@@ -9,21 +9,18 @@
 #include "Particle.h"
 #include "cinder/Vector.h"
 
-#define MAX_PARTICLES		10000
-
-
 class ParticleSystem {
 public:	
 	ParticleSystem();
 	~ParticleSystem();
 	
+	const int	MAX_PARTICLES = 10000;
+	const bool	DRAW_LINES = false;
 	ci::Vec2i	windowSize;
 	ci::Vec2f	invWindowSize;
-	Particle	particles[MAX_PARTICLES];
-//    float		posArray[MAX_PARTICLES * 2 * 2];
-//    float		colArray[MAX_PARTICLES * 3 * 2];
-    float		posArray[MAX_PARTICLES * 2];
-    float		colArray[MAX_PARTICLES * 4];
+	Particle*	particles;
+    float*		posArray;
+    float*		colArray;
 	int			curIndex;
 	
 	void update();

@@ -22,5 +22,6 @@ class Particle {
     void init(float x, float y, float u, float v);
     void update( const ci::Vec2f &windowSize, const ci::Vec2f &invWindowSize );
 	void updateVertexArrays( const ci::Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer);
+	void updateVertexArraysLines( const ci::Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer);
 };
 

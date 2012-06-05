@@ -96,12 +96,14 @@ void CinderParticlesApp::draw()
 	
 	// fourth pass (sorta)
 	//------------------------------------------------------------
-//	gl::color( ColorA::white() );
-//	gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
-//	mBlurX->bindTexture(GL_TEXTURE_2D, 0);
-//	gl::draw(mBlurX->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
-//	mBlurX->unbindTexture();
-	
+	/*
+	gl::color( ColorA::white() );
+	gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
+	mBlurX->bindTexture(GL_TEXTURE_2D, 0);
+	gl::draw(mBlurX->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
+	mBlurX->unbindTexture();
+	 */
+
 //	params::InterfaceGl::draw();
 }
 

@@ -9,9 +9,6 @@
 #include "cinder/Rand.h"
 #include "cinder/gl/gl.h"
 
-static const float MOMENTUM = 0.5f;
-static const float FLUID_FORCE = 0.6f;
-
 using namespace ci;
 
 Particle::Particle()
@@ -74,16 +71,11 @@ void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 		alpha = 0;
 }
 
-
 void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) {
-//	int vi = i * 4;
-//	posBuffer[vi++] = pos.x - vel.x;
-//	posBuffer[vi++] = pos.y - vel.y;
 	int vi = i * 2;
 	posBuffer[vi++] = pos.x;
 	posBuffer[vi++] = pos.y;
 	
-//	int ci = i * 6;
 	int ci = i * 4;
 	if( false ) {
 		// if drawing fluid, draw lines as black & white
@@ -91,22 +83,41 @@ void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* pos
 		colBuffer[ci++] = alpha;
 		colBuffer[ci++] = alpha;
 		colBuffer[ci++] = alpha;
-//		colBuffer[ci++] = alpha;
-//		colBuffer[ci++] = alpha;
-//		colBuffer[ci++] = alpha;
-	} else {
-		/*
-		// otherwise, use color
-		float vxNorm = vel.x * invWindowSize.x;
-		float vyNorm = vel.y * invWindowSize.y;
-		float v2 = vxNorm * vxNorm + vyNorm * vyNorm;
-#define VMAX 0.013f
-		if(v2>VMAX*VMAX) v2 = VMAX*VMAX;
-		float satInc = mass > 0.5 ? mass * mass * mass : 0;
-		satInc *= satInc * satInc * satInc;
-		Color color( CM_HSV, 0, v2 / ( VMAX * VMAX ), lerp( 0.5f, 1.0f, mass ) * alpha );
-#undef VMAX
-		 */
+	}
+	else {
+		float alphaPer = (1.0 - alpha) / 1.01;
+		float r = 1.0f - alphaPer;
+		float g = r * 0.75f;
+		float b = 1.0f - r;
+		
+		colBuffer[ci++] = r;
+		colBuffer[ci++] = g;
+		colBuffer[ci++] = b;
+		colBuffer[ci++] = alpha;
+	}
+}
+
+
+void Particle::updateVertexArraysLines( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) {
+	int vi = i * 4;
+	posBuffer[vi++] = pos.x - vel.x;
+	posBuffer[vi++] = pos.y - vel.y;
+	posBuffer[vi++] = pos.x;
+	posBuffer[vi++] = pos.y;
+	
+	int ci = i * 8;
+	if( false ) {
+		// if drawing fluid, draw lines as black & white
+		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = alpha;
+	}
+	else {
 		float alphaPer = (1.0 - alpha) / 1.01;
 		float r = 1.0f - alphaPer;
 		float g = r * 0.75f;
@@ -116,8 +127,9 @@ void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* pos
 		colBuffer[ci++] = g;
 		colBuffer[ci++] = b;
 		colBuffer[ci++] = alpha;
-//		colBuffer[ci++] = r*2.0;
-//		colBuffer[ci++] = g*2.0;
-//		colBuffer[ci++] = b*2.0;
+		colBuffer[ci++] = r;
+		colBuffer[ci++] = g;
+		colBuffer[ci++] = b;
+		colBuffer[ci++] = alpha;
 	}
 }
