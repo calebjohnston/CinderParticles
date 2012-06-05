@@ -15,16 +15,17 @@ Particle::Particle()
 {
 	pos = Vec2f( 0,0 );
 	vel = Vec2f( 0,0 );
-    radius = alpha = mass = 1.0;
+    radius = mass = 1.0;
+	alpha = 0;
 }
 
 void Particle::init( float x, float y ) {
 	pos.x = x;
 	pos.y = y;
-	vel.x = vel.y = Rand::randFloat( 0.3f, 1 );
+	vel.x = vel.y = 0;//Rand::randFloat( 0.3f, 1 );
 	radius = 5;
 	alpha  = 1.0;//Rand::randFloat( 0.3f, 1 );
-	mass = Rand::randFloat( 0.1f, 1 );
+	mass = 0;//Rand::randFloat( 0.1f, 1 );
 }
 
 void Particle::init( float x, float y, float u, float v ) {
@@ -33,16 +34,19 @@ void Particle::init( float x, float y, float u, float v ) {
 	vel.x = u;
 	vel.y = v;
 	radius = 5;
-	alpha  = 1.0;//Rand::randFloat( 0.3f, 1 );
-	mass = Rand::randFloat( 0.1f, 1 );
+	alpha  = 1.0;
+	mass = 0;//Rand::randFloat( 0.1f, 1 );
 }
 
 void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 	// only update if particle is visible
-	if( alpha == 0 )
-		return;
+//	if( alpha == 0 ) return;
 	
-	pos += vel;
+	vel.y += 0.2;	// gravity
+//	vel.x += 1.0;
+	
+	pos.x += vel.x;
+	pos.y += vel.y;
 
 	// bounce off edges
 	/*
@@ -66,9 +70,8 @@ void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 	*/
 	
 	// fade out a bit (and kill if alpha == 0);
-	alpha *= 0.99f;
-	if( alpha < 0.01f )
-		alpha = 0;
+	alpha -= 0.004;
+	if( alpha < 0.01f ) alpha = 0;
 }
 
 void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) {

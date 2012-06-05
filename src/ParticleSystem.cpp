@@ -44,6 +44,7 @@ void ParticleSystem::setWindowSize( const Vec2i &winSize )
 
 void ParticleSystem::update()
 {
+//	unsigned int count_ = 0;
 	if(DRAW_LINES){
 		for(int i=0; i<this->MAX_PARTICLES; i++) {
 			if(particles[i].alpha > 0) {
@@ -55,10 +56,12 @@ void ParticleSystem::update()
 	else{
 		for(int i=0; i<this->MAX_PARTICLES; i++) {
 			if(particles[i].alpha > 0) {
+//				count_++;
 				particles[i].update( windowSize, invWindowSize );
 				particles[i].updateVertexArrays( invWindowSize, i, posArray, colArray);
 			}
 		}
+//		if(count_==this->MAX_PARTICLES) std::cout << "maxxed out!!" << std::endl;
 	}
 }
 
@@ -112,7 +115,7 @@ void ParticleSystem::draw(){
 
 void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, int count ){
 	for(int i=0; i<count; i++){
-		addParticle( pos + Rand::randVec2f() * Rand::randFloat(10.0), vel + Rand::randVec2f() * Rand::randFloat(2.0) );
+		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
 	}
 }
 

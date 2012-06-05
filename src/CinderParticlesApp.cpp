@@ -45,7 +45,7 @@ void CinderParticlesApp::setup()
 // add force and dye to fluid, and create particles
 void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 {
-	mParticleSystem->addParticles( pos, vel, Rand::randInt(100) );
+	mParticleSystem->addParticles( pos, vel, 750 );
 }
 
 void CinderParticlesApp::update()
@@ -65,6 +65,7 @@ void CinderParticlesApp::draw()
 	mParticleSystem->draw();
 //	gl::drawSolidRect(Rectf(100,100,300,300));
 	mBlurX->unbindFramebuffer();
+
 	
 	// SECOND render pass...
 	//============================================================
@@ -131,7 +132,7 @@ void CinderParticlesApp::mouseMove( MouseEvent event )
 void CinderParticlesApp::mouseDrag( MouseEvent event )
 {
 	Vec2f mouseNorm = Vec2f( event.getPos() );// / getWindowSize();
-	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.3f;// / getWindowSize();
+	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.5f;// / getWindowSize();
 	pMouse = event.getPos();
 	this->addParticles(mouseNorm, mouseVel);
 }

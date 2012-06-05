@@ -14,7 +14,7 @@ public:
 	ParticleSystem();
 	~ParticleSystem();
 	
-	const int	MAX_PARTICLES = 10000;
+	const int	MAX_PARTICLES = 150000;
 	const bool	DRAW_LINES = false;
 	ci::Vec2i	windowSize;
 	ci::Vec2f	invWindowSize;

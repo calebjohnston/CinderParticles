@@ -1,12 +1,11 @@
 uniform sampler2D tex0;
 uniform vec2 sampleOffset;
 
-//float weights[21];	// gaussian normal distribution
-float weights[5];
+float weights[21];	// gaussian normal distribution
+//float weights[5];
 
 void main()
 {
-	/*
 	weights[0] = 0.0091679276560113852;
 	weights[1] = 0.014053461291849008;
 	weights[2] = 0.020595286319257878;
@@ -29,7 +28,6 @@ void main()
 	weights[19] = 0.014053461291849008;
 	weights[20] = 0.00916792765601138;
 	int len = 21;
-	
 
 	vec3 sum = vec3( 0.0, 0.0, 0.0 );
 	vec2 baseOffset = -10.0 * sampleOffset;
@@ -38,7 +36,7 @@ void main()
 		sum += texture2D( tex0, gl_TexCoord[0].st + baseOffset + offset ).rgb * weights[s];
 		offset += sampleOffset;
 	}
-	 */
+	/*
 	
 	// simpler version - 3 weights
 //	weights[0] = 0.25;
@@ -54,13 +52,15 @@ void main()
 	weights[4] = 0.1;
 	int len = 5;
 	
+	
 	vec3 sum = vec3( 0.0, 0.0, 0.0 );
 	vec2 baseOffset = -10.0 * sampleOffset;
 	vec2 offset = vec2( 0.0, 0.0 );
 	for( int s = 0; s < len; ++s ) {
 		sum += texture2D( tex0, gl_TexCoord[0].st + baseOffset + offset ).rgb * weights[s];
 		offset += sampleOffset;
-	}
+	 }
+	 */
 	
 	gl_FragColor.rgb = sum;
 	gl_FragColor.a = gl_FragColor.r;
