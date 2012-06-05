@@ -129,7 +129,7 @@ void CinderParticlesApp::mouseMove( MouseEvent event )
 void CinderParticlesApp::mouseDrag( MouseEvent event )
 {
 	Vec2f mouseNorm = Vec2f( event.getPos() );// / getWindowSize();
-	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.25f;// / getWindowSize();
+	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.3f;// / getWindowSize();
 	pMouse = event.getPos();
 	this->addParticles(mouseNorm, mouseVel);
 }

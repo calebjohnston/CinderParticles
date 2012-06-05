@@ -69,28 +69,31 @@ void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 	*/
 	
 	// fade out a bit (and kill if alpha == 0);
-	alpha *= 0.999f;
+	alpha *= 0.99f;
 	if( alpha < 0.01f )
 		alpha = 0;
 }
 
 
 void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) {
-	int vi = i * 4;
-	posBuffer[vi++] = pos.x - vel.x;
-	posBuffer[vi++] = pos.y - vel.y;
+//	int vi = i * 4;
+//	posBuffer[vi++] = pos.x - vel.x;
+//	posBuffer[vi++] = pos.y - vel.y;
+	int vi = i * 2;
 	posBuffer[vi++] = pos.x;
 	posBuffer[vi++] = pos.y;
 	
-	int ci = i * 6;
+//	int ci = i * 6;
+	int ci = i * 4;
 	if( false ) {
 		// if drawing fluid, draw lines as black & white
 		colBuffer[ci++] = alpha;
 		colBuffer[ci++] = alpha;
 		colBuffer[ci++] = alpha;
 		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
+//		colBuffer[ci++] = alpha;
+//		colBuffer[ci++] = alpha;
+//		colBuffer[ci++] = alpha;
 	} else {
 		/*
 		// otherwise, use color
@@ -112,8 +115,9 @@ void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* pos
 		colBuffer[ci++] = r;
 		colBuffer[ci++] = g;
 		colBuffer[ci++] = b;
-		colBuffer[ci++] = r*2.0;
-		colBuffer[ci++] = g*2.0;
-		colBuffer[ci++] = b*2.0;
+		colBuffer[ci++] = alpha;
+//		colBuffer[ci++] = r*2.0;
+//		colBuffer[ci++] = g*2.0;
+//		colBuffer[ci++] = b*2.0;
 	}
 }

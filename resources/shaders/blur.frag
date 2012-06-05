@@ -63,5 +63,5 @@ void main()
 	}
 	
 	gl_FragColor.rgb = sum;
-	gl_FragColor.a = 1.0;
+	gl_FragColor.a = gl_FragColor.r;
 }

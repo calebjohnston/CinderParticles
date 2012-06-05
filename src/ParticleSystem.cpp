@@ -42,30 +42,35 @@ void ParticleSystem::update()
 
 void ParticleSystem::draw(){
 	glEnable(GL_BLEND);
+	glDisable(GL_DEPTH_TEST);
 	glDisable( GL_TEXTURE_2D );
 //	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	// normal alpha blending
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );	// additive blending
-	glEnable(GL_LINE_SMOOTH);
-	glLineWidth(3.0);
+//	glEnable(GL_LINE_SMOOTH);
+//	glLineWidth(3.0);
+	glEnable(GL_POINT_SMOOTH);
+	glPointSize(6.0);
 	  
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, posArray);
 	
 	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(3, GL_FLOAT, 0, colArray);
+	glColorPointer(4, GL_FLOAT, 0, colArray);
 	
-	glDrawArrays(GL_LINES, 0, MAX_PARTICLES * 2);
+//	glDrawArrays(GL_POINTS, 0, MAX_PARTICLES * 2);
+	glDrawArrays(GL_POINTS, 0, MAX_PARTICLES);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-
+	
+	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 }
 
 
 void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, int count ){
 	for(int i=0; i<count; i++){
-		addParticle( pos + Rand::randVec2f() * Rand::randFloat(10.0), vel + Rand::randVec2f() * Rand::randFloat() );
+		addParticle( pos + Rand::randVec2f() * Rand::randFloat(10.0), vel + Rand::randVec2f() * Rand::randFloat(2.0) );
 	}
 }
 

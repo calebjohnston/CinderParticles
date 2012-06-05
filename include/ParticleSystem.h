@@ -20,8 +20,10 @@ public:
 	ci::Vec2i	windowSize;
 	ci::Vec2f	invWindowSize;
 	Particle	particles[MAX_PARTICLES];
-    float		posArray[MAX_PARTICLES * 2 * 2];
-    float		colArray[MAX_PARTICLES * 3 * 2];
+//    float		posArray[MAX_PARTICLES * 2 * 2];
+//    float		colArray[MAX_PARTICLES * 3 * 2];
+    float		posArray[MAX_PARTICLES * 2];
+    float		colArray[MAX_PARTICLES * 4];
 	int			curIndex;
 	
 	void update();
