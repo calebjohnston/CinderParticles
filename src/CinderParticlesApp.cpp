@@ -14,7 +14,7 @@ void CinderParticlesApp::setup()
 	this->setWindowSize(1680,1080);
 //	this->setWindowPosition(0,0);
 	
-	mShader = new gl::GlslProg( loadResource( "../Resources/shaders/particle.vert" ), loadResource( "../Resources/shaders/blur.frag" ) );
+	mShader = new gl::GlslProg( loadResource( "../Resources/shaders/pass.vert" ), loadResource( "../Resources/shaders/blur.frag" ) );
 	
 	gl::Fbo::Format format;
 	format.setColorInternalFormat( GL_RGBA );

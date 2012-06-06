@@ -25,8 +25,8 @@ public:
 	enum Rendering { POINTS, LINES, BILLBOARDS };
 	
 protected:	
-	const int	mMaxParticles = 160000;
 	ci::gl::Texture* mPointTexture;
+	int			mMaxParticles;
 	Rendering	mRenderType;
 	ci::Vec2i	mWindowSize;
 	ci::Vec2f	mInvWindowSize;

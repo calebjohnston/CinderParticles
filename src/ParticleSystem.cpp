@@ -12,6 +12,8 @@
 #include "cinder/Rand.h"
 #include "cinder/app/App.h"
 
+#define MAX_PARTICLES 160000
+
 using namespace ci;
 
 ParticleSystem::ParticleSystem() 
@@ -19,6 +21,7 @@ ParticleSystem::ParticleSystem()
 	mPointTexture = NULL;
 	mCurrentIndex = 0;
 	mRenderType = POINTS;
+	mMaxParticles = MAX_PARTICLES;
 	
 	// load texture -- PARAMETERIZE!
 	if(mRenderType == BILLBOARDS){
