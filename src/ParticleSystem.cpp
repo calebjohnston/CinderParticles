@@ -18,10 +18,12 @@ ParticleSystem::ParticleSystem()
 {
 	mPointTexture = NULL;
 	mCurrentIndex = 0;
-	mRenderType = LINES;
+	mRenderType = POINTS;
 	
 	// load texture -- PARAMETERIZE!
-	mPointTexture = new gl::Texture( loadImage( app::App::get()->loadResource("../Resources/images/particle.png") ) );
+	if(mRenderType == BILLBOARDS){
+		mPointTexture = new gl::Texture( loadImage( app::App::get()->loadResource("../Resources/images/particle.png") ) );
+	}
 	
 	// allocate memory
 	mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);

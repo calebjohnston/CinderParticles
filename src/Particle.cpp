@@ -46,7 +46,7 @@ void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 	// only update if particle is visible
 //	if( alpha == 0 ) return;
 	
-	mVelocity.y += 0.1;	// gravity
+//	mVelocity.y += 0.1;	// gravity
 //	vel.x += 1.0;
 	
 	mPosition.x += mVelocity.x;
@@ -74,34 +74,33 @@ void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 	
 	// fade out a bit (and kill if alpha == 0);
 	mAlpha -= 0.005;
-	if( mAlpha < 0.01f ) mAlpha = 0;
+//	if( mAlpha < 0.01f ) mAlpha = 0;
 }
 
 void Particle::updatePointsData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const 
 {
 	int vi = i * 2;
-	posBuffer[vi++] = mPosition.x;
-	posBuffer[vi++] = mPosition.y;
+	posBuffer[vi] = mPosition.x;
+	posBuffer[vi+1] = mPosition.y;
 	
 	int ci = i * 4;
-	if( false ) {
-		// if drawing fluid, draw lines as black & white
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-	}
-	else {
-		float alphaPer = (1.0 - mAlpha) / 1.01;
-		float r = 1.0f - alphaPer;
-		float g = r * 0.75f;
-		float b = 1.0f - r;
+//	if( false ) {
+//		colBuffer[ci] = mAlpha;
+//		colBuffer[ci+1] = mAlpha;
+//		colBuffer[ci+2] = mAlpha;
+//		colBuffer[ci+3] = mAlpha;
+//	}
+//	else {
+//		float alphaPer = (1.0 - mAlpha) / 1.01;
+//		float r = 1.0f - alphaPer;
+//		float g = r * 0.75f;
+//		float b = 1.0f - r;
 		
-		colBuffer[ci++] = r;
-		colBuffer[ci++] = g;
-		colBuffer[ci++] = b;
-		colBuffer[ci++] = mAlpha;
-	}
+		colBuffer[ci] = mAlpha;
+		colBuffer[ci+1] = mAlpha * 0.5f;
+		colBuffer[ci+2] = 1.0 - mAlpha;
+		colBuffer[ci+3] = mAlpha;
+//	}
 }
 
 void Particle::updateBillboardsData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer, float* texcoordBuffer) const 
