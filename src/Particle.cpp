@@ -13,43 +13,46 @@ using namespace ci;
 
 Particle::Particle()
 {
-	pos = Vec2f( 0,0 );
-	vel = Vec2f( 0,0 );
-    radius = mass = 1.0;
-	alpha = 0;
+	mPosition = Vec2f( 0,0 );
+	mVelocity = Vec2f( 0,0 );
+    mRadius = mMass = 1.0;
+	mAlpha = 0.0;
+}
+
+Particle::~Particle()
+{
 }
 
 void Particle::init( float x, float y ) {
-	pos.x = x;
-	pos.y = y;
-	vel.x = vel.y = 0;//Rand::randFloat( 0.3f, 1 );
-	radius = 5;
-	alpha  = 1.0;//Rand::randFloat( 0.3f, 1 );
-	mass = 0;//Rand::randFloat( 0.1f, 1 );
+	mPosition.x = x;
+	mPosition.y = y;
+	mVelocity.x = mVelocity.y = 0;
+	mRadius = 20.0;
+	mAlpha  = 1.0;
+	mMass = 0;
 }
 
 void Particle::init( float x, float y, float u, float v ) {
-	pos.x = x;
-	pos.y = y;
-	vel.x = u;
-	vel.y = v;
-	radius = 5;
-	alpha  = 1.0;
-	mass = 0;//Rand::randFloat( 0.1f, 1 );
+	mPosition.x = x;
+	mPosition.y = y;
+	mVelocity.x = u;
+	mVelocity.y = v;
+	mRadius = 20.0;
+	mAlpha  = 1.0;
+	mMass = 0;
 }
 
 void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 	// only update if particle is visible
 //	if( alpha == 0 ) return;
 	
-	vel.y += 0.2;	// gravity
+	mVelocity.y += 0.1;	// gravity
 //	vel.x += 1.0;
 	
-	pos.x += vel.x;
-	pos.y += vel.y;
-
+	mPosition.x += mVelocity.x;
+	mPosition.y += mVelocity.y;
+/*
 	// bounce off edges
-	/*
 	if( pos.x < 0 ) {
 		pos.x = 0;
 		vel.x *= -1;
@@ -67,28 +70,29 @@ void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize ) {
 		pos.y = windowSize.y;
 		vel.y *= -1;
 	}
-	*/
+ */
 	
 	// fade out a bit (and kill if alpha == 0);
-	alpha -= 0.004;
-	if( alpha < 0.01f ) alpha = 0;
+	mAlpha -= 0.005;
+	if( mAlpha < 0.01f ) mAlpha = 0;
 }
 
-void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) {
+void Particle::updatePointsData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const 
+{
 	int vi = i * 2;
-	posBuffer[vi++] = pos.x;
-	posBuffer[vi++] = pos.y;
+	posBuffer[vi++] = mPosition.x;
+	posBuffer[vi++] = mPosition.y;
 	
 	int ci = i * 4;
 	if( false ) {
 		// if drawing fluid, draw lines as black & white
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
 	}
 	else {
-		float alphaPer = (1.0 - alpha) / 1.01;
+		float alphaPer = (1.0 - mAlpha) / 1.01;
 		float r = 1.0f - alphaPer;
 		float g = r * 0.75f;
 		float b = 1.0f - r;
@@ -96,43 +100,93 @@ void Particle::updateVertexArrays( const Vec2f &invWindowSize, int i, float* pos
 		colBuffer[ci++] = r;
 		colBuffer[ci++] = g;
 		colBuffer[ci++] = b;
-		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = mAlpha;
 	}
 }
 
+void Particle::updateBillboardsData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer, float* texcoordBuffer) const 
+{
+	int vi = i * 8;
+	posBuffer[vi++] = mPosition.x - mRadius;
+	posBuffer[vi++] = mPosition.y - mRadius;
+	posBuffer[vi++] = mPosition.x + mRadius;
+	posBuffer[vi++] = mPosition.y - mRadius;
+	posBuffer[vi++] = mPosition.x + mRadius;
+	posBuffer[vi++] = mPosition.y + mRadius;
+	posBuffer[vi++] = mPosition.x - mRadius;
+	posBuffer[vi++] = mPosition.y + mRadius;
+	
+	int ti = i * 8;
+	texcoordBuffer[ti++] = 0;
+	texcoordBuffer[ti++] = 0;
+	texcoordBuffer[ti++] = 1.0;
+	texcoordBuffer[ti++] = 0;
+	texcoordBuffer[ti++] = 1.0;
+	texcoordBuffer[ti++] = 1.0;
+	texcoordBuffer[ti++] = 0;
+	texcoordBuffer[ti++] = 1.0;
+	
+	int ci = i * 16;
+	float alphaPer = (1.0 - mAlpha) / 1.01;
+	float r = 1.0f - alphaPer;
+	float g = r * 0.75f;
+	float b = 1.0f - r;
+	
+	colBuffer[ci++] = r;
+	colBuffer[ci++] = g;
+	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+	
+	colBuffer[ci++] = r;
+	colBuffer[ci++] = g;
+	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+	
+	colBuffer[ci++] = r;
+	colBuffer[ci++] = g;
+	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+	
+	colBuffer[ci++] = r;
+	colBuffer[ci++] = g;
+	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+}
 
-void Particle::updateVertexArraysLines( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) {
+
+void Particle::updateLinesData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const 
+{
 	int vi = i * 4;
-	posBuffer[vi++] = pos.x - vel.x;
-	posBuffer[vi++] = pos.y - vel.y;
-	posBuffer[vi++] = pos.x;
-	posBuffer[vi++] = pos.y;
+	posBuffer[vi++] = mPosition.x - mVelocity.x;
+	posBuffer[vi++] = mPosition.y - mVelocity.y;
+	posBuffer[vi++] = mPosition.x;
+	posBuffer[vi++] = mPosition.y;
 	
 	int ci = i * 8;
 	if( false ) {
 		// if drawing fluid, draw lines as black & white
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
-		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
+		colBuffer[ci++] = mAlpha;
 	}
 	else {
-		float alphaPer = (1.0 - alpha) / 1.01;
+		float alphaPer = (1.0 - mAlpha) / 1.01;
 		float r = 1.0f - alphaPer;
-		float g = r * 0.75f;
+		float g = r * 0.55f;
 		float b = 1.0f - r;
 
 		colBuffer[ci++] = r;
 		colBuffer[ci++] = g;
 		colBuffer[ci++] = b;
-		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = mAlpha;
 		colBuffer[ci++] = r;
 		colBuffer[ci++] = g;
 		colBuffer[ci++] = b;
-		colBuffer[ci++] = alpha;
+		colBuffer[ci++] = mAlpha;
 	}
 }

@@ -5,12 +5,14 @@
 
 void CinderParticlesApp::setup()
 {
+	mMouseDown = false;
 	mFPS = 60.0f;
 	setFrameRate( mFPS );
 	
 	mParticleSystem = new ParticleSystem();
 
 	this->setWindowSize(1680,1080);
+//	this->setWindowPosition(0,0);
 	
 	mShader = new gl::GlslProg( loadResource( "../Resources/shaders/particle.vert" ), loadResource( "../Resources/shaders/blur.frag" ) );
 	
@@ -36,12 +38,6 @@ void CinderParticlesApp::setup()
 	gl::enableAdditiveBlending();
 }
 
-//void CinderParticlesApp::fadeToColor( float r, float g, float b, float speed )
-//{
-//	glColor4f( r, g, b, speed );
-//	gl::drawSolidRect( getWindowBounds() );
-//}
-
 // add force and dye to fluid, and create particles
 void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 {
@@ -50,6 +46,9 @@ void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 
 void CinderParticlesApp::update()
 {	
+	if(mMouseDown){
+//		this->addParticles(mouseNorm, mouseVel);
+	}
 	mParticleSystem->update();
 }
 
@@ -57,15 +56,15 @@ void CinderParticlesApp::draw()
 {
 	// FIRST render pass...
 	//============================================================
-	mBlurX->bindFramebuffer();
+//	mBlurX->bindFramebuffer();
 	
 	gl::clear();
 	gl::color( ColorA::white() );
-	gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),false);
+	gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
 	mParticleSystem->draw();
 //	gl::drawSolidRect(Rectf(100,100,300,300));
-	mBlurX->unbindFramebuffer();
-
+//	mBlurX->unbindFramebuffer();
+	return;
 	
 	// SECOND render pass...
 	//============================================================
@@ -94,16 +93,6 @@ void CinderParticlesApp::draw()
 	gl::draw(mBlurY->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
 	mBlurY->unbindTexture();
 	mShader->unbind();
-	
-	// fourth pass (sorta)
-	//------------------------------------------------------------
-	/*
-	gl::color( ColorA::white() );
-	gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
-	mBlurX->bindTexture(GL_TEXTURE_2D, 0);
-	gl::draw(mBlurX->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
-	mBlurX->unbindTexture();
-	 */
 
 //	params::InterfaceGl::draw();
 }
@@ -129,10 +118,20 @@ void CinderParticlesApp::mouseMove( MouseEvent event )
 	pMouse = event.getPos();
 }
 
+void CinderParticlesApp::mouseDown( MouseEvent event )
+{
+	mMouseDown = true;
+}
+
+void CinderParticlesApp::mouseUp( MouseEvent event )
+{
+	mMouseDown = false;
+}
+
 void CinderParticlesApp::mouseDrag( MouseEvent event )
 {
-	Vec2f mouseNorm = Vec2f( event.getPos() );// / getWindowSize();
-	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.5f;// / getWindowSize();
+	Vec2f mouseNorm = Vec2f( event.getPos() );
+	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.5f;
 	pMouse = event.getPos();
 	this->addParticles(mouseNorm, mouseVel);
 }

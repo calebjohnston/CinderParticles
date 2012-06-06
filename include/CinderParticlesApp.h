@@ -9,7 +9,6 @@
 
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/GlslProg.h"
-#include "cinder/gl/Texture.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/params/Params.h"
 
@@ -22,17 +21,17 @@ using namespace ci::app;
 class CinderParticlesApp : public AppBasic {
 public:
 	void	setup();
-	
-//	void	fadeToColor( float r, float g, float b, float speed );
+	void	update();
+	void	draw();	
 	void	addParticles( Vec2f pos, Vec2f vel );
 	void	keyDown( KeyEvent event );
 	void	mouseMove( MouseEvent event );
 	void	mouseDrag( MouseEvent event );
+	void	mouseDown( MouseEvent event );
+	void	mouseUp( MouseEvent event );
 	void	resize( ResizeEvent event );
-	
-	void	update();
-	void	draw();
-	
+
+private:
 	ParticleSystem*			mParticleSystem;
 	gl::GlslProg*			mShader;
 	gl::Fbo*				mBlurX;
@@ -40,6 +39,7 @@ public:
 	params::InterfaceGl*	mParams;
 	
 	Vec2i					pMouse;
+	bool					mMouseDown;
 	float					mFPS;
 	std::string				mFpsLabel;
 };
