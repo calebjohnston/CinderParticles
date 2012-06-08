@@ -40,4 +40,5 @@ private:
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;
+	bool						mEnableGaussianBlur;
 };

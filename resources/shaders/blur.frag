@@ -2,7 +2,8 @@ uniform sampler2D tex0;
 uniform vec2 sampleOffset;
 
 //float weights[21];	// gaussian normal distribution
-float weights[5];
+float weights[5];		// not-so normal gaussian distribution
+//float weights[3];		// simple neighborhood averaging
 
 void main()
 {

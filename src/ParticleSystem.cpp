@@ -21,7 +21,7 @@ ParticleSystem::ParticleSystem()
 	mRenderType = NONE;	// mode starts unset
 	
 	// initialize data and set mode
-	this->setMode(SPRITES);
+	this->setMode(POINTS);
 	
 	setWindowSize(app::App::get()->getWindowSize());
 }
@@ -63,12 +63,21 @@ void ParticleSystem::setMode(Rendering mode)
 			mMaxParticles = (int) MAX_PARTICLES / 4;
 			mParticleRate = 300;
 			break;
+		default:
+		case NONE:
+			mMaxParticles = 0;
+			mParticleRate = 0;
+			break;
 	}
 	
 	// allocate memory
-	mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);
-    mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2 * scale_factor);
-	mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4 * scale_factor);
+	try {
+		mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);
+		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2 * scale_factor);
+		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4 * scale_factor);
+	} catch(...) {
+		std::cout << "Unable to allocate data" << std::endl;
+	}
 	
 	// initialize particle list
 	for(int i=0; i<this->mMaxParticles; i++) {
