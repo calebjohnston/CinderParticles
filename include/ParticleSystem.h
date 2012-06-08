@@ -1,10 +1,3 @@
-/*
- *  ParticleSystem.h
- *
- *  Created by Mehmet Akten on 02/05/2009.
- *
- */
-
 #pragma once
 
 #include "Particle.h"

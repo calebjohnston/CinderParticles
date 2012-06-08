@@ -1,10 +1,3 @@
-/*
- *  Particle.cpp
- *
- *  Created by Mehmet Akten on 02/05/2009.
- *
- */
-
 #include "Particle.h"
 #include "cinder/Rand.h"
 #include "cinder/gl/gl.h"

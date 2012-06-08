@@ -1,10 +1,3 @@
-/*
- *  ParticleSystem.cpp
- *
- *  Created by Mehmet Akten on 02/05/2009.
- *
- */
-
 #include "ParticleSystem.h"
 
 #include "cinder/ImageIO.h"

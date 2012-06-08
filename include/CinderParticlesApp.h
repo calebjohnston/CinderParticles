@@ -1,10 +1,3 @@
-//
-//  CinderParticlesApp.h
-//  CinderParticles
-//
-//  Created by Caleb Johnston on 6/4/12.
-//
-
 #pragma once
 
 #include "cinder/app/AppBasic.h"
