@@ -8,6 +8,7 @@ using namespace ci::app;
 
 void CinderParticlesApp::setup()
 {
+	mParams = NULL;
 	mShader = NULL;
 	mParticleSystem = NULL;
 	mBlurX = mBlurY = NULL;
@@ -32,7 +33,7 @@ void CinderParticlesApp::setup()
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
 	
-//	mParams = new params::InterfaceGl("settings", Vec2i(200,300));
+	// mParams = new params::InterfaceGl("settings", Vec2i(200,300));
 	
 	pMouse = getWindowCenter();
 	
@@ -46,9 +47,6 @@ void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 
 void CinderParticlesApp::update()
 {	
-//	if(mMouseDown){
-//		this->addParticles(mouseNorm, mouseVel);
-//	}
 	mParticleSystem->update();
 }
 
@@ -99,7 +97,7 @@ void CinderParticlesApp::draw()
 		mShader->unbind();
 	}
 
-//	params::InterfaceGl::draw();
+	if(mParams!=NULL) params::InterfaceGl::draw();
 }
 
 void CinderParticlesApp::resize( ResizeEvent event )
