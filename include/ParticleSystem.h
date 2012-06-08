@@ -16,7 +16,7 @@ public:
 	void addParticle( const ci::Vec2f &pos, const ci::Vec2f &vel );
 	void setWindowSize( const ci::Vec2i &winSize );
 
-	enum Rendering { NONE, POINTS, LINES, BILLBOARDS };
+	enum Rendering { NONE, POINTS, LINES, SPRITES };
 	
 	void setMode(Rendering mode);
 	
@@ -28,7 +28,6 @@ protected:
 	Particle*	mParticles;
     float*		mPositionArray;
     float*		mColorArray;
-    float*		mTexcoordsArray;
 	int			mMaxParticles;
 	int			mParticleRate;
 	int			mCurrentIndex;

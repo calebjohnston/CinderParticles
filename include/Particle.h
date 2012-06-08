@@ -18,7 +18,6 @@ public:
     void update(const ci::Vec2f &windowSize, const ci::Vec2f &invWindowSize);
 	void updateLinesData(const ci::Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const;
 	void updatePointsData(const ci::Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const;
-	void updateBillboardsData(const ci::Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer, float* texcoordBuffer) const;
 	
 protected:
     ci::Vec2f	mPosition;

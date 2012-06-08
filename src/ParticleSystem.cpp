@@ -14,7 +14,6 @@ ParticleSystem::ParticleSystem()
 	mParticles = NULL;
 	mColorArray = NULL;
 	mPositionArray = NULL;
-	mTexcoordsArray = NULL;
 	mPointTexture = NULL;
 	mCurrentIndex = 0;
 	mMaxParticles = 0;
@@ -22,7 +21,7 @@ ParticleSystem::ParticleSystem()
 	mRenderType = NONE;	// mode starts unset
 	
 	// initialize data and set mode
-	this->setMode(BILLBOARDS);
+	this->setMode(SPRITES);
 	
 	setWindowSize(app::App::get()->getWindowSize());
 }
@@ -35,7 +34,7 @@ void ParticleSystem::setMode(Rendering mode)
 	mRenderType = mode;
 	
 	// load texture -- PARAMETERIZE!
-	if(mRenderType == BILLBOARDS){
+	if(mRenderType == SPRITES){
 		if(mPointTexture != NULL) delete mPointTexture;
 		
 		gl::Texture::Format format;
@@ -49,21 +48,27 @@ void ParticleSystem::setMode(Rendering mode)
 	// determine memory requirements
 	int scale_factor = 1;
 	if(mRenderType == LINES) scale_factor = 2;
-	else if(mRenderType == BILLBOARDS) scale_factor = 4;
 	
 	// scale maximal values based upon processing requirements
-	this->mMaxParticles = (int) MAX_PARTICLES / scale_factor;
-	mParticleRate = (int) 1000 / (scale_factor*scale_factor);
+	switch(mRenderType){
+		case POINTS:
+			mMaxParticles = MAX_PARTICLES;
+			mParticleRate = 1000;
+			break;
+		case LINES:
+			mMaxParticles = (int) MAX_PARTICLES / 2;
+			mParticleRate = 400;
+			break;
+		case SPRITES:
+			mMaxParticles = (int) MAX_PARTICLES / 4;
+			mParticleRate = 300;
+			break;
+	}
 	
 	// allocate memory
 	mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);
     mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2 * scale_factor);
 	mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4 * scale_factor);
-	if(mRenderType == BILLBOARDS){
-		mTexcoordsArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2 * scale_factor);
-	}else{
-		mTexcoordsArray = NULL;
-	}
 	
 	// initialize particle list
 	for(int i=0; i<this->mMaxParticles; i++) {
@@ -76,7 +81,6 @@ ParticleSystem::~ParticleSystem()
 	delete mParticles;
 	delete mColorArray;
 	delete mPositionArray;
-	delete mTexcoordsArray;
 	delete mPointTexture;
 }
 
@@ -95,14 +99,6 @@ void ParticleSystem::update()
 				mParticles[i].update(mWindowSize, mInvWindowSize);
 				mParticles[i].updateLinesData(mInvWindowSize, i, mPositionArray, mColorArray);
 			}
-		}	
-	}
-	else if(mRenderType == BILLBOARDS){
-		for(int i=0; i<this->mMaxParticles; i++) {
-//			if(mParticles[i].alpha() > 0) {
-				mParticles[i].update(mWindowSize, mInvWindowSize);
-				mParticles[i].updateBillboardsData(mInvWindowSize, i, mPositionArray, mColorArray, mTexcoordsArray);
-//			}
 		}	
 	}
 	else{
@@ -126,7 +122,7 @@ void ParticleSystem::draw()
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glEnable(GL_LINE_SMOOTH);
 		glLineWidth(4.0);
-		  
+		
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(2, GL_FLOAT, 0, mPositionArray);
 		
@@ -141,13 +137,16 @@ void ParticleSystem::draw()
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
 	}
-	else if(mRenderType == BILLBOARDS){
+	else if(mRenderType == SPRITES){
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		
 		glEnable(GL_TEXTURE_2D);
-		mPointTexture->bind(0);
+		glBindTexture(GL_TEXTURE_2D, mPointTexture->getId());
+		glEnable(GL_POINT_SPRITE);
+		glTexEnvi(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
+		glPointSize(12.0);
 		
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(2, GL_FLOAT, 0, mPositionArray);
@@ -155,15 +154,12 @@ void ParticleSystem::draw()
 		glEnableClientState(GL_COLOR_ARRAY);
 		glColorPointer(4, GL_FLOAT, 0, mColorArray);
 		
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_FLOAT, 0, mTexcoordsArray);
+		glDrawArrays(GL_POINTS, 0, this->mMaxParticles);
 		
-		glDrawArrays(GL_QUADS, 0, this->mMaxParticles * 4);
-		
-		mPointTexture->unbind();
+		glDisable(GL_POINT_SPRITE);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisable(GL_TEXTURE_2D);
 		
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 		

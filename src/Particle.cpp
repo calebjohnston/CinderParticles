@@ -83,56 +83,6 @@ void Particle::updatePointsData( const Vec2f &invWindowSize, int i, float* posBu
 	colBuffer[ci+3] = mAlpha;
 }
 
-void Particle::updateBillboardsData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer, float* texcoordBuffer) const 
-{
-	int vi = i * 8;
-	float x1,x2,y1,y2;
-	x1 = mPosition.x - mRadius;
-	x2 = mPosition.x + mRadius;
-	y1 = mPosition.y - mRadius;
-	y2 = mPosition.y + mRadius;
-	posBuffer[vi] = x1;
-	posBuffer[vi+1] = y1;
-	posBuffer[vi+2] = x2;
-	posBuffer[vi+3] = y1;
-	posBuffer[vi+4] = x2;
-	posBuffer[vi+5] = y2;
-	posBuffer[vi+6] = x1;
-	posBuffer[vi+7] = y2;
-	
-	int ti = i * 8;
-	texcoordBuffer[ti] = 0;
-	texcoordBuffer[ti+1] = 0;
-	texcoordBuffer[ti+2] = 1.0;
-	texcoordBuffer[ti+3] = 0;
-	texcoordBuffer[ti+4] = 1.0;
-	texcoordBuffer[ti+5] = 1.0;
-	texcoordBuffer[ti+6] = 0;
-	texcoordBuffer[ti+7] = 1.0;
-	
-	int ci = i * 16;
-	colBuffer[ci++] = mAlpha;
-	colBuffer[ci++] = mAlpha * 0.5f;
-	colBuffer[ci++] = 1.0 - mAlpha;
-	colBuffer[ci++] = mAlpha;
-	
-	colBuffer[ci++] = mAlpha;
-	colBuffer[ci++] = mAlpha * 0.5f;
-	colBuffer[ci++] = 1.0 - mAlpha;
-	colBuffer[ci++] = mAlpha;
-	
-	colBuffer[ci++] = mAlpha;
-	colBuffer[ci++] = mAlpha * 0.5f;
-	colBuffer[ci++] = 1.0 - mAlpha;
-	colBuffer[ci++] = mAlpha;
-	
-	colBuffer[ci++] = mAlpha;
-	colBuffer[ci++] = mAlpha * 0.5f;
-	colBuffer[ci++] = 1.0 - mAlpha;
-	colBuffer[ci++] = mAlpha;
-}
-
-
 void Particle::updateLinesData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const 
 {
 	int vi = i * 4;
