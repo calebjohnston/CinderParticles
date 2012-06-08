@@ -92,7 +92,6 @@ void ParticleSystem::setWindowSize( const Vec2i &winSize )
 
 void ParticleSystem::update()
 {
-//	unsigned int count_ = 0;
 	if(mRenderType == LINES){
 		for(int i=0; i<this->mMaxParticles; i++) {
 			if(mParticles[i].alpha() > 0) {
@@ -104,12 +103,10 @@ void ParticleSystem::update()
 	else{
 		for(int i=0; i<this->mMaxParticles; i++) {
 			if(mParticles[i].alpha() > 0) {
-//				count_++;
 				mParticles[i].update(mWindowSize, mInvWindowSize);
 				mParticles[i].updatePointsData(mInvWindowSize, i, mPositionArray, mColorArray);
 			}
 		}
-//		if(count_==this->mMaxParticles) std::cout << "maxxed out!!" << std::endl;
 	}
 }
 

@@ -11,6 +11,13 @@
 using namespace ci;
 using namespace ci::app;
 
+/**
+ * The CinderParticlesApp is a basic particle engine. Some of the 
+ * implementation is based off of Memo's particle code. There are 
+ * options provided for rendering lines, points, or point sprites.
+ * The rendering uses VBOs for the particle geometry.
+ * FBOs can be used for custom post-processing.
+ */
 class CinderParticlesApp : public AppBasic {
 public:
 	void	setup();
@@ -25,14 +32,12 @@ public:
 	void	resize( ResizeEvent event );
 
 private:
-	ParticleSystem*			mParticleSystem;
-	gl::GlslProg*			mShader;
-	gl::Fbo*				mBlurX;
-	gl::Fbo*				mBlurY;
-	params::InterfaceGl*	mParams;
+	ParticleSystem*				mParticleSystem;
+	ci::gl::GlslProg*			mShader;
+	ci::gl::Fbo*				mBlurX;
+	ci::gl::Fbo*				mBlurY;
+	ci::params::InterfaceGl*	mParams;
 	
-	Vec2i					pMouse;
-	bool					mMouseDown;
-	float					mFPS;
-	std::string				mFpsLabel;
+	ci::Vec2i					pMouse;
+	bool						mMouseDown;
 };

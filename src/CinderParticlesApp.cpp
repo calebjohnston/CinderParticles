@@ -6,8 +6,7 @@
 void CinderParticlesApp::setup()
 {
 	mMouseDown = false;
-	mFPS = 60.0f;
-	setFrameRate( mFPS );
+	setFrameRate( 60 );
 	
 	mParticleSystem = new ParticleSystem();
 
@@ -31,7 +30,6 @@ void CinderParticlesApp::setup()
 	gl::enableDepthWrite();
 	
 //	mParams = new params::InterfaceGl("settings", Vec2i(200,300));
-//	mParams->addText( "fps", &mFpsLabel );
 	
 	pMouse = getWindowCenter();
 	
@@ -46,9 +44,9 @@ void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 
 void CinderParticlesApp::update()
 {	
-	if(mMouseDown){
+//	if(mMouseDown){
 //		this->addParticles(mouseNorm, mouseVel);
-	}
+//	}
 	mParticleSystem->update();
 }
 
