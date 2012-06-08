@@ -11,21 +11,52 @@ using namespace ci;
 
 ParticleSystem::ParticleSystem() 
 {
+	mParticles = NULL;
+	mColorArray = NULL;
+	mPositionArray = NULL;
+	mTexcoordsArray = NULL;
 	mPointTexture = NULL;
 	mCurrentIndex = 0;
-	mRenderType = POINTS;
-	mMaxParticles = MAX_PARTICLES;
+	mMaxParticles = 0;
+	mParticleRate = 0;
+	mRenderType = NONE;	// mode starts unset
+	
+	// initialize data and set mode
+	this->setMode(BILLBOARDS);
+	
+	setWindowSize(app::App::get()->getWindowSize());
+}
+
+void ParticleSystem::setMode(Rendering mode)
+{
+	if(mode == NONE) mode = POINTS;
+	if(mode == mRenderType) return;
+	
+	mRenderType = mode;
 	
 	// load texture -- PARAMETERIZE!
 	if(mRenderType == BILLBOARDS){
-		mPointTexture = new gl::Texture( loadImage( app::App::get()->loadResource("../Resources/images/particle.png") ) );
+		if(mPointTexture != NULL) delete mPointTexture;
+		
+		gl::Texture::Format format;
+		format.enableMipmapping(true);
+		format.setWrap(GL_CLAMP,GL_CLAMP);
+		format.setMinFilter(GL_NEAREST);
+		format.setMagFilter(GL_NEAREST);
+		mPointTexture = new gl::Texture( loadImage( app::App::get()->loadResource("../Resources/images/particle-small.png") ), format );
 	}
 	
-	// allocate memory
-	mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);
+	// determine memory requirements
 	int scale_factor = 1;
 	if(mRenderType == LINES) scale_factor = 2;
 	else if(mRenderType == BILLBOARDS) scale_factor = 4;
+	
+	// scale maximal values based upon processing requirements
+	this->mMaxParticles = (int) MAX_PARTICLES / scale_factor;
+	mParticleRate = (int) 1000 / (scale_factor*scale_factor);
+	
+	// allocate memory
+	mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);
     mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2 * scale_factor);
 	mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4 * scale_factor);
 	if(mRenderType == BILLBOARDS){
@@ -38,17 +69,15 @@ ParticleSystem::ParticleSystem()
 	for(int i=0; i<this->mMaxParticles; i++) {
 		mParticles[i] = Particle();
 	}
-	
-	setWindowSize(app::App::get()->getWindowSize());
 }
 
 ParticleSystem::~ParticleSystem() 
 {
-	delete mPointTexture;
 	delete mParticles;
-	delete mPositionArray;
 	delete mColorArray;
+	delete mPositionArray;
 	delete mTexcoordsArray;
+	delete mPointTexture;
 }
 
 void ParticleSystem::setWindowSize( const Vec2i &winSize )
@@ -166,8 +195,15 @@ void ParticleSystem::draw()
 }
 
 
-void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, int count ){
-	for(int i=0; i<count; i++){
+void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, unsigned int count ){
+	for(unsigned int i=0; i<count; i++){
+		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
+	}
+}
+
+
+void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel ){
+	for(unsigned int i=0; i<mParticleRate; i++){
 		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
 	}
 }

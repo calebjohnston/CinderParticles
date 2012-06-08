@@ -41,7 +41,7 @@ void CinderParticlesApp::setup()
 // add force and dye to fluid, and create particles
 void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 {
-	mParticleSystem->addParticles( pos, vel, 900 );
+	mParticleSystem->addParticles( pos, vel );
 }
 
 void CinderParticlesApp::update()

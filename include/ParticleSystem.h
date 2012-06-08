@@ -11,15 +11,17 @@ public:
 	
 	void update();
 	void draw();
-	void addParticles( const ci::Vec2f &pos, const ci::Vec2f &vel, int count = 10 );
+	void addParticles( const ci::Vec2f &pos, const ci::Vec2f &vel, unsigned int count );
+	void addParticles( const ci::Vec2f &pos, const ci::Vec2f &vel );
 	void addParticle( const ci::Vec2f &pos, const ci::Vec2f &vel );
 	void setWindowSize( const ci::Vec2i &winSize );
 
-	enum Rendering { POINTS, LINES, BILLBOARDS };
+	enum Rendering { NONE, POINTS, LINES, BILLBOARDS };
+	
+	void setMode(Rendering mode);
 	
 protected:	
 	ci::gl::Texture* mPointTexture;
-	int			mMaxParticles;
 	Rendering	mRenderType;
 	ci::Vec2i	mWindowSize;
 	ci::Vec2f	mInvWindowSize;
@@ -27,6 +29,8 @@ protected:
     float*		mPositionArray;
     float*		mColorArray;
     float*		mTexcoordsArray;
+	int			mMaxParticles;
+	int			mParticleRate;
 	int			mCurrentIndex;
 	
 };

@@ -77,71 +77,58 @@ void Particle::updatePointsData( const Vec2f &invWindowSize, int i, float* posBu
 	posBuffer[vi+1] = mPosition.y;
 	
 	int ci = i * 4;
-//	if( false ) {
-//		colBuffer[ci] = mAlpha;
-//		colBuffer[ci+1] = mAlpha;
-//		colBuffer[ci+2] = mAlpha;
-//		colBuffer[ci+3] = mAlpha;
-//	}
-//	else {
-//		float alphaPer = (1.0 - mAlpha) / 1.01;
-//		float r = 1.0f - alphaPer;
-//		float g = r * 0.75f;
-//		float b = 1.0f - r;
-		
-		colBuffer[ci] = mAlpha;
-		colBuffer[ci+1] = mAlpha * 0.5f;
-		colBuffer[ci+2] = 1.0 - mAlpha;
-		colBuffer[ci+3] = mAlpha;
-//	}
+	colBuffer[ci] = mAlpha;
+	colBuffer[ci+1] = mAlpha * 0.5f;
+	colBuffer[ci+2] = 1.0 - mAlpha;
+	colBuffer[ci+3] = mAlpha;
 }
 
 void Particle::updateBillboardsData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer, float* texcoordBuffer) const 
 {
 	int vi = i * 8;
-	posBuffer[vi++] = mPosition.x - mRadius;
-	posBuffer[vi++] = mPosition.y - mRadius;
-	posBuffer[vi++] = mPosition.x + mRadius;
-	posBuffer[vi++] = mPosition.y - mRadius;
-	posBuffer[vi++] = mPosition.x + mRadius;
-	posBuffer[vi++] = mPosition.y + mRadius;
-	posBuffer[vi++] = mPosition.x - mRadius;
-	posBuffer[vi++] = mPosition.y + mRadius;
+	float x1,x2,y1,y2;
+	x1 = mPosition.x - mRadius;
+	x2 = mPosition.x + mRadius;
+	y1 = mPosition.y - mRadius;
+	y2 = mPosition.y + mRadius;
+	posBuffer[vi] = x1;
+	posBuffer[vi+1] = y1;
+	posBuffer[vi+2] = x2;
+	posBuffer[vi+3] = y1;
+	posBuffer[vi+4] = x2;
+	posBuffer[vi+5] = y2;
+	posBuffer[vi+6] = x1;
+	posBuffer[vi+7] = y2;
 	
 	int ti = i * 8;
-	texcoordBuffer[ti++] = 0;
-	texcoordBuffer[ti++] = 0;
-	texcoordBuffer[ti++] = 1.0;
-	texcoordBuffer[ti++] = 0;
-	texcoordBuffer[ti++] = 1.0;
-	texcoordBuffer[ti++] = 1.0;
-	texcoordBuffer[ti++] = 0;
-	texcoordBuffer[ti++] = 1.0;
+	texcoordBuffer[ti] = 0;
+	texcoordBuffer[ti+1] = 0;
+	texcoordBuffer[ti+2] = 1.0;
+	texcoordBuffer[ti+3] = 0;
+	texcoordBuffer[ti+4] = 1.0;
+	texcoordBuffer[ti+5] = 1.0;
+	texcoordBuffer[ti+6] = 0;
+	texcoordBuffer[ti+7] = 1.0;
 	
 	int ci = i * 16;
-	float alphaPer = (1.0 - mAlpha) / 1.01;
-	float r = 1.0f - alphaPer;
-	float g = r * 0.75f;
-	float b = 1.0f - r;
-	
-	colBuffer[ci++] = r;
-	colBuffer[ci++] = g;
-	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+	colBuffer[ci++] = mAlpha * 0.5f;
+	colBuffer[ci++] = 1.0 - mAlpha;
 	colBuffer[ci++] = mAlpha;
 	
-	colBuffer[ci++] = r;
-	colBuffer[ci++] = g;
-	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+	colBuffer[ci++] = mAlpha * 0.5f;
+	colBuffer[ci++] = 1.0 - mAlpha;
 	colBuffer[ci++] = mAlpha;
 	
-	colBuffer[ci++] = r;
-	colBuffer[ci++] = g;
-	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+	colBuffer[ci++] = mAlpha * 0.5f;
+	colBuffer[ci++] = 1.0 - mAlpha;
 	colBuffer[ci++] = mAlpha;
 	
-	colBuffer[ci++] = r;
-	colBuffer[ci++] = g;
-	colBuffer[ci++] = b;
+	colBuffer[ci++] = mAlpha;
+	colBuffer[ci++] = mAlpha * 0.5f;
+	colBuffer[ci++] = 1.0 - mAlpha;
 	colBuffer[ci++] = mAlpha;
 }
 
@@ -149,36 +136,19 @@ void Particle::updateBillboardsData( const Vec2f &invWindowSize, int i, float* p
 void Particle::updateLinesData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const 
 {
 	int vi = i * 4;
-	posBuffer[vi++] = mPosition.x - mVelocity.x;
-	posBuffer[vi++] = mPosition.y - mVelocity.y;
-	posBuffer[vi++] = mPosition.x;
-	posBuffer[vi++] = mPosition.y;
+	posBuffer[vi] = mPosition.x - mVelocity.x;
+	posBuffer[vi+1] = mPosition.y - mVelocity.y;
+	posBuffer[vi+2] = mPosition.x;
+	posBuffer[vi+3] = mPosition.y;
 	
 	int ci = i * 8;
-	if( false ) {
-		// if drawing fluid, draw lines as black & white
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = mAlpha;
-	}
-	else {
-		float alphaPer = (1.0 - mAlpha) / 1.01;
-		float r = 1.0f - alphaPer;
-		float g = r * 0.55f;
-		float b = 1.0f - r;
-
-		colBuffer[ci++] = r;
-		colBuffer[ci++] = g;
-		colBuffer[ci++] = b;
-		colBuffer[ci++] = mAlpha;
-		colBuffer[ci++] = r;
-		colBuffer[ci++] = g;
-		colBuffer[ci++] = b;
-		colBuffer[ci++] = mAlpha;
-	}
+	colBuffer[ci] = mAlpha;
+	colBuffer[ci+1] = mAlpha * 0.5f;
+	colBuffer[ci+2] = 1.0 - mAlpha;
+	colBuffer[ci+3] = mAlpha;
+	
+	colBuffer[ci+4] = mAlpha;
+	colBuffer[ci+5] = mAlpha * 0.5f;
+	colBuffer[ci+6] = 1.0 - mAlpha;
+	colBuffer[ci+7] = mAlpha;
 }
