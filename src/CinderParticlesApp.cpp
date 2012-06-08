@@ -13,11 +13,11 @@ void CinderParticlesApp::setup()
 	mParticleSystem = NULL;
 	mBlurX = mBlurY = NULL;
 	mEnableGaussianBlur = mMouseDown = false;
-	setFrameRate( 60 );
-	
-	mParticleSystem = new ParticleSystem();
 
 	this->setWindowSize(1680,1080);
+	this->setFrameRate( 60 );
+	
+	mParticleSystem = new ParticleSystem();
 	
 	try {
 		mShader = new gl::GlslProg( loadResource( "../Resources/shaders/pass.vert" ), loadResource( "../Resources/shaders/blur.frag" ) );

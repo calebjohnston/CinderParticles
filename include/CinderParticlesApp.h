@@ -8,9 +8,6 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 
-using namespace ci;
-using namespace ci::app;
-
 /**
  * The CinderParticlesApp is a basic particle engine. Some of the 
  * implementation is based off of Memo's particle code. There are 
@@ -18,18 +15,18 @@ using namespace ci::app;
  * The rendering uses VBOs for the particle geometry.
  * FBOs can be used for custom post-processing.
  */
-class CinderParticlesApp : public AppBasic {
+class CinderParticlesApp : public ci::app::AppBasic {
 public:
 	void	setup();
 	void	update();
 	void	draw();	
-	void	addParticles( Vec2f pos, Vec2f vel );
-	void	keyDown( KeyEvent event );
-	void	mouseMove( MouseEvent event );
-	void	mouseDrag( MouseEvent event );
-	void	mouseDown( MouseEvent event );
-	void	mouseUp( MouseEvent event );
-	void	resize( ResizeEvent event );
+	void	addParticles( ci::Vec2f pos, ci::Vec2f vel );
+	void	keyDown( ci::app::KeyEvent event );
+	void	mouseMove( ci::app::MouseEvent event );
+	void	mouseDrag( ci::app::MouseEvent event );
+	void	mouseDown( ci::app::MouseEvent event );
+	void	mouseUp( ci::app::MouseEvent event );
+	void	resize( ci::app::ResizeEvent event );
 
 private:
 	ParticleSystem*				mParticleSystem;
