@@ -63,7 +63,7 @@ void CinderMultiParticlesApp::setup()
 
 void CinderMultiParticlesApp::update()
 {
-	mParticleSystem->computeRandomVectors();
+	mParticleSystem->computeRandomVectors(15.5f, 2.5f);
 }
 
 void CinderMultiParticlesApp::draw()

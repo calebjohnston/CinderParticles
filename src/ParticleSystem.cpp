@@ -276,7 +276,7 @@ void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, unsigned 
 void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel )
 {
 	for(unsigned int i=0; i<mParticleRate; i++){
-		addParticle( pos + mParticleRandomPos[i], vel * mParticleRandomVel[i]);
+		addParticle( pos + mParticleRandomPos[i], vel * mParticleRandomVel[i].y);
 	}
 }
 
