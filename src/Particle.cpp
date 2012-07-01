@@ -45,7 +45,7 @@ void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize )
 	mPosition.y += mVelocity.y;
 	
 	// fade out...
-	mAlpha -= 0.005;
+	mAlpha -= 0.01;
 }
 
 void Particle::updatePointsData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const 

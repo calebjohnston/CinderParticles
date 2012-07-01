@@ -7,7 +7,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 250000
+#define MAX_PARTICLES 150000
 
 using namespace ci;
 
@@ -55,15 +55,17 @@ void ParticleSystem::setMode(Rendering mode)
 	switch(mRenderType){
 		case POINTS:
 			mMaxParticles = MAX_PARTICLES;
-			mParticleRate = mMaxParticles/100;
+			mParticleRate = 750;
 			break;
 		case LINES:
 			mMaxParticles = (int) MAX_PARTICLES / 2;
 			mParticleRate = 400;
 			break;
 		case SPRITES:
-			mMaxParticles = (int) MAX_PARTICLES / 4;
-			mParticleRate = 300;
+			mMaxParticles = MAX_PARTICLES;
+			mParticleRate = 750;
+//			mMaxParticles = (int) MAX_PARTICLES / 4;
+//			mParticleRate = 200;
 			break;
 		default:
 		case NONE:
@@ -113,6 +115,7 @@ void ParticleSystem::threaded_update(const unsigned int start_index, const unsig
 {
 	boost::unique_lock<boost::shared_mutex> lock(mMutex);
 	std::cout << "id = " << id << ", start_index = " << start_index << ", end_index = " << end_index << std::endl;
+	mThreadCompleted.push_back(false);
 	lock.unlock();
 	
 	CinderMultiParticlesApp* application = (CinderMultiParticlesApp*) app::App::get();
@@ -140,13 +143,18 @@ void ParticleSystem::threaded_update(const unsigned int start_index, const unsig
 	}
 }
 
+void ParticleSystem::computeRandomVectors(const float pos_var, const float vel_var)
+{
+	for(unsigned int i=0; i<mParticleRate; i++){
+		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(pos_var);
+		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(vel_var);
+	}
+}
+
 void ParticleSystem::update()
 {	
-	for(unsigned int i=0; i<mParticleRate; i++){
-		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(15.5);
-		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(5.0);
-	}
-	/*
+	this->computeRandomVectors();
+	
 	if(mRenderType == LINES){
 		for(int i=0; i<this->mMaxParticles; i++) {
 			if(mParticles[i].alpha() > 0) {
@@ -163,20 +171,18 @@ void ParticleSystem::update()
 			}
 		}
 	}
-	*/
-	mThreadCompleted[0] = true;
-	mThreadCompleted[1] = true;
-	mThreadCompleted[2] = true;
-	mThreadCompleted[3] = true;
+	
+	for(int i=0; i<mThreadCompleted.size(); i++) {
+		mThreadCompleted[i] = true;
+	}
 }
 
 void ParticleSystem::draw()
 {	
 	bool keep_going = true;
-	keep_going = keep_going && mThreadCompleted[0];
-	keep_going = keep_going && mThreadCompleted[1];
-	keep_going = keep_going && mThreadCompleted[2];
-	keep_going = keep_going && mThreadCompleted[3];
+	for(int i=0; i<mThreadCompleted.size(); i++) {
+		keep_going = keep_going && mThreadCompleted[i];
+	}
 	if(!keep_going) return;
 	
 	if(mRenderType == LINES){
@@ -253,29 +259,30 @@ void ParticleSystem::draw()
 		glDisable(GL_BLEND);
 	}
 	
-	mThreadCompleted[0] = false;
-	mThreadCompleted[1] = false;
-	mThreadCompleted[2] = false;
-	mThreadCompleted[3] = false;
+	for(int i=0; i<mThreadCompleted.size(); i++) {
+		mThreadCompleted[i] = false;
+	}
 }
 
 
-void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, unsigned int count ){
+void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, unsigned int count )
+{
 	for(unsigned int i=0; i<count; i++){
-		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
+		addParticle( pos + mParticleRandomPos[i], vel * mParticleRandomVel[i]);
 	}
 }
 
 
-void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel ){
+void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel )
+{
 	for(unsigned int i=0; i<mParticleRate; i++){
-		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
-//		addParticle( pos + mParticleRandomPos[i], vel + mParticleRandomVel[i]);
+		addParticle( pos + mParticleRandomPos[i], vel * mParticleRandomVel[i]);
 	}
 }
 
 
-void ParticleSystem::addParticle( const Vec2f &pos, const Vec2f &vel ) {
+void ParticleSystem::addParticle( const Vec2f &pos, const Vec2f &vel )
+{
 	mParticles[mCurrentIndex].init( pos.x, pos.y, vel.x, vel.y );
 	mCurrentIndex++;
 	if(mCurrentIndex >= this->mMaxParticles){

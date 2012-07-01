@@ -49,7 +49,7 @@ void CinderMultiParticlesApp::setup()
 	
 	gl::enableAdditiveBlending();
 	
-	int core_count = System::getNumCores() - 1;	// better to stick with 3 threads (+1 for master)
+	int core_count = System::getNumCores() - 2;	// better to stick with 3 threads (+1 for master)
 	mRunning = true;
 	unsigned int workload_size = mParticleSystem->getMaxParticles() / core_count;
 	unsigned int start_index, end_index;
@@ -61,14 +61,9 @@ void CinderMultiParticlesApp::setup()
 	}
 }
 
-void CinderMultiParticlesApp::addParticles( Vec2f pos, Vec2f vel )
-{
-	mParticleSystem->addParticles( pos, vel );
-}
-
 void CinderMultiParticlesApp::update()
-{	
-	mParticleSystem->update();
+{
+	mParticleSystem->computeRandomVectors();
 }
 
 void CinderMultiParticlesApp::draw()
@@ -174,9 +169,9 @@ void CinderMultiParticlesApp::mouseUp( MouseEvent event )
 void CinderMultiParticlesApp::mouseDrag( MouseEvent event )
 {
 	Vec2f mouseNorm = Vec2f( event.getPos() );
-	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.05f;
+	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.25f;
 	pMouse = event.getPos();
-	this->addParticles(mouseNorm, mouseVel);
+	mParticleSystem->addParticles(mouseNorm, mouseVel);
 }
 
 CINDER_APP_BASIC( CinderMultiParticlesApp, RendererGl )
