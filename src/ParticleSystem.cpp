@@ -2,11 +2,12 @@
 #include "CinderMultiParticlesApp.h"
 
 #include "cinder/app/App.h"
+#include "cinder/Vector.h"
 #include "cinder/ImageIO.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 125000
+#define MAX_PARTICLES 200000
 
 using namespace ci;
 
@@ -84,6 +85,14 @@ void ParticleSystem::setMode(Rendering mode)
 	for(int i=0; i<this->mMaxParticles; i++) {
 		mParticles[i] = Particle();
 	}
+	
+	// populate random number lists
+	mParticleRandomPos = (ci::Vec2f*) malloc(sizeof(ci::Vec2f) * mParticleRate);
+	mParticleRandomVel = (ci::Vec2f*) malloc(sizeof(ci::Vec2f) * mParticleRate);
+	for(unsigned int i=0; i<mParticleRate; i++){
+		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(15.5);
+		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(5.0);
+	}
 }
 
 ParticleSystem::~ParticleSystem() 
@@ -133,6 +142,11 @@ void ParticleSystem::threaded_update(const unsigned int start_index, const unsig
 
 void ParticleSystem::update()
 {	
+	for(unsigned int i=0; i<mParticleRate; i++){
+		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(15.5);
+		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(5.0);
+	}
+	
 	if(mRenderType == LINES){
 		for(int i=0; i<this->mMaxParticles; i++) {
 			if(mParticles[i].alpha() > 0) {
@@ -255,7 +269,8 @@ void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, unsigned 
 
 void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel ){
 	for(unsigned int i=0; i<mParticleRate; i++){
-		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
+//		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
+		addParticle( pos + mParticleRandomPos[i], vel + mParticleRandomVel[i]);
 	}
 }
 

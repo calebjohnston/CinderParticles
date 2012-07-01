@@ -53,6 +53,8 @@ protected:
 	int			mMaxParticles;
 	int			mParticleRate;
 	int			mCurrentIndex;
+	ci::Vec2f*	mParticleRandomPos;
+	ci::Vec2f*	mParticleRandomVel;
 	
 	bool		mThreadCompleted[4];
 	boost::shared_mutex mMutex;

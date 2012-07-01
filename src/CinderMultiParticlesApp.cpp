@@ -25,7 +25,7 @@ void CinderMultiParticlesApp::setup()
 	mEnableGaussianBlur = mMouseDown = mRunning = false;
 
 	this->setWindowSize(1680,1080);
-	this->setFrameRate( 60 );
+	this->setFrameRate(60);
 	
 	mParticleSystem = new ParticleSystem();
 	
@@ -174,7 +174,7 @@ void CinderMultiParticlesApp::mouseUp( MouseEvent event )
 void CinderMultiParticlesApp::mouseDrag( MouseEvent event )
 {
 	Vec2f mouseNorm = Vec2f( event.getPos() );
-	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.5f;
+	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.05f;
 	pMouse = event.getPos();
 	this->addParticles(mouseNorm, mouseVel);
 }
