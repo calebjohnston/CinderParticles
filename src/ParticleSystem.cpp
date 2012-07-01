@@ -142,11 +142,6 @@ void ParticleSystem::threaded_update(const unsigned int start_index, const unsig
 
 void ParticleSystem::update()
 {	
-	for(unsigned int i=0; i<mParticleRate; i++){
-		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(15.5);
-		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(5.0);
-	}
-	
 	if(mRenderType == LINES){
 		for(int i=0; i<this->mMaxParticles; i++) {
 			if(mParticles[i].alpha() > 0) {
