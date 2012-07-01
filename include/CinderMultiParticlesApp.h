@@ -38,11 +38,13 @@ private:
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
+	ci::gl::Fbo*				mFade;
 	ci::params::InterfaceGl*	mParams;
 	std::vector<std::thread*>	mThreads;
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;
 	bool						mEnableGaussianBlur;
+	bool						mEnableFade;
 	bool						mRunning;
 };

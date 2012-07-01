@@ -18,7 +18,7 @@ public:
 	void threaded_update(const unsigned int start_index, const unsigned int end_index, const int id);
 	
 	/** Computes a set of random vectors. Intended to be used once per update step */
-	void computeRandomVectors(const float pos_var = 15.0f, const float vel_var = 5.0f);
+	void computeRandomVectors(const float pos_var = 15.0f, const float vel_var = 5.0f, const float scale = 1.0f);
 	
 	/** Cinder draw callback */
 	void draw();
@@ -58,6 +58,7 @@ protected:
 	int			mCurrentIndex;
 	ci::Vec2f*	mParticleRandomPos;
 	ci::Vec2f*	mParticleRandomVel;
+	float*		mParticleRandomFactor;
 	
 	std::vector<bool>	mThreadCompleted;
 	boost::shared_mutex	mMutex;

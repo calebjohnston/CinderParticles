@@ -62,10 +62,8 @@ void ParticleSystem::setMode(Rendering mode)
 			mParticleRate = 400;
 			break;
 		case SPRITES:
-			mMaxParticles = MAX_PARTICLES;
-			mParticleRate = 750;
-//			mMaxParticles = (int) MAX_PARTICLES / 4;
-//			mParticleRate = 200;
+			mMaxParticles = (int) MAX_PARTICLES / 4;
+			mParticleRate = 200;
 			break;
 		default:
 		case NONE:
@@ -91,10 +89,9 @@ void ParticleSystem::setMode(Rendering mode)
 	// populate random number lists
 	mParticleRandomPos = (ci::Vec2f*) malloc(sizeof(ci::Vec2f) * mParticleRate);
 	mParticleRandomVel = (ci::Vec2f*) malloc(sizeof(ci::Vec2f) * mParticleRate);
-	for(unsigned int i=0; i<mParticleRate; i++){
-		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(15.5);
-		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(5.0);
-	}
+	mParticleRandomFactor = (float*) malloc(sizeof(float) * mParticleRate);
+	
+	this->computeRandomVectors(15.0f, 5.0f, 2.5f);
 }
 
 ParticleSystem::~ParticleSystem() 
@@ -143,11 +140,12 @@ void ParticleSystem::threaded_update(const unsigned int start_index, const unsig
 	}
 }
 
-void ParticleSystem::computeRandomVectors(const float pos_var, const float vel_var)
+void ParticleSystem::computeRandomVectors(const float pos_var, const float vel_var, const float scale)
 {
 	for(unsigned int i=0; i<mParticleRate; i++){
 		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(pos_var);
 		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(vel_var);
+		mParticleRandomFactor[i] = Rand::randFloat(scale);
 	}
 }
 
@@ -264,22 +262,19 @@ void ParticleSystem::draw()
 	}
 }
 
-
 void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, unsigned int count )
 {
 	for(unsigned int i=0; i<count; i++){
-		addParticle( pos + mParticleRandomPos[i], vel * mParticleRandomVel[i]);
+		addParticle( pos + mParticleRandomPos[i], vel + mParticleRandomVel[i]);
 	}
 }
-
 
 void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel )
 {
 	for(unsigned int i=0; i<mParticleRate; i++){
-		addParticle( pos + mParticleRandomPos[i], vel * mParticleRandomVel[i].y);
+		addParticle( pos + mParticleRandomPos[i], vel + mParticleRandomVel[i]);
 	}
 }
-
 
 void ParticleSystem::addParticle( const Vec2f &pos, const Vec2f &vel )
 {
