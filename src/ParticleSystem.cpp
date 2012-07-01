@@ -1,11 +1,12 @@
 #include "ParticleSystem.h"
+#include "CinderMultiParticlesApp.h"
 
+#include "cinder/app/App.h"
 #include "cinder/ImageIO.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
-#include "cinder/app/App.h"
 
-#define MAX_PARTICLES 160000
+#define MAX_PARTICLES 125000
 
 using namespace ci;
 
@@ -21,7 +22,7 @@ ParticleSystem::ParticleSystem()
 	mRenderType = NONE;	// mode starts unset
 	
 	// initialize data and set mode
-	this->setMode(POINTS);
+	this->setMode(LINES);
 	
 	setWindowSize(app::App::get()->getWindowSize());
 }
@@ -53,7 +54,7 @@ void ParticleSystem::setMode(Rendering mode)
 	switch(mRenderType){
 		case POINTS:
 			mMaxParticles = MAX_PARTICLES;
-			mParticleRate = 1000;
+			mParticleRate = mMaxParticles/100;
 			break;
 		case LINES:
 			mMaxParticles = (int) MAX_PARTICLES / 2;
@@ -99,8 +100,39 @@ void ParticleSystem::setWindowSize( const Vec2i &winSize )
 	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
 }
 
-void ParticleSystem::update()
+void ParticleSystem::threaded_update(const unsigned int start_index, const unsigned int end_index, const int id)
 {
+	boost::unique_lock<boost::shared_mutex> lock(mMutex);
+	std::cout << "id = " << id << ", start_index = " << start_index << ", end_index = " << end_index << std::endl;
+	lock.unlock();
+	
+	CinderMultiParticlesApp* application = (CinderMultiParticlesApp*) app::App::get();
+	while( application->running() ){
+		if(!mThreadCompleted[id]){
+			if(mRenderType == LINES){
+				for(int i=start_index; i<end_index; i++) {
+					if(mParticles[i].alpha() > 0) {
+						mParticles[i].update(mWindowSize, mInvWindowSize);
+						mParticles[i].updateLinesData(mInvWindowSize, i, mPositionArray, mColorArray);
+					}
+				}	
+			}
+			else{
+				for(int i=start_index; i<end_index; i++) {
+					if(mParticles[i].alpha() > 0) {
+						mParticles[i].update(mWindowSize, mInvWindowSize);
+						mParticles[i].updatePointsData(mInvWindowSize, i, mPositionArray, mColorArray);
+					}
+				}
+			}
+			
+			mThreadCompleted[id] = true;
+		}
+	}
+}
+
+void ParticleSystem::update()
+{	
 	if(mRenderType == LINES){
 		for(int i=0; i<this->mMaxParticles; i++) {
 			if(mParticles[i].alpha() > 0) {
@@ -117,10 +149,22 @@ void ParticleSystem::update()
 			}
 		}
 	}
+	
+	mThreadCompleted[0] = true;
+	mThreadCompleted[1] = true;
+	mThreadCompleted[2] = true;
+	mThreadCompleted[3] = true;
 }
 
 void ParticleSystem::draw()
-{
+{	
+	bool keep_going = true;
+	keep_going = keep_going && mThreadCompleted[0];
+	keep_going = keep_going && mThreadCompleted[1];
+	keep_going = keep_going && mThreadCompleted[2];
+	keep_going = keep_going && mThreadCompleted[3];
+	if(!keep_going) return;
+	
 	if(mRenderType == LINES){
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
@@ -194,6 +238,11 @@ void ParticleSystem::draw()
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
 	}
+	
+	mThreadCompleted[0] = false;
+	mThreadCompleted[1] = false;
+	mThreadCompleted[2] = false;
+	mThreadCompleted[3] = false;
 }
 
 

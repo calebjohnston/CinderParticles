@@ -1,9 +1,12 @@
 #pragma once
 
+#include <vector>
+
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/params/Params.h"
+#include "cinder/Thread.h"
 
 #include "Particle.h"
 #include "ParticleSystem.h"
@@ -15,8 +18,9 @@
  * The rendering uses VBOs for the particle geometry.
  * FBOs can be used for custom post-processing.
  */
-class CinderParticlesApp : public ci::app::AppBasic {
+class CinderMultiParticlesApp : public ci::app::AppBasic {
 public:
+	~CinderMultiParticlesApp();
 	void	setup();
 	void	update();
 	void	draw();	
@@ -35,6 +39,7 @@ private:
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
 	ci::params::InterfaceGl*	mParams;
+	std::vector<std::thread*>	mThreads;
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;

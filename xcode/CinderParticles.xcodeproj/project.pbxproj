@@ -16,6 +16,21 @@
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		00BAE65A0E7ED9C10018A608 /* CinderParticlesApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */; };
+		3C0FF79B159FDDCA004FF665 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
+		3C0FF79C159FDDCA004FF665 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEF157D312400EF2816 /* shaders */; };
+		3C0FF79F159FDDCA004FF665 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0026CD1A1197C25E007D86C6 /* Particle.cpp */; };
+		3C0FF7A0159FDDCA004FF665 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */; };
+		3C0FF7A2159FDDCA004FF665 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		3C0FF7A3159FDDCA004FF665 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		3C0FF7A4159FDDCA004FF665 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
+		3C0FF7A5159FDDCA004FF665 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		3C0FF7A6159FDDCA004FF665 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		3C0FF7A7159FDDCA004FF665 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0097E3E40F3E9819005A4392 /* QuickTime.framework */; };
+		3C0FF7A8159FDDCA004FF665 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		3C0FF7A9159FDDCA004FF665 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		3C0FF7AA159FDDCA004FF665 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		3C0FF7AB159FDDCA004FF665 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		3CBE4BFB159FDFE7009863EB /* CinderMultiParticlesApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */; };
 		4101ECF0157D312400EF2816 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
 		4101ECF1157D312400EF2816 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEF157D312400EF2816 /* shaders */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
@@ -41,6 +56,10 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderParticles_Prefix.pch; sourceTree = "<group>"; };
+		3C0FF7AF159FDDCA004FF665 /* CinderMultiParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CinderMultiParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CinderMultiParticles-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/CinderMultiParticles-Info.plist"; sourceTree = "<absolute>"; };
+		3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinderMultiParticlesApp.h; path = ../include/CinderMultiParticlesApp.h; sourceTree = "<group>"; };
+		3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CinderMultiParticlesApp.cpp; path = ../src/CinderMultiParticlesApp.cpp; sourceTree = "<group>"; };
 		4101ECEC157D297200EF2816 /* CinderParticlesApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CinderParticlesApp.h; path = ../include/CinderParticlesApp.h; sourceTree = "<group>"; };
 		4101ECEE157D312400EF2816 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../resources/images; sourceTree = "<group>"; };
 		4101ECEF157D312400EF2816 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = ../resources/shaders; sourceTree = "<group>"; };
@@ -52,6 +71,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3C0FF7A1159FDDCA004FF665 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C0FF7A2159FDDCA004FF665 /* Cocoa.framework in Frameworks */,
+				3C0FF7A3159FDDCA004FF665 /* OpenGL.framework in Frameworks */,
+				3C0FF7A4159FDDCA004FF665 /* Carbon.framework in Frameworks */,
+				3C0FF7A5159FDDCA004FF665 /* CoreVideo.framework in Frameworks */,
+				3C0FF7A6159FDDCA004FF665 /* QTKit.framework in Frameworks */,
+				3C0FF7A7159FDDCA004FF665 /* QuickTime.framework in Frameworks */,
+				3C0FF7A8159FDDCA004FF665 /* Accelerate.framework in Frameworks */,
+				3C0FF7A9159FDDCA004FF665 /* AudioToolbox.framework in Frameworks */,
+				3C0FF7AA159FDDCA004FF665 /* AudioUnit.framework in Frameworks */,
+				3C0FF7AB159FDDCA004FF665 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -78,6 +114,7 @@
 				0026CD1A1197C25E007D86C6 /* Particle.cpp */,
 				0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */,
 				00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */,
+				3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -113,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* CinderParticles.app */,
+				3C0FF7AF159FDDCA004FF665 /* CinderMultiParticles.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,6 +163,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */,
 			);
 			name = msaFluidParticles;
 			sourceTree = "<group>";
@@ -132,10 +171,11 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */,
 				0026CD201197C267007D86C6 /* Particle.h */,
 				0026CD211197C267007D86C6 /* ParticleSystem.h */,
-				32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */,
 				4101ECEC157D297200EF2816 /* CinderParticlesApp.h */,
+				3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -162,6 +202,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3C0FF799159FDDCA004FF665 /* CinderMultiParticles */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C0FF7AC159FDDCA004FF665 /* Build configuration list for PBXNativeTarget "CinderMultiParticles" */;
+			buildPhases = (
+				3C0FF79A159FDDCA004FF665 /* Resources */,
+				3C0FF79D159FDDCA004FF665 /* Sources */,
+				3C0FF7A1159FDDCA004FF665 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CinderMultiParticles;
+			productInstallPath = "$(HOME)/Applications";
+			productName = msaFluidParticles;
+			productReference = 3C0FF7AF159FDDCA004FF665 /* CinderMultiParticles.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8D1107260486CEB800E47090 /* CinderParticles */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "CinderParticles" */;
@@ -200,11 +258,21 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* CinderParticles */,
+				3C0FF799159FDDCA004FF665 /* CinderMultiParticles */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3C0FF79A159FDDCA004FF665 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C0FF79B159FDDCA004FF665 /* images in Resources */,
+				3C0FF79C159FDDCA004FF665 /* shaders in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,6 +285,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3C0FF79D159FDDCA004FF665 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C0FF79F159FDDCA004FF665 /* Particle.cpp in Sources */,
+				3C0FF7A0159FDDCA004FF665 /* ParticleSystem.cpp in Sources */,
+				3CBE4BFB159FDFE7009863EB /* CinderMultiParticlesApp.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,6 +308,56 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		3C0FF7AD159FDDCA004FF665 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CinderParticles_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_UNROLL_LOOPS = NO;
+				INFOPLIST_FILE = "CinderMultiParticles-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"$(CINDER_PATH)/lib/libcinder_d.a",
+					"-lcurl",
+				);
+				PRODUCT_NAME = CinderMultiParticles;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		3C0FF7AE159FDDCA004FF665 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CinderParticles_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_UNROLL_LOOPS = YES;
+				INFOPLIST_FILE = "CinderMultiParticles-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"$(CINDER_PATH)/lib/libcinder.a",
+					"-lcurl",
+				);
+				PRODUCT_NAME = CinderMultiParticles;
+				STRIP_INSTALLED_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -285,7 +413,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../Cinder;
+				CINDER_PATH = ../../Cinder/cinder;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;
@@ -300,7 +428,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
-				CINDER_PATH = ../../Cinder;
+				CINDER_PATH = ../../Cinder/cinder;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;
@@ -313,6 +441,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3C0FF7AC159FDDCA004FF665 /* Build configuration list for PBXNativeTarget "CinderMultiParticles" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C0FF7AD159FDDCA004FF665 /* Debug */,
+				3C0FF7AE159FDDCA004FF665 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "CinderParticles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
