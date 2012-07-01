@@ -113,7 +113,9 @@ void CinderMultiParticlesApp::draw()
 		mFade->bindTexture(GL_TEXTURE_2D, 0);
 		gl::draw(mFade->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
 		mFade->unbindTexture();
-		gl::color(0.25f,0.25f,0.25f,1.0f);
+		
+		gl::enableAlphaBlending();
+		gl::color(0,0,0,0.5f);
 		gl::drawSolidRect(Rectf(0,0,getWindowWidth(),getWindowHeight()));
 	}
 	else if(!mEnableGaussianBlur){
