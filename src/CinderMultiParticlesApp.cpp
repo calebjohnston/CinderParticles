@@ -49,7 +49,7 @@ void CinderMultiParticlesApp::setup()
 	
 	gl::enableAdditiveBlending();
 	
-	int core_count = 2;//System::getNumCores() - 1;	// better to stick with 3 threads (+1 for master)
+	int core_count = System::getNumCores() - 1;	// better to stick with 3 threads (+1 for master)
 	mRunning = true;
 	unsigned int workload_size = mParticleSystem->getMaxParticles() / core_count;
 	unsigned int start_index, end_index;

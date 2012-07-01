@@ -7,7 +7,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 200000
+#define MAX_PARTICLES 250000
 
 using namespace ci;
 
@@ -142,6 +142,11 @@ void ParticleSystem::threaded_update(const unsigned int start_index, const unsig
 
 void ParticleSystem::update()
 {	
+	for(unsigned int i=0; i<mParticleRate; i++){
+		mParticleRandomPos[i] = Rand::randVec2f() * Rand::randFloat(15.5);
+		mParticleRandomVel[i] = Rand::randVec2f() * Rand::randFloat(5.0);
+	}
+	/*
 	if(mRenderType == LINES){
 		for(int i=0; i<this->mMaxParticles; i++) {
 			if(mParticles[i].alpha() > 0) {
@@ -158,7 +163,7 @@ void ParticleSystem::update()
 			}
 		}
 	}
-	
+	*/
 	mThreadCompleted[0] = true;
 	mThreadCompleted[1] = true;
 	mThreadCompleted[2] = true;
@@ -264,8 +269,8 @@ void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel, unsigned 
 
 void ParticleSystem::addParticles( const Vec2f &pos, const Vec2f &vel ){
 	for(unsigned int i=0; i<mParticleRate; i++){
-//		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
-		addParticle( pos + mParticleRandomPos[i], vel + mParticleRandomVel[i]);
+		addParticle( pos + Rand::randVec2f() * Rand::randFloat(15.0), vel + Rand::randVec2f() * Rand::randFloat(5.0) );
+//		addParticle( pos + mParticleRandomPos[i], vel + mParticleRandomVel[i]);
 	}
 }
 
