@@ -5,6 +5,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Fbo.h"
+#include "cinder/gl/Texture.h"
 #include "cinder/params/Params.h"
 #include "cinder/Thread.h"
 
@@ -39,6 +40,7 @@ private:
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
 	ci::gl::Fbo*				mFade;
+	ci::gl::Texture*			mFadeTexture;
 	ci::params::InterfaceGl*	mParams;
 	std::vector<std::thread*>	mThreads;
 	
