@@ -1,6 +1,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/System.h"
 #include "cinder/Rand.h"
+#include "cinder/Xml.h"
 
 #include "CinderMultiParticlesApp.h"
 
@@ -22,11 +23,11 @@ void CinderMultiParticlesApp::setup()
 	mShader = NULL;
 	mParticleSystem = NULL;
 	mBlurX = mBlurY = mFade = NULL;
-	mFadeTexture = NULL;
 	mEnableGaussianBlur = mEnableFade = mMouseDown = mRunning = false;
 
 	this->setWindowSize(1680,1080);
 	this->setFrameRate(60);
+	this->setWindowPos(0, 60);
 	
 	mParticleSystem = new ParticleSystem();
 	
@@ -49,8 +50,7 @@ void CinderMultiParticlesApp::setup()
 	pMouse = getWindowCenter();
 	
 	gl::enableAdditiveBlending();
-	
-	int core_count = System::getNumCores() - 2;	// better to stick with 3 threads (+1 for master)
+	int core_count = System::getNumCores() - 1;	// better to stick with 3 threads (+1 for master)
 	mRunning = true;
 	unsigned int workload_size = mParticleSystem->getMaxParticles() / core_count;
 	unsigned int start_index, end_index;
@@ -74,7 +74,7 @@ void CinderMultiParticlesApp::draw()
 		gl::clear();
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
 		mFade->bindTexture(GL_TEXTURE_2D, 0);
-		gl::color(0.85f,0.85f,0.85f,0.85f);
+		gl::color(0.91f,0.80f,0.88f,1.0f);
 		gl::draw(mFade->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
 		mFade->unbindTexture();
 		gl::color( ColorA::white() );
@@ -83,7 +83,7 @@ void CinderMultiParticlesApp::draw()
 		Area inverted = mFade->getBounds();
 		inverted.setY1(gl::getViewport().getY2());
 		inverted.setY2(gl::getViewport().getY1());
-		mFade->blitFromScreen(mFade->getBounds(), inverted);
+		mFade->blitFromScreen(mFade->getBounds(), inverted, GL_NEAREST, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 	else if(!mEnableGaussianBlur){
 		gl::clear();
@@ -157,16 +157,9 @@ void CinderMultiParticlesApp::resize( ResizeEvent event )
 	mBlurY = new gl::Fbo(w, h, format);
 	mFade = new gl::Fbo(w, h, format);
 	
-	
 	mFade->bindFramebuffer();
 	gl::clear();
-	gl::color( ColorA::white() );
 	mFade->unbindFramebuffer();
-	
-	gl::Texture::Format f;
-	f.setWrap(GL_CLAMP,GL_CLAMP);
-	f.setInternalFormat(GL_RGBA);
-	mFadeTexture = new gl::Texture(w, h, f);
 }
 
 void CinderMultiParticlesApp::keyDown( KeyEvent event )
@@ -180,6 +173,9 @@ void CinderMultiParticlesApp::keyDown( KeyEvent event )
 			break;
 		case 'b':
 			mEnableGaussianBlur = !mEnableGaussianBlur;
+			break;
+		case 's':
+			writeImage( getHomeDirectory() / "cinder" / "particles" / ("snapshot-" + toString( this->getElapsedFrames() ) + ".png" ), copyWindowSurface() );
 			break;
     }
 }

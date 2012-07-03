@@ -7,7 +7,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 300000
+#define MAX_PARTICLES 100000
 
 using namespace ci;
 
@@ -59,7 +59,7 @@ void ParticleSystem::setMode(Rendering mode)
 			break;
 		case LINES:
 			mMaxParticles = (int) MAX_PARTICLES / 2;
-			mParticleRate = 700;
+			mParticleRate = 400;
 			break;
 		case SPRITES:
 			mMaxParticles = (int) MAX_PARTICLES / 4;

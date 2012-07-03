@@ -38,7 +38,7 @@ void Particle::init( float x, float y, float u, float v )
 void Particle::update( const Vec2f &windowSize, const Vec2f &invWindowSize )
 {
 	// apply gravity (or not)
-//	mVelocity.y += 0.1;
+	mVelocity.y += 0.15;
 	
 	// integrate
 	mPosition.x += mVelocity.x;
