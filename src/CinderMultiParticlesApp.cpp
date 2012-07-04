@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "cinder/app/AppBasic.h"
 #include "cinder/System.h"
 #include "cinder/Rand.h"
@@ -7,6 +9,10 @@
 
 using namespace ci;
 using namespace ci::app;
+
+static float _r = 0.0f;
+static float _g = 0.0f;
+static float _b = 0.0f;
 
 CinderMultiParticlesApp::~CinderMultiParticlesApp()
 {
@@ -26,7 +32,7 @@ void CinderMultiParticlesApp::setup()
 	mEnableGaussianBlur = mEnableFade = mMouseDown = mRunning = false;
 
 	this->setWindowSize(1680,1080);
-	this->setFrameRate(60);
+	this->setFrameRate(30);
 	this->setWindowPos(0, 60);
 	
 	mParticleSystem = new ParticleSystem();
@@ -50,7 +56,7 @@ void CinderMultiParticlesApp::setup()
 	pMouse = getWindowCenter();
 	
 	gl::enableAdditiveBlending();
-	int core_count = System::getNumCores() - 1;	// better to stick with 3 threads (+1 for master)
+	int core_count = System::getNumCores() - 2;	// better to stick with 3 threads (+1 for master)
 	mRunning = true;
 	unsigned int workload_size = mParticleSystem->getMaxParticles() / core_count;
 	unsigned int start_index, end_index;
@@ -74,7 +80,11 @@ void CinderMultiParticlesApp::draw()
 		gl::clear();
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
 		mFade->bindTexture(GL_TEXTURE_2D, 0);
-		gl::color(0.91f,0.80f,0.88f,1.0f);
+		_r = 0.95f - (0.5f * sin(this->getElapsedSeconds() + 5.5f) + 0.5f) * 0.1f;
+		_g = 0.95f - (0.5f * sin(this->getElapsedSeconds()) + 0.5f) * 0.1f;
+		_b = 0.95f - (0.5f * sin(this->getElapsedSeconds()) + 0.5f) * 0.1f;
+		gl::color(_r, _g, _b, 1.0f);
+//		gl::color(0.91f,0.80f,0.88f,1.0f);
 		gl::draw(mFade->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
 		mFade->unbindTexture();
 		gl::color( ColorA::white() );

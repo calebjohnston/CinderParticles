@@ -7,7 +7,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 100000
+#define MAX_PARTICLES 150000
 
 using namespace ci;
 
