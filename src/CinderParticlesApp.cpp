@@ -20,7 +20,7 @@ void CinderParticlesApp::setup()
 	mParticleSystem = new ParticleSystem();
 	
 	try {
-		mShader = new gl::GlslProg( loadResource( "../Resources/shaders/pass.vert" ), loadResource( "../Resources/shaders/blur.frag" ) );
+		mShader = new gl::GlslProg( app::loadAsset( "../Resources/shaders/pass.vert" ), app::loadAsset( "../Resources/shaders/blur.frag" ) );
 	}
 	catch( ci::gl::GlslProgCompileExc &exc ) {
 		console() << "Shader compile error: " << std::endl;
