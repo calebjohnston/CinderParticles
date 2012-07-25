@@ -10,7 +10,8 @@
 
 using namespace ci;
 
-SpriteSystem::SpriteSystem() 
+SpriteSystem::SpriteSystem(const unsigned int particles, const int threads = 0)
+ : ParticleSystem(particles, threads)
 {
 	mParticles = NULL;
 	mColorArray = NULL;
@@ -20,9 +21,9 @@ SpriteSystem::SpriteSystem()
 	
 	// allocate memory
 	try {
-		mParticles = (PointSprite*) calloc(sizeof(PointSprite), this->mMaxParticles);
-		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
-		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 8);
+		mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);
+		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2);
+		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
 	} catch(...) {
 		std::cout << "Unable to allocate data" << std::endl;
 	}
@@ -46,6 +47,7 @@ SpriteSystem::~SpriteSystem()
 	delete mParticles;
 	delete mColorArray;
 	delete mPositionArray;
+	delete mPointTexture;
 }
 
 void SpriteSystem::update()
@@ -56,16 +58,27 @@ void SpriteSystem::update()
 	mEmitter->update(*this);
 
 	// Update kernel(*this)
+	/*
+	for(int i=0; i<this->mMaxParticles; i++) {
+		if(mParticles[i].alpha() > 0) {
+			mParticles[i].update(mWindowSize, mInvWindowSize);
+			mParticles[i].updatePointsData(mInvWindowSize, i, mPositionArray, mColorArray);
+		}
+	}
+	*/
 }
 
 void SpriteSystem::draw()
 {	
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	glEnable(GL_LINE_SMOOTH);
-	glLineWidth(4.0);
+	
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, mPointTexture->getId());
+	glEnable(GL_POINT_SPRITE);
+	glTexEnvi(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
+	glPointSize(12.0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, mPositionArray);
@@ -73,8 +86,12 @@ void SpriteSystem::draw()
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(4, GL_FLOAT, 0, mColorArray);
 	
-	glDrawArrays(GL_LINES, 0, this->mMaxParticles * 2);
-
+	glDrawArrays(GL_POINTS, 0, this->mMaxParticles);
+	
+	glDisable(GL_POINT_SPRITE);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
+	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	
@@ -100,3 +117,5 @@ void Emitter::addParticles(const SpriteSystem& system, const Vec2f &pos, const V
 		}
 	}
 }
+
+#undef MAX_PARTICLES

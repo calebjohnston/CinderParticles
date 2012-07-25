@@ -11,7 +11,8 @@
 
 using namespace ci;
 
-LineSystem::LineSystem() 
+LineSystem::LineSystem(const unsigned int particles, const int threads = 0)
+ : ParticleSystem(particles, threads)
 {
 	mParticles = NULL;
 	mColorArray = NULL;
@@ -108,3 +109,5 @@ void Emitter::addParticles(const LineSystem& system, const Vec2f &pos, const Vec
 		}
 	}
 }
+
+#undef MAX_PARTICLES
