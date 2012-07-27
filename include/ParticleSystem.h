@@ -10,20 +10,24 @@
 class ParticleSystem {
 public:	
 	// Cstor initializes data
-	virtual ParticleSystem(const unsigned int particles, const int threads = 0);
+	ParticleSystem(const unsigned int particles, const int threads = 0);
 	virtual ~ParticleSystem();
 	
 	/** Cinder update callback */
-	virtual void update() = 0;
+	virtual void update();
 	
 	/** Cinder draw callback */
 	virtual void draw() = 0;
 	
 	/** Might need to refactor this... hmmmm */
-	virtual void updateKernel(const unsigned int start_index, const unsigned int end_index);
+	virtual void updateKernel(const unsigned int start_index, const unsigned int end_index) = 0;
 	
 	/** Might need to refactor this... hmmmm */
-	virtual void threaded_update(const unsigned int start_index, const unsigned int end_index, const int id);
+	virtual void spawnThread(const unsigned int start_index, const unsigned int end_index, const int id);
+	
+	/** methods to test the status of the threads */
+	void preDraw();
+	void postDraw();
 	
 	/** Accessor method for the total set of particles */
 	unsigned int getMaxParticles() const { return mMaxParticles; }

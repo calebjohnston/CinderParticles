@@ -17,7 +17,9 @@ void CinderParticlesApp::setup()
 	this->setWindowSize(1680,1080);
 	this->setFrameRate(60);
 	
-	mParticleSystem = new ParticleSystem();
+//	mParticleSystem = new ParticleSystem();
+	mLineSystem = new LineSystem();
+	mSpriteSystem = new SpriteSystem();
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset( "../Resources/shaders/pass.vert" ), app::loadAsset( "../Resources/shaders/blur.frag" ) );
@@ -42,16 +44,17 @@ void CinderParticlesApp::setup()
 
 void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 {
-	mParticleSystem->addParticles( pos, vel );
+//	mParticleSystem->addParticles( pos, vel );
 }
 
 void CinderParticlesApp::update()
 {	
-	mParticleSystem->update();
+//	mParticleSystem->update();
 }
 
 void CinderParticlesApp::draw()
 {
+/*
 	if(!mEnableGaussianBlur){
 		gl::clear();
 		gl::color( ColorA::white() );
@@ -96,15 +99,14 @@ void CinderParticlesApp::draw()
 		mBlurY->unbindTexture();
 		mShader->unbind();
 	}
-
-	if(mParams!=NULL) params::InterfaceGl::draw();
+*/
 }
 
 void CinderParticlesApp::resize( ResizeEvent event )
 {
 	int w = event.getWidth();
 	int h = event.getHeight();
-	mParticleSystem->setWindowSize( Vec2i( w, h ) );
+//	mParticleSystem->setWindowSize( Vec2i( w, h ) );
 	
 	// clean data
 	if(mBlurX != NULL) delete mBlurX;

@@ -5,8 +5,8 @@
 #include "cinder/gl/Fbo.h"
 #include "cinder/params/Params.h"
 
-#include "Particle.h"
-#include "ParticleSystem.h"
+#include "LineSystem.h"
+#include "SpriteSystem.h"
 
 /**
  * The CinderParticlesApp is a basic particle engine. Some of the 
@@ -30,14 +30,15 @@ public:
 	inline bool running() const { return mRunning; }
 
 private:
-	ParticleSystem*				mParticleSystem;
+	ParticleSystem*				mLineSystem;
+	ParticleSystem*				mSpriteSystem;
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
-	ci::params::InterfaceGl*	mParams;
+//	ci::params::InterfaceGl*	mParams;
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;
 	bool						mEnableGaussianBlur;
-	bool						mRunning;
+//	bool						mRunning;
 };
