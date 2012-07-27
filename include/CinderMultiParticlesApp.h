@@ -9,8 +9,8 @@
 #include "cinder/params/Params.h"
 #include "cinder/Thread.h"
 
-#include "Particle.h"
-#include "ParticleSystem.h"
+#include "LineSystem.h"
+#include "SpriteSystem.h"
 
 /**
  * The CinderParticlesApp is a basic particle engine. Some of the 
@@ -32,21 +32,20 @@ public:
 	void	mouseDown( ci::app::MouseEvent event );
 	void	mouseUp( ci::app::MouseEvent event );
 	void	resize( ci::app::ResizeEvent event );
-	inline bool running() const { return mRunning; }
 
 private:
-	ParticleSystem*				mParticleSystem;
+	ParticleSystem*				mLineSystem;
+	ParticleSystem*				mSpriteSystem;
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
 	ci::gl::Fbo*				mFade;
 	ci::gl::Texture*			mFadeTexture;
-	ci::params::InterfaceGl*	mParams;
+//	ci::params::InterfaceGl*	mParams;
 	std::vector<std::thread*>	mThreads;
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;
 	bool						mEnableGaussianBlur;
 	bool						mEnableFade;
-	bool						mRunning;
 };

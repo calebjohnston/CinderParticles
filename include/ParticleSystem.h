@@ -10,7 +10,7 @@
 class ParticleSystem {
 public:	
 	// Cstor initializes data
-	virtual ParticleSystem(const unsigned int particles, const int threads = 0);
+	ParticleSystem(const unsigned int particles, const int threads = 0);
 	virtual ~ParticleSystem();
 	
 	/** Cinder update callback */

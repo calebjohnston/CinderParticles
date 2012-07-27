@@ -9,12 +9,11 @@
 
 using namespace ci;
 
-LineSystem::LineSystem(const unsigned int particles, const int threads = 0) : ParticleSystem(particles, threads)
+LineSystem::LineSystem(const unsigned int particles, const int threads) : ParticleSystem(particles, threads)
 {
 	mParticles = NULL;
 	mColorArray = NULL;
 	mPositionArray = NULL;
-	mPointTexture = NULL;
 	
 	// allocate memory
 	try {
@@ -44,6 +43,11 @@ LineSystem::~LineSystem()
 	delete mParticles;
 	delete mColorArray;
 	delete mPositionArray;
+}
+
+void LineSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
+{
+	// nothing yet...
 }
 
 void LineSystem::update()
@@ -84,24 +88,3 @@ void LineSystem::draw()
 	
 	ParticleSystem::postDraw();
 }
-
-void Emitter::update(const LineSystem& system)
-{
-	Vec2f pos();
-	Vec2f vel();
-	this->addParticles(system, pos, vel);
-}
-
-// this needs to be updated (for multithreaded codes ???)
-void Emitter::addParticles(const LineSystem& system, const Vec2f &pos, const Vec2f &vel)
-{
-	for(unsigned int i=0; i<mParticleRate; i++){
-		system.mParticles[mCurrentIndex].init(pos.x, pos.y, vel.x, vel.y);
-		mCurrentIndex++;
-		if(mCurrentIndex >= system.mMaxParticles){
-			mCurrentIndex = 0;
-		}
-	}
-}
-
-#undef MAX_PARTICLES

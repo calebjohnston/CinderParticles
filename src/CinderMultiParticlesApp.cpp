@@ -10,26 +10,23 @@ using namespace ci::app;
 
 CinderMultiParticlesApp::~CinderMultiParticlesApp()
 {
-	mRunning = false;
-	
-	for(int i = 0; i < mThreads.size(); ++i){
-		mThreads.at(i)->join();
-	}
 }
 
 void CinderMultiParticlesApp::setup()
 {
-	mParams = NULL;
+//	mParams = NULL;
 	mShader = NULL;
-	mParticleSystem = NULL;
+//	mParticleSystem = NULL;
 	mBlurX = mBlurY = mFade = NULL;
-	mEnableGaussianBlur = mEnableFade = mMouseDown = mRunning = false;
+	mEnableGaussianBlur = mEnableFade = mMouseDown = false;
 
 	this->setWindowSize(1680,1080);
 	this->setFrameRate(60);
 	this->setWindowPos(0, 60);
 	
-	mParticleSystem = new ParticleSystem();
+//	mParticleSystem = new ParticleSystem();
+	mLineSystem = new LineSystem(50000);
+	mSpriteSystem = new SpriteSystem(50000);
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset( "../Resources/shaders/pass.vert" ), app::loadAsset( "../Resources/shaders/blur.frag" ) );
@@ -50,25 +47,16 @@ void CinderMultiParticlesApp::setup()
 	pMouse = getWindowCenter();
 	
 	gl::enableAdditiveBlending();
-	int core_count = System::getNumCores() - 1;	// better to stick with 3 threads (+1 for master)
-	mRunning = true;
-	unsigned int workload_size = mParticleSystem->getMaxParticles() / core_count;
-	unsigned int start_index, end_index;
-	for(int i = 0; i < core_count; ++i){
-		start_index = i * workload_size;
-		end_index = start_index + workload_size;
-		std::thread* t = new std::thread(boost::bind(&ParticleSystem::threaded_update, mParticleSystem, _1, _2, _3), start_index, end_index, i);
-		mThreads.push_back(t);
-	}
 }
 
 void CinderMultiParticlesApp::update()
 {
-	mParticleSystem->computeRandomVectors(15.5f, 5.5f);
+//	mParticleSystem->computeRandomVectors(15.5f, 5.5f);
 }
 
 void CinderMultiParticlesApp::draw()
 {
+	/*
 	if(mEnableFade){
 		// first
 		gl::clear();
@@ -129,15 +117,14 @@ void CinderMultiParticlesApp::draw()
 		mBlurY->unbindTexture();
 		mShader->unbind();
 	}
-
-	if(mParams!=NULL) params::InterfaceGl::draw();
+*/
 }
 
 void CinderMultiParticlesApp::resize( ResizeEvent event )
 {
 	int w = event.getWidth();
 	int h = event.getHeight();
-	mParticleSystem->setWindowSize( Vec2i( w, h ) );
+//	mParticleSystem->setWindowSize( Vec2i( w, h ) );
 	
 	// clean data
 	if(mBlurX != NULL) delete mBlurX;
@@ -175,7 +162,7 @@ void CinderMultiParticlesApp::keyDown( KeyEvent event )
 			mEnableGaussianBlur = !mEnableGaussianBlur;
 			break;
 		case 's':
-			//app::writeImage( getHomeDirectory() / "cinder" / "particles" / ("snapshot-" + toString( this->getElapsedFrames() ) + ".png" ), copyWindowSurface() );
+			// app::writeImage( getHomeDirectory() / "cinder" / "particles" / ("snapshot-" + toString( this->getElapsedFrames() ) + ".png" ), copyWindowSurface() );
 			break;
     }
 }
@@ -200,7 +187,7 @@ void CinderMultiParticlesApp::mouseDrag( MouseEvent event )
 	Vec2f mouseNorm = Vec2f( event.getPos() );
 	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.25f;
 	pMouse = event.getPos();
-	mParticleSystem->addParticles(mouseNorm, mouseVel);
+//	mParticleSystem->addParticles(mouseNorm, mouseVel);
 }
 
 CINDER_APP_BASIC( CinderMultiParticlesApp, RendererGl )

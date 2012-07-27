@@ -6,11 +6,13 @@
 #include "cinder/ImageIO.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
+#include "cinder/Thread.h"
 
 using namespace ci;
+using namespace ci::app;
 using namespace std;
 
-ParticleSystem::ParticleSystem(const unsigned int particles, const int threads = 0) : mMaxParticles(particles), mRunning(true)
+ParticleSystem::ParticleSystem(const unsigned int particles, const int threads) : mMaxParticles(particles), mRunning(true)
 {
 	mRunning = true;
 	if(threads <= 0){
@@ -56,7 +58,7 @@ void ParticleSystem::update()
 // 	}
 // }
 
-void ParticleSystem::launchThread(const unsigned int start_index, const unsigned int end_index, const int id)
+void ParticleSystem::spawnThread(const unsigned int start_index, const unsigned int end_index, const int id)
 {
 	boost::unique_lock<boost::shared_mutex> lock(mMutex);
 	mThreadCompleted.push_back(false);

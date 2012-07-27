@@ -2,6 +2,8 @@
 
 #include "NumberCache.h"
 
+using namespace ci;
+
 NumberCache::NumberCache()
 {}
 

@@ -4,14 +4,16 @@
 
 #include "ParticleSystem.h"
 
-class LinesSystem : public ParticleSystem {
+class LineSystem : public ParticleSystem {
 public:	
 	// Cstor initializes data
-	virtual LinesSystem(const unsigned int particles, const int threads = 0);
-	virtual ~LinesSystem();
+	LineSystem(const unsigned int particles, const int threads = 0);
+	virtual ~LineSystem();
 	
 	/** Cinder update callback */
 	virtual void update();
+	
+	virtual void updateKernel(const unsigned int start_index, const unsigned int end_index);
 	
 	/** Cinder draw callback */
 	virtual void draw();
@@ -42,15 +44,28 @@ public:
 		
 		ci::Vec2f getDirection() const { return mDirection; }
 		
-		void update(const LineSystem& system);
+		void update(const LineSystem& system)
+		{
+			this->addParticles(system, ci::Vec2f(0,0), ci::Vec2f(0,0));
+		}
 		
 	  protected:
-		void addParticles(const LineSystem& system, const Vec2f &pos, const Vec2f &vel);
+		void addParticles(const LineSystem& system, const ci::Vec2f &pos, const ci::Vec2f &vel)
+		{
+			for(unsigned int i=0; i<mParticleRate; i++){
+				system.mParticles[mCurrentIndex].init(pos.x, pos.y, vel.x, vel.y);
+				mCurrentIndex++;
+				if(mCurrentIndex >= system.mMaxParticles){
+					mCurrentIndex = 0;
+				}
+			}
+		}
 		
 		ci::Vec2f mPosition;
 		ci::Vec2f mDirection;
 		unsigned int mEmitterRate;
 		unsigned int mCurrentIndex;
+		unsigned int mParticleRate;
 		
 		friend class LineSystem;
 	};

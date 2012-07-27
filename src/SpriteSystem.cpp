@@ -6,26 +6,23 @@
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 500000
-
 using namespace ci;
 
-SpriteSystem::SpriteSystem(const unsigned int particles, const int threads = 0)
+SpriteSystem::SpriteSystem(const unsigned int particles, const int threads)
  : ParticleSystem(particles, threads)
 {
 	mParticles = NULL;
 	mColorArray = NULL;
 	mPositionArray = NULL;
 	mPointTexture = NULL;
-	mMaxParticles = (unsigned int) MAX_PARTICLES;
 	
 	// allocate memory
 	try {
-		mParticles = (Particle*) calloc(sizeof(Particle), this->mMaxParticles);
+		mParticles = (PointSprite*) calloc(sizeof(PointSprite), this->mMaxParticles);
 		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2);
 		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
 	} catch(...) {
-		std::cout << "Unable to allocate data" << std::endl;
+		ci::app::console() << "Unable to allocate data" << std::endl;
 	}
 	
 	// initialize particle list (prolly not necessary, we're using structs)
@@ -39,6 +36,13 @@ SpriteSystem::SpriteSystem(const unsigned int particles, const int threads = 0)
 	// this should be able to be passed in (and added maybe?)
 	mEmitter = new Emitter();
 	
+	gl::Texture::Format format;
+	format.enableMipmapping(true);
+	format.setWrap(GL_CLAMP,GL_CLAMP);
+	format.setMinFilter(GL_NEAREST);
+	format.setMagFilter(GL_NEAREST);
+//	mPointTexture = new gl::Texture( loadImage( app::App::get()->loadAsset("../Resources/images/particle-small.png") ), format );
+	
 	// setup NumberCache
 }
 
@@ -50,26 +54,26 @@ SpriteSystem::~SpriteSystem()
 	delete mPointTexture;
 }
 
+void SpriteSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
+{
+	// nothing yet...
+}
+
 void SpriteSystem::update()
 {	
 	//this->computeRandomVectors();	// update number cache
 	
 	// update from emitter
 	mEmitter->update(*this);
-
-	// Update kernel(*this)
-	/*
-	for(int i=0; i<this->mMaxParticles; i++) {
-		if(mParticles[i].alpha() > 0) {
-			mParticles[i].update(mWindowSize, mInvWindowSize);
-			mParticles[i].updatePointsData(mInvWindowSize, i, mPositionArray, mColorArray);
-		}
-	}
-	*/
+	
+	// executes compute kernel (or relies upon threads to do so)
+	ParticleSystem::update();
 }
 
 void SpriteSystem::draw()
 {	
+	ParticleSystem::preDraw();
+	
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -97,25 +101,6 @@ void SpriteSystem::draw()
 	
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+	
+	ParticleSystem::postDraw();
 }
-
-void Emitter::update(const SpriteSystem& system)
-{
-	Vec2f pos();
-	Vec2f vel();
-	this->addParticles(system, pos, vel);
-}
-
-// this needs to be updated (for multithreaded codes ???)
-void Emitter::addParticles(const SpriteSystem& system, const Vec2f &pos, const Vec2f &vel)
-{
-	for(unsigned int i=0; i<mParticleRate; i++){
-		system.mParticles[mCurrentIndex].init(pos.x, pos.y, vel.x, vel.y);
-		mCurrentIndex++;
-		if(mCurrentIndex >= system.mMaxParticles){
-			mCurrentIndex = 0;
-		}
-	}
-}
-
-#undef MAX_PARTICLES
