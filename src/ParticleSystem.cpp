@@ -10,7 +10,6 @@
 
 using namespace ci;
 using namespace ci::app;
-using namespace std;
 
 ParticleSystem::ParticleSystem(const unsigned int particles, const int threads) : mMaxParticles(particles), mRunning(true)
 {
