@@ -17,16 +17,16 @@ public:
 	virtual void draw();
 	
 	struct Line2D {
-		float[2] position;
-		float[2] velocity;
+		ci::Vec2f position;
+		ci::Vec2f velocity;
 		float mass, alpha;
 		
 		void init(const float x = 0, const float y = 0, const float u = 0, const float v = 0, const float m = 1, const float a = 1)
 		{
-			position[0] = x;
-			position[1] = y;
-			velocity[0] = u;
-			velocity[1] = v;
+			position.x = x;
+			position.y = y;
+			velocity.x = u;
+			velocity.y = v;
 			mass = m;
 			alpha = a;
 		}

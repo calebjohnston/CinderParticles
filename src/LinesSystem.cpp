@@ -7,18 +7,14 @@
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 500000
-
 using namespace ci;
 
-LineSystem::LineSystem(const unsigned int particles, const int threads = 0)
- : ParticleSystem(particles, threads)
+LineSystem::LineSystem(const unsigned int particles, const int threads = 0) : ParticleSystem(particles, threads)
 {
 	mParticles = NULL;
 	mColorArray = NULL;
 	mPositionArray = NULL;
 	mPointTexture = NULL;
-	mMaxParticles = (unsigned int) MAX_PARTICLES;
 	
 	// allocate memory
 	try {
@@ -26,7 +22,7 @@ LineSystem::LineSystem(const unsigned int particles, const int threads = 0)
 		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
 		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 8);
 	} catch(...) {
-		std::cout << "Unable to allocate data" << std::endl;
+		ci::app::console() << "Unable to allocate data" << std::endl;
 	}
 	
 	// initialize particle list (prolly not necessary, we're using structs)
@@ -57,18 +53,14 @@ void LineSystem::update()
 	// update from emitter
 	mEmitter->update(*this);
 	
-	// for(int i=0; i<this->mMaxParticles; i++) {
-	// 	if(mParticles[i].alpha() > 0) {
-	// 		mParticles[i].update(mWindowSize, mInvWindowSize);
-	// 		mParticles[i].updateLinesData(mInvWindowSize, i, mPositionArray, mColorArray);
-	// 	}
-	// }
-	
-	// Update kernel(*this)
+	// executes compute kernel (or relies upon threads to do so)
+	ParticleSystem::update();
 }
 
 void LineSystem::draw()
 {	
+	ParticleSystem::preDraw();
+	
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_TEXTURE_2D);
@@ -89,6 +81,8 @@ void LineSystem::draw()
 	
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+	
+	ParticleSystem::postDraw();
 }
 
 void Emitter::update(const LineSystem& system)
