@@ -34,7 +34,11 @@ public:
 		}
 	};
 	
-	struct Emitter {
+	class Emitter {
+		Emitter(const unsigned int rate, const ci::Vec2f& pos, const ci::Vec2f& dir)
+		: mEmitterRate(rate), mPosition(pos), mDirection(dir), mCurrentIndex(0) {}
+		
+		~Emitter() {}
 		
 		void setPosition(const ci::Vec2f& pos) { mPosition = pos; }	
 		
@@ -46,13 +50,13 @@ public:
 		
 		void update(const LineSystem& system)
 		{
-			this->addParticles(system, ci::Vec2f(0,0), ci::Vec2f(0,0));
+			this->addParticles(system, mPosition, mDirection);
 		}
 		
 	  protected:
 		void addParticles(const LineSystem& system, const ci::Vec2f &pos, const ci::Vec2f &vel)
 		{
-			for(unsigned int i=0; i<mParticleRate; i++){
+			for(unsigned int i=0; i<mEmitterRate; i++){
 				system.mParticles[mCurrentIndex].init(pos.x, pos.y, vel.x, vel.y);
 				mCurrentIndex++;
 				if(mCurrentIndex >= system.mMaxParticles){
@@ -65,7 +69,6 @@ public:
 		ci::Vec2f mDirection;
 		unsigned int mEmitterRate;
 		unsigned int mCurrentIndex;
-		unsigned int mParticleRate;
 		
 		friend class LineSystem;
 	};

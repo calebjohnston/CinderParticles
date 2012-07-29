@@ -27,7 +27,6 @@ public:
 	void	mouseDown( ci::app::MouseEvent event );
 	void	mouseUp( ci::app::MouseEvent event );
 	void	resize( ci::app::ResizeEvent event );
-	inline bool running() const { return mRunning; }
 
 private:
 	ParticleSystem*				mLineSystem;

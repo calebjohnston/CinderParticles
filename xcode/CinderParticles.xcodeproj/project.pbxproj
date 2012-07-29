@@ -62,7 +62,7 @@
 		3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CinderMultiParticles-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/CinderMultiParticles-Info.plist"; sourceTree = "<absolute>"; };
 		3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinderMultiParticlesApp.h; path = ../include/CinderMultiParticlesApp.h; sourceTree = "<group>"; };
 		3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CinderMultiParticlesApp.cpp; path = ../src/CinderMultiParticlesApp.cpp; sourceTree = "<group>"; };
-		3CC9BB3315C251BD0017D3AE /* LineSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; name = LineSystem.h; path = ../include/LineSystem.h; sourceTree = "<group>"; };
+		3CC9BB3315C251BD0017D3AE /* LineSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineSystem.h; path = ../include/LineSystem.h; sourceTree = "<group>"; };
 		3CC9BB3415C251BD0017D3AE /* NumberCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NumberCache.h; path = ../include/NumberCache.h; sourceTree = "<group>"; };
 		3CC9BB3515C251BD0017D3AE /* SpriteSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteSystem.h; path = ../include/SpriteSystem.h; sourceTree = "<group>"; };
 		3CC9BB3615C251C90017D3AE /* LineSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LineSystem.cpp; path = ../src/LineSystem.cpp; sourceTree = "<group>"; };
@@ -181,10 +181,10 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */,
 				3CC9BB3315C251BD0017D3AE /* LineSystem.h */,
 				3CC9BB3415C251BD0017D3AE /* NumberCache.h */,
 				3CC9BB3515C251BD0017D3AE /* SpriteSystem.h */,
-				32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */,
 				0026CD211197C267007D86C6 /* ParticleSystem.h */,
 				4101ECEC157D297200EF2816 /* CinderParticlesApp.h */,
 				3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */,

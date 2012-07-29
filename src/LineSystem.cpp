@@ -24,6 +24,9 @@ LineSystem::LineSystem(const unsigned int particles, const int threads) : Partic
 		ci::app::console() << "Unable to allocate data" << std::endl;
 	}
 	
+//	size_t s = sizeof(Line2D);
+//	ci::app::console() << "Line2D is " << s << " bytes." << std::endl;
+	
 	// initialize particle list (prolly not necessary, we're using structs)
 	// for(int i=0; i<this->mMaxParticles; i++) {
 	// 	mParticles[i].init();
@@ -33,7 +36,7 @@ LineSystem::LineSystem(const unsigned int particles, const int threads) : Partic
 	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
 	
 	// this should be able to be passed in (and added maybe?)
-	mEmitter = new Emitter();
+	mEmitter = new Emitter(1000, Vec2f(mWindowSize.x * 0.5f, mWindowSize.y * 0.5f), Vec2f(0,-1.0f));
 	
 	// setup NumberCache
 }
@@ -47,7 +50,17 @@ LineSystem::~LineSystem()
 
 void LineSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
 {
-	// nothing yet...
+	for(size_t index = start_index; index < end_index; index++){
+		// accumulate system forces
+		mParticles[index].velocity.y += 0.15;
+		
+		// perform integration
+		mParticles[index].position.x += mParticles[index].velocity.x;
+		mParticles[index].position.y += mParticles[index].velocity.y;
+		
+		// fade out
+		mParticles[index].alpha -= 0.01;
+	}
 }
 
 void LineSystem::update()
@@ -73,15 +86,15 @@ void LineSystem::draw()
 	glLineWidth(4.0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 0, mPositionArray);
+	glVertexPointer(2, GL_FLOAT, 16, mParticles);
 	
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_FLOAT, 0, mColorArray);
+//	glEnableClientState(GL_COLOR_ARRAY);
+//	glColorPointer(4, GL_FLOAT, 0, mParticles);
 	
 	glDrawArrays(GL_LINES, 0, this->mMaxParticles * 2);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+//	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);

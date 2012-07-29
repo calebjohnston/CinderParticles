@@ -8,7 +8,7 @@
 
 using namespace ci;
 
-SpriteSystem::SpriteSystem(const unsigned int particles, const int threads)
+SpriteSystem::SpriteSystem(const std::string& filepath, const unsigned int particles, const int threads)
  : ParticleSystem(particles, threads)
 {
 	mParticles = NULL;
@@ -34,14 +34,16 @@ SpriteSystem::SpriteSystem(const unsigned int particles, const int threads)
 	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
 	
 	// this should be able to be passed in (and added maybe?)
-	mEmitter = new Emitter();
+//	mEmitter = new Emitter();
+	mEmitter = new Emitter(400, Vec2f(mWindowSize.x * 0.5f, mWindowSize.y * 0.5f), Vec2f(0,-1.0f));
 	
 	gl::Texture::Format format;
 	format.enableMipmapping(true);
 	format.setWrap(GL_CLAMP,GL_CLAMP);
 	format.setMinFilter(GL_NEAREST);
 	format.setMagFilter(GL_NEAREST);
-//	mPointTexture = new gl::Texture( loadImage( app::App::get()->loadAsset("../Resources/images/particle-small.png") ), format );
+	
+	mPointTexture = new gl::Texture( loadImage( app::App::get()->loadAsset(filepath) ), format );
 	
 	// setup NumberCache
 }
@@ -56,7 +58,17 @@ SpriteSystem::~SpriteSystem()
 
 void SpriteSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
 {
-	// nothing yet...
+	for(size_t index = start_index; index < end_index; index++){
+		// accumulate system forces
+		mParticles[index].velocity.y += 0.15;
+		
+		// perform integration
+		mParticles[index].position.x += mParticles[index].velocity.x;
+		mParticles[index].position.y += mParticles[index].velocity.y;
+		
+		// fade out
+		mParticles[index].alpha -= 0.01;
+	}
 }
 
 void SpriteSystem::update()

@@ -26,7 +26,7 @@ void CinderMultiParticlesApp::setup()
 	
 //	mParticleSystem = new ParticleSystem();
 	mLineSystem = new LineSystem(50000);
-	mSpriteSystem = new SpriteSystem(50000);
+//	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset( "../Resources/shaders/pass.vert" ), app::loadAsset( "../Resources/shaders/blur.frag" ) );
@@ -52,10 +52,16 @@ void CinderMultiParticlesApp::setup()
 void CinderMultiParticlesApp::update()
 {
 //	mParticleSystem->computeRandomVectors(15.5f, 5.5f);
+	
+	mLineSystem->update();
 }
 
 void CinderMultiParticlesApp::draw()
 {
+	gl::clear();
+	gl::color(1,1,1,1);
+	mLineSystem->draw();
+	
 	/*
 	if(mEnableFade){
 		// first
@@ -124,7 +130,6 @@ void CinderMultiParticlesApp::resize( ResizeEvent event )
 {
 	int w = event.getWidth();
 	int h = event.getHeight();
-//	mParticleSystem->setWindowSize( Vec2i( w, h ) );
 	
 	// clean data
 	if(mBlurX != NULL) delete mBlurX;
