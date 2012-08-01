@@ -9,6 +9,7 @@
 #include "cinder/params/Params.h"
 #include "cinder/Thread.h"
 
+#include "Emitter.h"
 #include "LineSystem.h"
 #include "SpriteSystem.h"
 
@@ -21,6 +22,7 @@
  */
 class CinderMultiParticlesApp : public ci::app::AppBasic {
 public:
+	CinderMultiParticlesApp();
 	~CinderMultiParticlesApp();
 	void	setup();
 	void	update();
@@ -36,6 +38,7 @@ public:
 private:
 	ParticleSystem*				mLineSystem;
 	ParticleSystem*				mSpriteSystem;
+	Emitter*					mEmitter;
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;

@@ -35,9 +35,6 @@ LineSystem::LineSystem(const unsigned int particles, const int threads) : Partic
 	mWindowSize = app::App::get()->getWindowSize();
 	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
 	
-	// this should be able to be passed in (and added maybe?)
-	mEmitter = new Emitter(1000, Vec2f(mWindowSize.x * 0.5f, mWindowSize.y * 0.5f), Vec2f(0,-1.0f));
-	
 	// setup NumberCache
 }
 
@@ -63,15 +60,31 @@ void LineSystem::updateKernel(const unsigned int start_index, const unsigned int
 	}
 }
 
-void LineSystem::update()
+void LineSystem::emit(const Emitter& emitter)
 {	
 	//this->computeRandomVectors();	// update number cache
 	
 	// update from emitter
-	mEmitter->update(*this);
+	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
+}
+
+void LineSystem::update()
+{	
+	//this->computeRandomVectors();	// update number cache
 	
 	// executes compute kernel (or relies upon threads to do so)
 	ParticleSystem::update();
+}
+
+void LineSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
+{
+	for(unsigned int i=0; i<amount; i++){
+		mParticles[mCurrentIndex].init(pos.x, pos.y, vel.x, vel.y);
+		mCurrentIndex++;
+		if(mCurrentIndex >= mMaxParticles){
+			mCurrentIndex = 0;
+		}
+	}
 }
 
 void LineSystem::draw()

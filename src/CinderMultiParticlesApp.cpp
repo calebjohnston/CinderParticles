@@ -8,25 +8,30 @@
 using namespace ci;
 using namespace ci::app;
 
+CinderMultiParticlesApp::CinderMultiParticlesApp()
+ :	mShader(NULL), mBlurX(NULL), mBlurY(NULL), mFade(NULL),
+	mEnableGaussianBlur(false), mEnableFade(false), mMouseDown(false),
+	mEmitter(NULL), mLineSystem(NULL), mSpriteSystem(NULL)
+{}
+
 CinderMultiParticlesApp::~CinderMultiParticlesApp()
 {
 }
 
 void CinderMultiParticlesApp::setup()
 {
-//	mParams = NULL;
-	mShader = NULL;
-//	mParticleSystem = NULL;
-	mBlurX = mBlurY = mFade = NULL;
-	mEnableGaussianBlur = mEnableFade = mMouseDown = false;
-
 	this->setWindowSize(1680,1080);
 	this->setFrameRate(60);
 	this->setWindowPos(0, 60);
 	
+	fs::path path = this->getAppPath() / "Contents" / "Resources";
+	this->addAssetDirectory(path);
+	
 //	mParticleSystem = new ParticleSystem();
-	mLineSystem = new LineSystem(50000);
-//	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
+//	mLineSystem = new LineSystem(50000);
+	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
+	pMouse = getWindowCenter();
+	mEmitter = new Emitter(100, pMouse, Vec2f(0,-10.0f));
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset( "../Resources/shaders/pass.vert" ), app::loadAsset( "../Resources/shaders/blur.frag" ) );
@@ -42,10 +47,6 @@ void CinderMultiParticlesApp::setup()
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
 	
-	// mParams = new params::InterfaceGl("settings", Vec2i(200,300));
-	
-	pMouse = getWindowCenter();
-	
 	gl::enableAdditiveBlending();
 }
 
@@ -53,14 +54,19 @@ void CinderMultiParticlesApp::update()
 {
 //	mParticleSystem->computeRandomVectors(15.5f, 5.5f);
 	
-	mLineSystem->update();
+	mEmitter->setPosition(pMouse);
+	
+//	mLineSystem->update();
+	mSpriteSystem->emit(*mEmitter);
+	mSpriteSystem->update();
 }
 
 void CinderMultiParticlesApp::draw()
 {
 	gl::clear();
 	gl::color(1,1,1,1);
-	mLineSystem->draw();
+//	mLineSystem->draw();
+	mSpriteSystem->draw();
 	
 	/*
 	if(mEnableFade){

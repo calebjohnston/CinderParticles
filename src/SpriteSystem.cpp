@@ -14,7 +14,6 @@ SpriteSystem::SpriteSystem(const std::string& filepath, const unsigned int parti
 	mParticles = NULL;
 	mColorArray = NULL;
 	mPositionArray = NULL;
-	mPointTexture = NULL;
 	
 	// allocate memory
 	try {
@@ -34,7 +33,6 @@ SpriteSystem::SpriteSystem(const std::string& filepath, const unsigned int parti
 	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
 	
 	// this should be able to be passed in (and added maybe?)
-//	mEmitter = new Emitter();
 	mEmitter = new Emitter(400, Vec2f(mWindowSize.x * 0.5f, mWindowSize.y * 0.5f), Vec2f(0,-1.0f));
 	
 	gl::Texture::Format format;
@@ -42,8 +40,7 @@ SpriteSystem::SpriteSystem(const std::string& filepath, const unsigned int parti
 	format.setWrap(GL_CLAMP,GL_CLAMP);
 	format.setMinFilter(GL_NEAREST);
 	format.setMagFilter(GL_NEAREST);
-	
-	mPointTexture = new gl::Texture( loadImage( app::App::get()->loadAsset(filepath) ), format );
+	mPointTexture = gl::Texture( loadImage( app::loadAsset(filepath) ), format );
 	
 	// setup NumberCache
 }
@@ -53,7 +50,6 @@ SpriteSystem::~SpriteSystem()
 	delete mParticles;
 	delete mColorArray;
 	delete mPositionArray;
-	delete mPointTexture;
 }
 
 void SpriteSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
@@ -75,11 +71,23 @@ void SpriteSystem::update()
 {	
 	//this->computeRandomVectors();	// update number cache
 	
-	// update from emitter
-	mEmitter->update(*this);
-	
 	// executes compute kernel (or relies upon threads to do so)
 	ParticleSystem::update();
+}
+
+void SpriteSystem::emit(const Emitter& emitter)
+{
+	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
+}
+
+void SpriteSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
+{
+	for(unsigned int i=0; i<amount; i++){
+		mParticles[mCurrentIndex++].init(pos.x, pos.y, vel.x, vel.y);
+		if(mCurrentIndex >= mMaxParticles){
+			mCurrentIndex = 0;
+		}
+	}
 }
 
 void SpriteSystem::draw()
@@ -91,16 +99,16 @@ void SpriteSystem::draw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, mPointTexture->getId());
+	glBindTexture(GL_TEXTURE_2D, mPointTexture.getId());
 	glEnable(GL_POINT_SPRITE);
 	glTexEnvi(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
 	glPointSize(12.0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 0, mPositionArray);
+	glVertexPointer(2, GL_FLOAT, 16, mParticles);
 	
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_FLOAT, 0, mColorArray);
+//	glEnableClientState(GL_COLOR_ARRAY);
+//	glColorPointer(4, GL_FLOAT, 0, mColorArray);
 	
 	glDrawArrays(GL_POINTS, 0, this->mMaxParticles);
 	
@@ -109,7 +117,7 @@ void SpriteSystem::draw()
 	glDisable(GL_TEXTURE_2D);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+//	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);

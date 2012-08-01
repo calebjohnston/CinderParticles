@@ -28,6 +28,8 @@
 		3C0FF7A9159FDDCA004FF665 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
 		3C0FF7AA159FDDCA004FF665 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		3C0FF7AB159FDDCA004FF665 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		3C9D942215C6153800C47CDD /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CBA5C4515C5E3330088D160 /* Emitter.cpp */; };
+		3CBA5C4615C5E3330088D160 /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CBA5C4515C5E3330088D160 /* Emitter.cpp */; };
 		3CBE4BFB159FDFE7009863EB /* CinderMultiParticlesApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */; };
 		3CC9BB3915C251C90017D3AE /* LineSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9BB3615C251C90017D3AE /* LineSystem.cpp */; };
 		3CC9BB3A15C251C90017D3AE /* LineSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9BB3615C251C90017D3AE /* LineSystem.cpp */; };
@@ -60,6 +62,8 @@
 		32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderParticles_Prefix.pch; sourceTree = "<group>"; };
 		3C0FF7AF159FDDCA004FF665 /* CinderMultiParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CinderMultiParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CinderMultiParticles-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/CinderMultiParticles-Info.plist"; sourceTree = "<absolute>"; };
+		3CBA5C4315C5E32B0088D160 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Emitter.h; path = ../include/Emitter.h; sourceTree = "<group>"; };
+		3CBA5C4515C5E3330088D160 /* Emitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Emitter.cpp; path = ../src/Emitter.cpp; sourceTree = "<group>"; };
 		3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CinderMultiParticlesApp.h; path = ../include/CinderMultiParticlesApp.h; sourceTree = "<group>"; };
 		3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CinderMultiParticlesApp.cpp; path = ../src/CinderMultiParticlesApp.cpp; sourceTree = "<group>"; };
 		3CC9BB3315C251BD0017D3AE /* LineSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineSystem.h; path = ../include/LineSystem.h; sourceTree = "<group>"; };
@@ -119,8 +123,9 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				3CC9BB3615C251C90017D3AE /* LineSystem.cpp */,
+				3CBA5C4515C5E3330088D160 /* Emitter.cpp */,
 				3CC9BB3715C251C90017D3AE /* NumberCache.cpp */,
+				3CC9BB3615C251C90017D3AE /* LineSystem.cpp */,
 				3CC9BB3815C251C90017D3AE /* SpriteSystem.cpp */,
 				0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */,
 				00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */,
@@ -181,9 +186,10 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				3CBA5C4315C5E32B0088D160 /* Emitter.h */,
+				3CC9BB3415C251BD0017D3AE /* NumberCache.h */,
 				32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */,
 				3CC9BB3315C251BD0017D3AE /* LineSystem.h */,
-				3CC9BB3415C251BD0017D3AE /* NumberCache.h */,
 				3CC9BB3515C251BD0017D3AE /* SpriteSystem.h */,
 				0026CD211197C267007D86C6 /* ParticleSystem.h */,
 				4101ECEC157D297200EF2816 /* CinderParticlesApp.h */,
@@ -301,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C9D942215C6153800C47CDD /* Emitter.cpp in Sources */,
 				3C0FF7A0159FDDCA004FF665 /* ParticleSystem.cpp in Sources */,
 				3CBE4BFB159FDFE7009863EB /* CinderMultiParticlesApp.cpp in Sources */,
 				3CC9BB3A15C251C90017D3AE /* LineSystem.cpp in Sources */,
@@ -318,6 +325,7 @@
 				3CC9BB3915C251C90017D3AE /* LineSystem.cpp in Sources */,
 				3CC9BB3B15C251C90017D3AE /* NumberCache.cpp in Sources */,
 				3CC9BB3D15C251C90017D3AE /* SpriteSystem.cpp in Sources */,
+				3CBA5C4615C5E3330088D160 /* Emitter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

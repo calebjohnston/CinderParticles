@@ -11,7 +11,7 @@
 using namespace ci;
 using namespace ci::app;
 
-ParticleSystem::ParticleSystem(const unsigned int particles, const int threads) : mMaxParticles(particles), mRunning(true)
+ParticleSystem::ParticleSystem(const unsigned int particles, const int threads) : mMaxParticles(particles), mRunning(true), mCurrentIndex(0)
 {
 	mRunning = true;
 	if(threads <= 0){

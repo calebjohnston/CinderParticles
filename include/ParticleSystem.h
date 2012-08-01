@@ -4,6 +4,8 @@
 
 #include "cinder/Thread.h"
 
+#include "Emitter.h"
+
 /**
  * ParticleSystem base class.
  */
@@ -25,6 +27,12 @@ public:
 	/** Might need to refactor this... hmmmm */
 	virtual void spawnThread(const unsigned int start_index, const unsigned int end_index, const int id);
 	
+	/** Interface for updating the system itself */
+	virtual void addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel) = 0;
+	
+	/** Emitter interface */
+	virtual void emit(const Emitter& emitter) = 0;
+	
 	/** methods to test the status of the threads */
 	void preDraw();
 	void postDraw();
@@ -38,6 +46,7 @@ public:
 protected:
 	bool mRunning;
 	unsigned int	mMaxParticles;
+	unsigned int	mCurrentIndex;
 	boost::shared_mutex	mMutex;
 	std::vector<std::thread*> mThreads;
 	std::vector<bool> mThreadCompleted;	// not sure if there's a better way of doing this yet...
