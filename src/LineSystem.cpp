@@ -25,11 +25,6 @@ LineSystem::LineSystem(const unsigned int particles, const int threads)
 		ci::app::console() << "Unable to allocate data" << std::endl;
 	}
 	
-	// initialize particle list (prolly not necessary, we're using structs)
-	// for(int i=0; i<this->mMaxParticles; i++) {
-	// 	mParticles[i].init();
-	// }
-	
 	mWindowSize = app::App::get()->getWindowSize();
 	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
 	
