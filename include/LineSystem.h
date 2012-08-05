@@ -26,16 +26,19 @@ public:
 	void addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel);
 	
 	struct Line2D {
-		ci::Vec2f position;
+		ci::Vec2f start;
 		ci::Vec2f velocity;
+		ci::Vec2f end;
 		float mass, alpha;
 		
 		void init(const float x = 0, const float y = 0, const float u = 0, const float v = 0, const float m = 1, const float a = 1)
 		{
-			position.x = x;
-			position.y = y;
+			start.x = x;
+			start.y = y;
 			velocity.x = u;
 			velocity.y = v;
+			end.x = x + u;
+			end.y = y + v;
 			mass = m;
 			alpha = a;
 		}

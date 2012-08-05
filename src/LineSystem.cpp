@@ -48,15 +48,19 @@ LineSystem::~LineSystem()
 void LineSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
 {
 	for(size_t index = start_index; index < end_index; index++){
+		Line2D* line = mParticles + index;
+
 		// accumulate system forces
-		mParticles[index].velocity.y += 0.15;
+		line->velocity.y += 0.15;
 		
 		// perform integration
-		mParticles[index].position.x += mParticles[index].velocity.x;
-		mParticles[index].position.y += mParticles[index].velocity.y;
+		line->start.x = line->end.x;
+		line->start.y = line->end.y;
+		line->end.x = line->start.x + line->velocity.x;
+		line->end.y = line->start.y + line->velocity.y;
 		
 		// fade out
-		mParticles[index].alpha -= 0.01;
+		line->alpha -= 0.01;
 	}
 }
 
@@ -79,8 +83,7 @@ void LineSystem::update()
 void LineSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
 {
 	for(unsigned int i=0; i<amount; i++){
-		mParticles[mCurrentIndex].init(pos.x, pos.y, vel.x, vel.y);
-		mCurrentIndex++;
+		mParticles[mCurrentIndex++].init(pos.x, pos.y, vel.x, vel.y);
 		if(mCurrentIndex >= mMaxParticles){
 			mCurrentIndex = 0;
 		}
@@ -99,7 +102,7 @@ void LineSystem::draw()
 	glLineWidth(4.0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 16, mParticles);
+	glVertexPointer(2, GL_FLOAT, 8, mParticles);
 	
 //	glEnableClientState(GL_COLOR_ARRAY);
 //	glColorPointer(4, GL_FLOAT, 0, mParticles);

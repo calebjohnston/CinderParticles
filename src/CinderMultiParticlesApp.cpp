@@ -28,8 +28,8 @@ void CinderMultiParticlesApp::setup()
 	this->addAssetDirectory(path);
 	
 //	mParticleSystem = new ParticleSystem();
-//	mLineSystem = new LineSystem(50000);
-	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
+	mLineSystem = new LineSystem(50000);
+//	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
 	pMouse = getWindowCenter();
 	mEmitter = new Emitter(100, pMouse, Vec2f(0,-10.0f));
 	
@@ -56,17 +56,18 @@ void CinderMultiParticlesApp::update()
 	
 	mEmitter->setPosition(pMouse);
 	
-//	mLineSystem->update();
-	mSpriteSystem->emit(*mEmitter);
-	mSpriteSystem->update();
+	mLineSystem->emit(*mEmitter);
+	mLineSystem->update();
+	//mSpriteSystem->emit(*mEmitter);
+	//mSpriteSystem->update();
 }
 
 void CinderMultiParticlesApp::draw()
 {
 	gl::clear();
 	gl::color(1,1,1,1);
-//	mLineSystem->draw();
-	mSpriteSystem->draw();
+	mLineSystem->draw();
+//	mSpriteSystem->draw();
 	
 	/*
 	if(mEnableFade){
