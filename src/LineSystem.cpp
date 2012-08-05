@@ -9,12 +9,13 @@
 
 using namespace ci;
 
-LineSystem::LineSystem(const unsigned int particles, const int threads) : ParticleSystem(particles, threads)
+LineSystem::LineSystem(const unsigned int particles, const int threads)
+:	ParticleSystem(particles, threads),
+	mParticles(NULL),
+	mColorArray(NULL),
+	mPositionArray(NULL),
+	mNumCache(NULL)
 {
-	mParticles = NULL;
-	mColorArray = NULL;
-	mPositionArray = NULL;
-	
 	// allocate memory
 	try {
 		mParticles = (Line2D*) calloc(sizeof(Line2D), this->mMaxParticles);
@@ -23,9 +24,6 @@ LineSystem::LineSystem(const unsigned int particles, const int threads) : Partic
 	} catch(...) {
 		ci::app::console() << "Unable to allocate data" << std::endl;
 	}
-	
-//	size_t s = sizeof(Line2D);
-//	ci::app::console() << "Line2D is " << s << " bytes." << std::endl;
 	
 	// initialize particle list (prolly not necessary, we're using structs)
 	// for(int i=0; i<this->mMaxParticles; i++) {
@@ -36,6 +34,7 @@ LineSystem::LineSystem(const unsigned int particles, const int threads) : Partic
 	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
 	
 	// setup NumberCache
+	mNumCache = new NumberCache(2048);	// use no more than 2 kbytes
 }
 
 LineSystem::~LineSystem() 
@@ -43,11 +42,13 @@ LineSystem::~LineSystem()
 	delete mParticles;
 	delete mColorArray;
 	delete mPositionArray;
+	delete mNumCache;
 }
 
 void LineSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
 {
-	for(size_t index = start_index; index < end_index; index++){
+	size_t index, vi, ci;
+	for(index = start_index; index < end_index; index++){
 		Line2D* line = mParticles + index;
 
 		// accumulate system forces
@@ -61,20 +62,37 @@ void LineSystem::updateKernel(const unsigned int start_index, const unsigned int
 		
 		// fade out
 		line->alpha -= 0.01;
+		
+		// update the vertex array
+		vi = index * 4;
+		mPositionArray[vi] = line->start.x;
+		mPositionArray[vi+1] = line->start.y;
+		mPositionArray[vi+2] = line->end.x;
+		mPositionArray[vi+3] = line->end.y;
+		
+		// update the color array
+		ci = index * 8;
+		mColorArray[ci] = line->alpha;
+		mColorArray[ci+1] = line->alpha * 0.5f;
+		mColorArray[ci+2] = 1.0 - line->alpha;
+		mColorArray[ci+3] = line->alpha;
+		
+		mColorArray[ci+4] = line->alpha;
+		mColorArray[ci+5] = line->alpha * 0.5f;
+		mColorArray[ci+6] = 1.0 - line->alpha;
+		mColorArray[ci+7] = line->alpha;
 	}
 }
 
 void LineSystem::emit(const Emitter& emitter)
 {	
-	//this->computeRandomVectors();	// update number cache
-	
 	// update from emitter
 	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
 }
 
 void LineSystem::update()
 {	
-	//this->computeRandomVectors();	// update number cache
+	mNumCache->computeRandomVectors();	// update number cache
 	
 	// executes compute kernel (or relies upon threads to do so)
 	ParticleSystem::update();
@@ -83,7 +101,9 @@ void LineSystem::update()
 void LineSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
 {
 	for(unsigned int i=0; i<amount; i++){
-		mParticles[mCurrentIndex++].init(pos.x, pos.y, vel.x, vel.y);
+		Vec2f p = mNumCache->nextPosition();
+		Vec2f v = mNumCache->nextVelocity();
+		mParticles[mCurrentIndex++].init(pos.x + p.x, pos.y + p.y, vel.x + v.x, vel.y + v.y);
 		if(mCurrentIndex >= mMaxParticles){
 			mCurrentIndex = 0;
 		}
@@ -102,15 +122,15 @@ void LineSystem::draw()
 	glLineWidth(4.0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 8, mParticles);
+	glVertexPointer(2, GL_FLOAT, 0, mPositionArray);
 	
-//	glEnableClientState(GL_COLOR_ARRAY);
-//	glColorPointer(4, GL_FLOAT, 0, mParticles);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glColorPointer(4, GL_FLOAT, 0, mColorArray);
 	
 	glDrawArrays(GL_LINES, 0, this->mMaxParticles * 2);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
-//	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);

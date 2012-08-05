@@ -28,8 +28,8 @@ void CinderMultiParticlesApp::setup()
 	this->addAssetDirectory(path);
 	
 //	mParticleSystem = new ParticleSystem();
-	mLineSystem = new LineSystem(50000);
-//	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
+//	mLineSystem = new LineSystem(50000);
+	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
 	pMouse = getWindowCenter();
 	mEmitter = new Emitter(100, pMouse, Vec2f(0,-10.0f));
 	
@@ -52,22 +52,20 @@ void CinderMultiParticlesApp::setup()
 
 void CinderMultiParticlesApp::update()
 {
-//	mParticleSystem->computeRandomVectors(15.5f, 5.5f);
-	
 	mEmitter->setPosition(pMouse);
 	
-	mLineSystem->emit(*mEmitter);
-	mLineSystem->update();
-	//mSpriteSystem->emit(*mEmitter);
-	//mSpriteSystem->update();
+//	mLineSystem->emit(*mEmitter);
+//	mLineSystem->update();
+	mSpriteSystem->emit(*mEmitter);
+	mSpriteSystem->update();
 }
 
 void CinderMultiParticlesApp::draw()
 {
 	gl::clear();
 	gl::color(1,1,1,1);
-	mLineSystem->draw();
-//	mSpriteSystem->draw();
+//	mLineSystem->draw();
+	mSpriteSystem->draw();
 	
 	/*
 	if(mEnableFade){
@@ -199,7 +197,6 @@ void CinderMultiParticlesApp::mouseDrag( MouseEvent event )
 	Vec2f mouseNorm = Vec2f( event.getPos() );
 	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.25f;
 	pMouse = event.getPos();
-//	mParticleSystem->addParticles(mouseNorm, mouseVel);
 }
 
 CINDER_APP_BASIC( CinderMultiParticlesApp, RendererGl )

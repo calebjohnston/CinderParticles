@@ -2,6 +2,7 @@
 
 #include "cinder/Vector.h"
 
+#include "NumberCache.h"
 #include "Emitter.h"
 #include "ParticleSystem.h"
 
@@ -27,8 +28,8 @@ public:
 	
 	struct Line2D {
 		ci::Vec2f start;
-		ci::Vec2f velocity;
 		ci::Vec2f end;
+		ci::Vec2f velocity;
 		float mass, alpha;
 		
 		void init(const float x = 0, const float y = 0, const float u = 0, const float v = 0, const float m = 1, const float a = 1)
@@ -50,7 +51,7 @@ protected:
 	Line2D*		mParticles;
     float*		mPositionArray;
     float*		mColorArray;
-
+	NumberCache* mNumCache;
 };
 
 

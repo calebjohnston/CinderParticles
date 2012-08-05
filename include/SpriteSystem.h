@@ -2,7 +2,9 @@
 
 #include "cinder/gl/Texture.h"
 #include "cinder/Vector.h"
+#include "cinder/Color.h"
 
+#include "NumberCache.h"
 #include "Emitter.h"
 #include "ParticleSystem.h"
 
@@ -29,7 +31,8 @@ public:
 	struct PointSprite {
 		ci::Vec2f position;
 		ci::Vec2f velocity;
-		float mass, alpha;
+		ci::ColorA color;
+		float mass;
 		
 		void init(const float x = 0, const float y = 0, const float u = 0, const float v = 0, const float m = 1, const float a = 1)
 		{
@@ -37,8 +40,8 @@ public:
 			position.y = y;
 			velocity.x = u;
 			velocity.y = v;
+			color.a = a;
 			mass = m;
-			alpha = a;
 		}
 	};
 	
@@ -49,7 +52,7 @@ protected:
 	PointSprite* mParticles;
     float*		mPositionArray;
     float*		mColorArray;
-	Emitter*	mEmitter;
+	NumberCache* mNumCache;
 
 };
 
