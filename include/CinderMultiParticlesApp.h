@@ -8,10 +8,13 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/params/Params.h"
 #include "cinder/Thread.h"
+#include "cinder/ArcBall.h"
+#include "cinder/Camera.h"
 
 #include "Emitter.h"
 #include "LineSystem.h"
 #include "SpriteSystem.h"
+#include "GpuParticleSystem.h"
 
 /**
  * The CinderParticlesApp is a basic particle engine. Some of the 
@@ -34,10 +37,14 @@ public:
 	void	mouseDown( ci::app::MouseEvent event );
 	void	mouseUp( ci::app::MouseEvent event );
 	void	resize( ci::app::ResizeEvent event );
-
+	
+	ci::CameraPersp		mCam;
+	ci::Arcball			mArcball;
+	
 private:
 	ParticleSystem*				mLineSystem;
 	ParticleSystem*				mSpriteSystem;
+	GpuParticleSystem*			mGpuSystem;
 	Emitter*					mEmitter;
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
@@ -46,6 +53,7 @@ private:
 	ci::gl::Texture*			mFadeTexture;
 //	ci::params::InterfaceGl*	mParams;
 	std::vector<std::thread*>	mThreads;
+	
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;

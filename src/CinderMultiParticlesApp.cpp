@@ -2,6 +2,8 @@
 #include "cinder/System.h"
 #include "cinder/Rand.h"
 #include "cinder/Xml.h"
+#include "cinder/Utilities.h"
+#include "cinder/Quaternion.h"
 
 #include "CinderMultiParticlesApp.h"
 
@@ -11,7 +13,7 @@ using namespace ci::app;
 CinderMultiParticlesApp::CinderMultiParticlesApp()
  :	mShader(NULL), mBlurX(NULL), mBlurY(NULL), mFade(NULL),
 	mEnableGaussianBlur(false), mEnableFade(false), mMouseDown(false),
-	mEmitter(NULL), mLineSystem(NULL), mSpriteSystem(NULL)
+	mEmitter(NULL), mLineSystem(NULL), mSpriteSystem(NULL), mGpuSystem(NULL)
 {}
 
 CinderMultiParticlesApp::~CinderMultiParticlesApp()
@@ -20,7 +22,7 @@ CinderMultiParticlesApp::~CinderMultiParticlesApp()
 
 void CinderMultiParticlesApp::setup()
 {
-	this->setWindowSize(1680,1080);
+	this->setWindowSize(1000,800);
 	this->setFrameRate(60);
 	this->setWindowPos(0, 60);
 	
@@ -29,12 +31,15 @@ void CinderMultiParticlesApp::setup()
 	
 //	mParticleSystem = new ParticleSystem();
 //	mLineSystem = new LineSystem(50000);
-	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
+//	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
+	mGpuSystem = new GpuParticleSystem(262144);
+	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
+	
 	pMouse = getWindowCenter();
 	mEmitter = new Emitter(100, pMouse, Vec2f(0,-10.0f));
 	
 	try {
-		mShader = new gl::GlslProg( app::loadAsset( "../Resources/shaders/pass.vert" ), app::loadAsset( "../Resources/shaders/blur.frag" ) );
+		mShader = new gl::GlslProg( app::loadAsset("shaders/pass.vert"), app::loadAsset( "shaders/blur.frag" ) );
 	}
 	catch( ci::gl::GlslProgCompileExc &exc ) {
 		console() << "Shader compile error: " << std::endl;
@@ -44,10 +49,10 @@ void CinderMultiParticlesApp::setup()
 		console() << "Unable to load shader" << std::endl;
 	}
 	
-	gl::enableDepthRead();
-	gl::enableDepthWrite();
+//	gl::enableDepthRead();
+//	gl::enableDepthWrite();
 	
-	gl::enableAdditiveBlending();
+//	gl::enableAdditiveBlending();
 }
 
 void CinderMultiParticlesApp::update()
@@ -56,8 +61,10 @@ void CinderMultiParticlesApp::update()
 	
 //	mLineSystem->emit(*mEmitter);
 //	mLineSystem->update();
-	mSpriteSystem->emit(*mEmitter);
-	mSpriteSystem->update();
+//	mSpriteSystem->emit(*mEmitter);
+//	mSpriteSystem->update();
+	
+	mGpuSystem->update();
 }
 
 void CinderMultiParticlesApp::draw()
@@ -65,8 +72,8 @@ void CinderMultiParticlesApp::draw()
 	gl::clear();
 	gl::color(1,1,1,1);
 //	mLineSystem->draw();
-	mSpriteSystem->draw();
-	
+//	mSpriteSystem->draw();
+	mGpuSystem->draw();
 	/*
 	if(mEnableFade){
 		// first
@@ -157,6 +164,17 @@ void CinderMultiParticlesApp::resize( ResizeEvent event )
 	mFade->bindFramebuffer();
 	gl::clear();
 	mFade->unbindFramebuffer();
+	
+	// -- 
+	{
+		mArcball.setWindowSize( getWindowSize() );
+		mArcball.setCenter( Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f ) );
+		mArcball.setRadius( getWindowHeight() / 2.0f );
+		
+		mCam.lookAt( Vec3f( 0.0f, 0.0f, -450.0f ), Vec3f::zero() );
+		mCam.setPerspective( 60.0f, getWindowAspectRatio(), 0.1f, 2000.0f );
+		gl::setMatrices( mCam );
+	}
 }
 
 void CinderMultiParticlesApp::keyDown( KeyEvent event )
@@ -185,6 +203,8 @@ void CinderMultiParticlesApp::mouseMove( MouseEvent event )
 void CinderMultiParticlesApp::mouseDown( MouseEvent event )
 {
 	mMouseDown = true;
+	// -- 
+	mArcball.mouseDown( event.getPos() );
 }
 
 void CinderMultiParticlesApp::mouseUp( MouseEvent event )
@@ -197,6 +217,9 @@ void CinderMultiParticlesApp::mouseDrag( MouseEvent event )
 	Vec2f mouseNorm = Vec2f( event.getPos() );
 	Vec2f mouseVel = Vec2f( event.getPos() - pMouse ) * 0.25f;
 	pMouse = event.getPos();
+	
+	// -- 
+	mArcball.mouseDrag( event.getPos() );
 }
 
 CINDER_APP_BASIC( CinderMultiParticlesApp, RendererGl )

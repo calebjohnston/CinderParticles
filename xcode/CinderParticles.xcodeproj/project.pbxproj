@@ -15,6 +15,10 @@
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		00BAE65A0E7ED9C10018A608 /* CinderParticlesApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */; };
+		3C09D57615CEFAE5007BEB31 /* GpuSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */; };
+		3C09D57715CEFAF9007BEB31 /* GpuSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */; };
+		3C09D57A15CF015A007BEB31 /* GpuParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */; };
+		3C09D57B15CF0164007BEB31 /* GpuParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */; };
 		3C0FF79B159FDDCA004FF665 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
 		3C0FF79C159FDDCA004FF665 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEF157D312400EF2816 /* shaders */; };
 		3C0FF7A0159FDDCA004FF665 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */; };
@@ -60,6 +64,10 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderParticles_Prefix.pch; sourceTree = "<group>"; };
+		3C09D57315CEFADD007BEB31 /* GpuSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpuSystem.h; path = ../include/GpuSystem.h; sourceTree = "<group>"; };
+		3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GpuSystem.cpp; path = ../src/GpuSystem.cpp; sourceTree = "<group>"; };
+		3C09D57815CEFF2F007BEB31 /* GpuParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpuParticleSystem.h; path = ../include/GpuParticleSystem.h; sourceTree = "<group>"; };
+		3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GpuParticleSystem.cpp; path = ../src/GpuParticleSystem.cpp; sourceTree = "<group>"; };
 		3C0FF7AF159FDDCA004FF665 /* CinderMultiParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CinderMultiParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CinderMultiParticles-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/CinderMultiParticles-Info.plist"; sourceTree = "<absolute>"; };
 		3CBA5C4315C5E32B0088D160 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Emitter.h; path = ../include/Emitter.h; sourceTree = "<group>"; };
@@ -123,6 +131,8 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */,
+				3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */,
 				3CBA5C4515C5E3330088D160 /* Emitter.cpp */,
 				3CC9BB3715C251C90017D3AE /* NumberCache.cpp */,
 				3CC9BB3615C251C90017D3AE /* LineSystem.cpp */,
@@ -186,6 +196,8 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				3C09D57815CEFF2F007BEB31 /* GpuParticleSystem.h */,
+				3C09D57315CEFADD007BEB31 /* GpuSystem.h */,
 				3CBA5C4315C5E32B0088D160 /* Emitter.h */,
 				3CC9BB3415C251BD0017D3AE /* NumberCache.h */,
 				32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */,
@@ -307,6 +319,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C09D57B15CF0164007BEB31 /* GpuParticleSystem.cpp in Sources */,
+				3C09D57715CEFAF9007BEB31 /* GpuSystem.cpp in Sources */,
 				3C9D942215C6153800C47CDD /* Emitter.cpp in Sources */,
 				3C0FF7A0159FDDCA004FF665 /* ParticleSystem.cpp in Sources */,
 				3CBE4BFB159FDFE7009863EB /* CinderMultiParticlesApp.cpp in Sources */,
@@ -326,6 +340,8 @@
 				3CC9BB3B15C251C90017D3AE /* NumberCache.cpp in Sources */,
 				3CC9BB3D15C251C90017D3AE /* SpriteSystem.cpp in Sources */,
 				3CBA5C4615C5E3330088D160 /* Emitter.cpp in Sources */,
+				3C09D57615CEFAE5007BEB31 /* GpuSystem.cpp in Sources */,
+				3C09D57A15CF015A007BEB31 /* GpuParticleSystem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +454,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				CINDER_PATH = ../../Cinder/cinder;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;
@@ -453,6 +470,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				CINDER_PATH = ../../Cinder/cinder;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;

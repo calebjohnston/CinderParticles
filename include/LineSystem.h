@@ -24,7 +24,7 @@ public:
 	virtual void emit(const Emitter& emitter);
 	
 	/** */
-	void addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel);
+	virtual void addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel);
 	
 	struct Line2D {
 		ci::Vec2f start;
