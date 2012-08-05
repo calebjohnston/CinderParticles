@@ -11,9 +11,27 @@
 using namespace ci;
 using namespace ci::app;
 
-ParticleSystem::ParticleSystem(const unsigned int particles, const int threads) : mMaxParticles(particles), mRunning(true), mCurrentIndex(0)
+ParticleSystem::ParticleSystem() : mMaxParticles(0), mRunning(false), mCurrentIndex(0)
+{	
+}
+
+ParticleSystem::~ParticleSystem() 
+{
+	mRunning = false;
+	
+	for(int i = 0; i < mThreads.size(); ++i){
+		mThreads.at(i)->join();
+	}
+	
+	mThreadCompleted.clear();
+	mThreads.clear();
+}
+
+void ParticleSystem::setup(const unsigned int particles, const int threads)
 {
 	mRunning = true;
+	mMaxParticles = particles;
+	mCurrentIndex = 0;
 	if(threads <= 0){
 		// nothing?
 	}
@@ -30,32 +48,12 @@ ParticleSystem::ParticleSystem(const unsigned int particles, const int threads) 
 	}
 }
 
-ParticleSystem::~ParticleSystem() 
-{
-	mRunning = false;
-	
-	for(int i = 0; i < mThreads.size(); ++i){
-		mThreads.at(i)->join();
-	}
-	
-	mThreadCompleted.clear();
-	mThreads.clear();
-}
-
 void ParticleSystem::update()
 {
 	if(mThreads.size() <= 0){
 		this->updateKernel(0, mMaxParticles);
 	}
 }
-
-// THIS IS A DUMMY IMPL!!!!
-// void ParticleSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
-// {
-// 	for(int i=start_index; i<end_index; i++) {
-// 		this->particles[i].update(blah blah);
-// 	}
-// }
 
 void ParticleSystem::spawnThread(const unsigned int start_index, const unsigned int end_index, const int id)
 {

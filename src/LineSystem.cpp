@@ -9,8 +9,8 @@
 
 using namespace ci;
 
-LineSystem::LineSystem(const unsigned int particles, const int threads)
-:	ParticleSystem(particles, threads),
+LineSystem::LineSystem()
+:	ParticleSystem(),
 	mParticles(NULL),
 	mColorArray(NULL),
 	mPositionArray(NULL),
@@ -56,7 +56,7 @@ void LineSystem::updateKernel(const unsigned int start_index, const unsigned int
 		line->end.y = line->start.y + line->velocity.y;
 		
 		// fade out
-		line->alpha -= 0.01;
+		line->alpha -= 0.005;
 		
 		// update the vertex array
 		vi = index * 4;

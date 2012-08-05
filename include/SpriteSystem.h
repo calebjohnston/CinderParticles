@@ -11,8 +11,11 @@
 class SpriteSystem : public ParticleSystem {
 public:	
 	// Cstor initializes data
-	SpriteSystem(const std::string& filepath, const unsigned int particles, const int threads = 0);
+	SpriteSystem(const std::string& filepath);
 	virtual ~SpriteSystem();
+	
+	/** Cinder update callback */
+	// virtual void setup(const unsigned int particles, const int threads = 0);
 	
 	/** Cinder update callback */
 	virtual void update();

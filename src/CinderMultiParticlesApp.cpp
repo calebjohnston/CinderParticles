@@ -22,7 +22,7 @@ CinderMultiParticlesApp::~CinderMultiParticlesApp()
 
 void CinderMultiParticlesApp::setup()
 {
-	this->setWindowSize(1000,800);
+	this->setWindowSize(1650,1080);
 	this->setFrameRate(60);
 	this->setWindowPos(0, 60);
 	
@@ -30,10 +30,13 @@ void CinderMultiParticlesApp::setup()
 	this->addAssetDirectory(path);
 	
 //	mParticleSystem = new ParticleSystem();
-//	mLineSystem = new LineSystem(50000);
-//	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png", 50000);
-	mGpuSystem = new GpuParticleSystem(262144);
-	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
+	mLineSystem = new LineSystem();
+	mLineSystem->setup(50000, 1);
+	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png");
+	mSpriteSystem->setup(50000, 1);
+	
+//	mGpuSystem = new GpuParticleSystem(262144);
+//	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
 	
 	pMouse = getWindowCenter();
 	mEmitter = new Emitter(100, pMouse, Vec2f(0,-10.0f));
@@ -51,29 +54,28 @@ void CinderMultiParticlesApp::setup()
 	
 //	gl::enableDepthRead();
 //	gl::enableDepthWrite();
-	
-//	gl::enableAdditiveBlending();
 }
 
 void CinderMultiParticlesApp::update()
 {
 	mEmitter->setPosition(pMouse);
 	
-//	mLineSystem->emit(*mEmitter);
-//	mLineSystem->update();
-//	mSpriteSystem->emit(*mEmitter);
-//	mSpriteSystem->update();
+	mLineSystem->emit(*mEmitter);
+	mLineSystem->update();
+	mSpriteSystem->emit(*mEmitter);
+	mSpriteSystem->update();
 	
-	mGpuSystem->update();
+//	mGpuSystem->update();
 }
 
 void CinderMultiParticlesApp::draw()
 {
 	gl::clear();
 	gl::color(1,1,1,1);
-//	mLineSystem->draw();
-//	mSpriteSystem->draw();
-	mGpuSystem->draw();
+	gl::enableAdditiveBlending();
+	mLineSystem->draw();
+	mSpriteSystem->draw();
+//	mGpuSystem->draw();
 	/*
 	if(mEnableFade){
 		// first
@@ -167,13 +169,13 @@ void CinderMultiParticlesApp::resize( ResizeEvent event )
 	
 	// -- 
 	{
-		mArcball.setWindowSize( getWindowSize() );
-		mArcball.setCenter( Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f ) );
-		mArcball.setRadius( getWindowHeight() / 2.0f );
-		
-		mCam.lookAt( Vec3f( 0.0f, 0.0f, -450.0f ), Vec3f::zero() );
-		mCam.setPerspective( 60.0f, getWindowAspectRatio(), 0.1f, 2000.0f );
-		gl::setMatrices( mCam );
+//		mArcball.setWindowSize( getWindowSize() );
+//		mArcball.setCenter( Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f ) );
+//		mArcball.setRadius( getWindowHeight() / 2.0f );
+//		
+//		mCam.lookAt( Vec3f( 0.0f, 0.0f, -450.0f ), Vec3f::zero() );
+//		mCam.setPerspective( 60.0f, getWindowAspectRatio(), 0.1f, 2000.0f );
+//		gl::setMatrices( mCam );
 	}
 }
 

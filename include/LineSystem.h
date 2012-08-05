@@ -9,8 +9,11 @@
 class LineSystem : public ParticleSystem {
 public:	
 	// Cstor initializes data
-	LineSystem(const unsigned int particles, const int threads = 0);
+	LineSystem();
 	virtual ~LineSystem();
+	
+	/** Cinder update callback */
+//	virtual void setup(const unsigned int particles, const int threads = 0);
 	
 	/** Cinder update callback */
 	virtual void update();

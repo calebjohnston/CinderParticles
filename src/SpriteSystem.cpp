@@ -7,8 +7,8 @@
 
 using namespace ci;
 
-SpriteSystem::SpriteSystem(const std::string& filepath, const unsigned int particles, const int threads)
- :	ParticleSystem(particles, threads), 
+SpriteSystem::SpriteSystem(const std::string& filepath)
+ :	ParticleSystem(), 
 	mParticles(NULL),
 	mColorArray(NULL),
 	mPositionArray(NULL),
