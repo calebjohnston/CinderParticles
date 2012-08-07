@@ -1,4 +1,6 @@
 #include "cinder/app/AppBasic.h"
+#include "cinder/ObjLoader.h"
+#include "cinder/TriMesh.h"
 #include "cinder/System.h"
 #include "cinder/Rand.h"
 #include "cinder/Xml.h"
@@ -29,17 +31,29 @@ void CinderMultiParticlesApp::setup()
 	fs::path path = this->getAppPath() / "Contents" / "Resources";
 	this->addAssetDirectory(path);
 	
-//	mParticleSystem = new ParticleSystem();
+//	TriMesh mMesh;
+//	ObjLoader loader( (DataSourceRef) loadAsset("meshes/jewel01a.obj") );
+//	loader.load( &mMesh );
+//	mVBO = gl::VboMesh( mMesh );
+	
 	mLineSystem = new LineSystem();
-	mLineSystem->setup(50000, 1);
-	mSpriteSystem = new SpriteSystem("../Resources/images/particle-small.png");
-	mSpriteSystem->setup(50000, 1);
+	mLineSystem->setup(100000, 2);
+	mSpriteSystem = new SpriteSystem("images/particle-small.png");
+	mSpriteSystem->setup(5000);
+	mMeshSystem = new MeshSystem("meshes/Jewel01b.obj");
+	mMeshSystem->setup(500, 1);
+	mMeshSystem2 = new MeshSystem("meshes/Leaf01e.obj");
+	mMeshSystem2->setup(1000, 1);
+	_rot = 0.0f;
+	mContinue = true;
 	
 //	mGpuSystem = new GpuParticleSystem(262144);
 //	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
 	
 	pMouse = getWindowCenter();
 	mEmitter = new Emitter(100, pMouse, Vec2f(0,-10.0f));
+	mEmitter2 = new Emitter(5, pMouse, Vec2f(0,-10.0f));
+	mEmitter3 = new Emitter(15, pMouse, Vec2f(0,-5.0f));
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset("shaders/pass.vert"), app::loadAsset( "shaders/blur.frag" ) );
@@ -57,26 +71,52 @@ void CinderMultiParticlesApp::setup()
 }
 
 void CinderMultiParticlesApp::update()
-{
+{	
+	if(!mContinue) return;
+	
 	mEmitter->setPosition(pMouse);
+	mEmitter2->setPosition(pMouse);
+	mEmitter3->setPosition(pMouse);
 	
 	mLineSystem->emit(*mEmitter);
 	mLineSystem->update();
+	
 	mSpriteSystem->emit(*mEmitter);
 	mSpriteSystem->update();
+
+	mMeshSystem->emit(*mEmitter2);
+	mMeshSystem->update();
+	mMeshSystem2->emit(*mEmitter3);
+	mMeshSystem2->update();
 	
 //	mGpuSystem->update();
 }
 
-void CinderMultiParticlesApp::draw()
+void CinderMultiParticlesApp::drawSystems()
 {
-	gl::clear();
-	gl::color(1,1,1,1);
-	gl::enableAdditiveBlending();
 	mLineSystem->draw();
 	mSpriteSystem->draw();
+	mMeshSystem->draw();
+	mMeshSystem2->draw();
+}
+
+void CinderMultiParticlesApp::draw()
+{
+	if(!mContinue) return;
+	
 //	mGpuSystem->draw();
-	/*
+	
+//	gl::color(1,1,1,1);
+//	gl::pushModelView();
+//	gl::translate(200,200,0);
+//	gl::scale(20,20,20);
+//	glRotatef(_rot, 0.0f,1.0f,0.0f);
+//	gl::draw(mVBO);
+//	gl::popModelView();
+//	_rot += 1.0f;
+	
+//	mContinue = false;
+	
 	if(mEnableFade){
 		// first
 		gl::clear();
@@ -85,8 +125,9 @@ void CinderMultiParticlesApp::draw()
 		gl::color(0.91f,0.80f,0.88f,1.0f);
 		gl::draw(mFade->getTexture(0), Rectf( 0, 0, getWindowWidth(), getWindowHeight() ) );
 		mFade->unbindTexture();
-		gl::color( ColorA::white() );
-		mParticleSystem->draw();
+		gl::color(1,1,1,1);
+		
+		this->drawSystems();
 		
 		Area inverted = mFade->getBounds();
 		inverted.setY1(gl::getViewport().getY2());
@@ -95,9 +136,10 @@ void CinderMultiParticlesApp::draw()
 	}
 	else if(!mEnableGaussianBlur){
 		gl::clear();
-		gl::color( ColorA::white() );
+		gl::color(1,1,1,1);
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
-		mParticleSystem->draw();
+		
+		this->drawSystems();
 	}
 	else{
 		// FIRST render pass...
@@ -106,14 +148,16 @@ void CinderMultiParticlesApp::draw()
 		gl::clear();
 		gl::color( ColorA::white() );
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),false);
-		mParticleSystem->draw();
+		
+		this->drawSystems();
+		
 		mBlurX->unbindFramebuffer();
 		
 		// SECOND render pass...
 		//============================================================
 		mBlurY->bindFramebuffer();
 		gl::clear();
-		gl::color( ColorA::white() );
+		gl::color(1,1,1,1);
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),false);
 		mBlurX->bindTexture(GL_TEXTURE_2D, 0);
 		mShader->bind();
@@ -127,7 +171,7 @@ void CinderMultiParticlesApp::draw()
 		// THIRD render pass...
 		//============================================================
 		gl::clear();
-		gl::color( ColorA::white() );
+		gl::color(1,1,1,1);
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
 		mBlurY->bindTexture(GL_TEXTURE_2D, 0);
 		mShader->bind();
@@ -137,7 +181,6 @@ void CinderMultiParticlesApp::draw()
 		mBlurY->unbindTexture();
 		mShader->unbind();
 	}
-*/
 }
 
 void CinderMultiParticlesApp::resize( ResizeEvent event )
@@ -190,6 +233,9 @@ void CinderMultiParticlesApp::keyDown( KeyEvent event )
 			break;
 		case 'b':
 			mEnableGaussianBlur = !mEnableGaussianBlur;
+			break;
+		case 'p':
+			mContinue = true;
 			break;
 		case 's':
 			// app::writeImage( getHomeDirectory() / "cinder" / "particles" / ("snapshot-" + toString( this->getElapsedFrames() ) + ".png" ), copyWindowSurface() );

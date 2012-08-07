@@ -4,6 +4,7 @@
 
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/GlslProg.h"
+#include "cinder/gl/Vbo.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/params/Params.h"
@@ -14,6 +15,7 @@
 #include "Emitter.h"
 #include "LineSystem.h"
 #include "SpriteSystem.h"
+#include "MeshSystem.h"
 #include "GpuParticleSystem.h"
 
 /**
@@ -30,6 +32,7 @@ public:
 	void	setup();
 	void	update();
 	void	draw();	
+	void	drawSystems();
 	void	addParticles( ci::Vec2f pos, ci::Vec2f vel );
 	void	keyDown( ci::app::KeyEvent event );
 	void	mouseMove( ci::app::MouseEvent event );
@@ -40,23 +43,29 @@ public:
 	
 	ci::CameraPersp		mCam;
 	ci::Arcball			mArcball;
+	ci::gl::VboMesh		mVBO;
 	
 private:
 	ParticleSystem*				mLineSystem;
 	ParticleSystem*				mSpriteSystem;
+	ParticleSystem*				mMeshSystem;
+	ParticleSystem*				mMeshSystem2;
 	GpuParticleSystem*			mGpuSystem;
 	Emitter*					mEmitter;
+	Emitter*					mEmitter2;
+	Emitter*					mEmitter3;
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
 	ci::gl::Fbo*				mFade;
 	ci::gl::Texture*			mFadeTexture;
-//	ci::params::InterfaceGl*	mParams;
 	std::vector<std::thread*>	mThreads;
-	
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;
 	bool						mEnableGaussianBlur;
 	bool						mEnableFade;
+	
+	float _rot;
+	bool mContinue;
 };

@@ -11,7 +11,7 @@
 using namespace ci;
 using namespace ci::app;
 
-ParticleSystem::ParticleSystem() : mMaxParticles(0), mRunning(false), mCurrentIndex(0)
+ParticleSystem::ParticleSystem() : mMaxParticles(0), mRunning(false), mCurrentIndex(0), mInitialized(false)
 {	
 }
 
@@ -46,10 +46,14 @@ void ParticleSystem::setup(const unsigned int particles, const int threads)
 			mThreads.push_back(t);
 		}
 	}
+	
+	mInitialized = true;
 }
 
 void ParticleSystem::update()
 {
+	if(!mInitialized) return;
+	
 	if(mThreads.size() <= 0){
 		this->updateKernel(0, mMaxParticles);
 	}

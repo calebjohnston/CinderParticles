@@ -16,20 +16,6 @@ LineSystem::LineSystem()
 	mPositionArray(NULL),
 	mNumCache(NULL)
 {
-	// allocate memory
-	try {
-		mParticles = (Line2D*) calloc(sizeof(Line2D), this->mMaxParticles);
-		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
-		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 8);
-	} catch(...) {
-		ci::app::console() << "Unable to allocate data" << std::endl;
-	}
-	
-	mWindowSize = app::App::get()->getWindowSize();
-	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
-	
-	// setup NumberCache
-	mNumCache = new NumberCache(2048);	// use no more than 2 kbytes
 }
 
 LineSystem::~LineSystem() 
@@ -40,9 +26,65 @@ LineSystem::~LineSystem()
 	delete mNumCache;
 }
 
+void LineSystem::setup(const unsigned int particles, const int threads)
+{
+	ParticleSystem::setup(particles, threads);
+	
+	// allocate memory
+	try {
+		mParticles = (Line2D*) calloc(sizeof(Line2D), this->mMaxParticles);
+		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
+		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 8);
+	} catch(...) {
+		ci::app::console() << "Unable to allocate data" << std::endl;
+		return;
+	}
+	
+	mWindowSize = app::App::get()->getWindowSize();
+	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
+	
+	// setup NumberCache
+	mNumCache = new NumberCache(2048);	// use no more than 2 kbytes
+}
+
 void LineSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
 {
+	if(!mInitialized) return;
+	
 	size_t index, vi, ci;
+	for(index = start_index; index < end_index; index++){
+		// accumulate system forces
+		mParticles[index].velocity.y += 0.15;
+		
+		// perform integration
+		mParticles[index].start.x = mParticles[index].end.x;
+		mParticles[index].start.y = mParticles[index].end.y;
+		mParticles[index].end.x = mParticles[index].start.x + mParticles[index].velocity.x;
+		mParticles[index].end.y = mParticles[index].start.y + mParticles[index].velocity.y;
+		
+		// fade out
+		mParticles[index].alpha -= 0.01;
+		
+		// update the vertex array
+		vi = index * 4;
+		mPositionArray[vi] = mParticles[index].start.x;
+		mPositionArray[vi+1] = mParticles[index].start.y;
+		mPositionArray[vi+2] = mParticles[index].end.x;
+		mPositionArray[vi+3] = mParticles[index].end.y;
+		
+		// update the color array
+		ci = index * 8;
+		mColorArray[ci] = mParticles[index].alpha;
+		mColorArray[ci+1] = mParticles[index].alpha * 0.5f;
+		mColorArray[ci+2] = 1.0 - mParticles[index].alpha;
+		mColorArray[ci+3] = mParticles[index].alpha;
+		
+		mColorArray[ci+4] = mParticles[index].alpha;
+		mColorArray[ci+5] = mParticles[index].alpha * 0.5f;
+		mColorArray[ci+6] = 1.0 - mParticles[index].alpha;
+		mColorArray[ci+7] = mParticles[index].alpha;
+	}
+	/*
 	for(index = start_index; index < end_index; index++){
 		Line2D* line = mParticles + index;
 
@@ -56,7 +98,7 @@ void LineSystem::updateKernel(const unsigned int start_index, const unsigned int
 		line->end.y = line->start.y + line->velocity.y;
 		
 		// fade out
-		line->alpha -= 0.005;
+		line->alpha -= 0.01;
 		
 		// update the vertex array
 		vi = index * 4;
@@ -77,16 +119,21 @@ void LineSystem::updateKernel(const unsigned int start_index, const unsigned int
 		mColorArray[ci+6] = 1.0 - line->alpha;
 		mColorArray[ci+7] = line->alpha;
 	}
+	*/
 }
 
 void LineSystem::emit(const Emitter& emitter)
 {	
+	if(!mInitialized) return;
+	
 	// update from emitter
 	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
 }
 
 void LineSystem::update()
-{	
+{
+	if(!mInitialized) return;
+	
 	mNumCache->computeRandomVectors();	// update number cache
 	
 	// executes compute kernel (or relies upon threads to do so)
@@ -95,6 +142,8 @@ void LineSystem::update()
 
 void LineSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
 {
+	if(!mInitialized) return;
+	
 	for(unsigned int i=0; i<amount; i++){
 		Vec2f p = mNumCache->nextPosition();
 		Vec2f v = mNumCache->nextVelocity();
@@ -107,6 +156,8 @@ void LineSystem::addParticles(const unsigned int amount, const Vec2f &pos, const
 
 void LineSystem::draw()
 {	
+	if(!mInitialized) return;
+	
 	ParticleSystem::preDraw();
 	
 	glEnable(GL_BLEND);

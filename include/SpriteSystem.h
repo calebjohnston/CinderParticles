@@ -15,7 +15,7 @@ public:
 	virtual ~SpriteSystem();
 	
 	/** Cinder update callback */
-	// virtual void setup(const unsigned int particles, const int threads = 0);
+	virtual void setup(const unsigned int particles, const int threads = 0);
 	
 	/** Cinder update callback */
 	virtual void update();
@@ -58,7 +58,4 @@ protected:
 	NumberCache* mNumCache;
 
 };
-
-
-
 

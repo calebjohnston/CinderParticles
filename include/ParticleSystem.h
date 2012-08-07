@@ -48,6 +48,7 @@ public:
 	
 protected:
 	bool mRunning;
+	bool mInitialized;
 	unsigned int	mMaxParticles;
 	unsigned int	mCurrentIndex;
 	boost::shared_mutex	mMutex;

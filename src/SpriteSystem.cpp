@@ -14,27 +14,12 @@ SpriteSystem::SpriteSystem(const std::string& filepath)
 	mPositionArray(NULL),
 	mNumCache(NULL)
 {	
-	// allocate memory
-	try {
-		mParticles = (PointSprite*) calloc(sizeof(PointSprite), this->mMaxParticles);
-		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2);
-		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
-	} catch(...) {
-		app::console() << "Unable to allocate data" << std::endl;
-	}
-	
-	mWindowSize = app::App::get()->getWindowSize();
-	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
-	
 	gl::Texture::Format format;
 	format.enableMipmapping(true);
 	format.setWrap(GL_CLAMP,GL_CLAMP);
 	format.setMinFilter(GL_NEAREST);
 	format.setMagFilter(GL_NEAREST);
 	mPointTexture = gl::Texture( loadImage( app::loadAsset(filepath) ), format );
-	
-	// setup NumberCache
-	mNumCache = new NumberCache(2048);	// maximum size of 2 kilobytes
 }
 
 SpriteSystem::~SpriteSystem() 
@@ -45,8 +30,31 @@ SpriteSystem::~SpriteSystem()
 	delete mNumCache;
 }
 
+void SpriteSystem::setup(const unsigned int particles, const int threads)
+{
+	ParticleSystem::setup(particles, threads);
+	
+	// allocate memory
+	try {
+		mParticles = (PointSprite*) calloc(sizeof(PointSprite), this->mMaxParticles);
+		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 2);
+		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
+	} catch(...) {
+		app::console() << "Unable to allocate data" << std::endl;
+		return;
+	}
+	
+	mWindowSize = app::App::get()->getWindowSize();
+	mInvWindowSize = Vec2f( 1.0f / mWindowSize.x, 1.0f / mWindowSize.y );
+	
+	// setup NumberCache
+	mNumCache = new NumberCache(2048);	// maximum size of 2 kilobytes
+}
+
 void SpriteSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
 {
+	if(!mInitialized) return;
+	
 	for(size_t index = start_index; index < end_index; index++){
 		PointSprite* point = mParticles + index;
 		// accumulate system forces
@@ -66,6 +74,8 @@ void SpriteSystem::updateKernel(const unsigned int start_index, const unsigned i
 
 void SpriteSystem::update()
 {	
+	if(!mInitialized) return;
+	
 	mNumCache->computeRandomVectors();	// update number cache
 	
 	// executes compute kernel (or relies upon threads to do so)
@@ -74,11 +84,15 @@ void SpriteSystem::update()
 
 void SpriteSystem::emit(const Emitter& emitter)
 {
+	if(!mInitialized) return;
+	
 	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
 }
 
 void SpriteSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
 {
+	if(!mInitialized) return;
+	
 	for(unsigned int i=0; i<amount; i++){
 		Vec2f p = mNumCache->nextPosition();
 		Vec2f v = mNumCache->nextVelocity();
@@ -91,6 +105,8 @@ void SpriteSystem::addParticles(const unsigned int amount, const Vec2f &pos, con
 
 void SpriteSystem::draw()
 {	
+	if(!mInitialized) return;
+	
 	ParticleSystem::preDraw();
 	
 	glEnable(GL_BLEND);
