@@ -60,11 +60,6 @@ void GpuParticleSystem::emit(const Emitter& emitter)
 	
 }
 
-void GpuParticleSystem::addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel)
-{
-	
-}
-
 void GpuParticleSystem::update()
 {	
 	gl::setMatricesWindow( mFBO[0].getSize(), false ); // false to prevent vertical flipping

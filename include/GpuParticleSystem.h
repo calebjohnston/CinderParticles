@@ -29,9 +29,6 @@ public:
 	/** Cinder draw callback */
 	virtual void draw();
 	
-	/** Interface for updating the system itself */
-	virtual void addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel);
-	
 	/** Emitter interface */
 	virtual void emit(const Emitter& emitter);
 	

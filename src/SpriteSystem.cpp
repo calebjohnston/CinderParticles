@@ -49,6 +49,8 @@ void SpriteSystem::setup(const unsigned int particles, const int threads)
 	
 	// setup NumberCache
 	mNumCache = new NumberCache(2048);	// maximum size of 2 kilobytes
+	
+	mInitialized = true;
 }
 
 void SpriteSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
@@ -65,8 +67,8 @@ void SpriteSystem::updateKernel(const unsigned int start_index, const unsigned i
 		point->position.y += point->velocity.y;
 		
 		// fade out and update color
-		point->color.r = point->color.a;
-		point->color.g = point->color.a * 0.5f;
+		point->color.r = point->color.a * 0.25f;
+		point->color.g = point->color.a * 0.85f;
 		point->color.b = 1.0 - point->color.a;
 		point->color.a -= 0.01;
 	}
@@ -86,14 +88,9 @@ void SpriteSystem::emit(const Emitter& emitter)
 {
 	if(!mInitialized) return;
 	
-	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
-}
-
-void SpriteSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
-{
-	if(!mInitialized) return;
-	
-	for(unsigned int i=0; i<amount; i++){
+	Vec2f pos = emitter.getPosition();
+	Vec2f vel = emitter.getDirection();
+	for(unsigned int i=0; i<emitter.getRate(); i++){
 		Vec2f p = mNumCache->nextPosition();
 		Vec2f v = mNumCache->nextVelocity();
 		mParticles[mCurrentIndex++].init(pos.x + p.x, pos.y + p.y, vel.x + v.x, vel.y + v.y);

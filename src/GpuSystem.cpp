@@ -24,11 +24,6 @@ void GpuSystem::emit(const Emitter& emitter)
 {
 }
 
-void GpuSystem::addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel)
-{
-	
-}
-
 void GpuSystem::update()
 {	
 	GpuParticleSystem::update();

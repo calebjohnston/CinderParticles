@@ -45,6 +45,8 @@ void LineSystem::setup(const unsigned int particles, const int threads)
 	
 	// setup NumberCache
 	mNumCache = new NumberCache(2048);	// use no more than 2 kbytes
+	
+	mInitialized = true;
 }
 
 void LineSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
@@ -53,41 +55,8 @@ void LineSystem::updateKernel(const unsigned int start_index, const unsigned int
 	
 	size_t index, vi, ci;
 	for(index = start_index; index < end_index; index++){
-		// accumulate system forces
-		mParticles[index].velocity.y += 0.15;
-		
-		// perform integration
-		mParticles[index].start.x = mParticles[index].end.x;
-		mParticles[index].start.y = mParticles[index].end.y;
-		mParticles[index].end.x = mParticles[index].start.x + mParticles[index].velocity.x;
-		mParticles[index].end.y = mParticles[index].start.y + mParticles[index].velocity.y;
-		
-		// fade out
-		mParticles[index].alpha -= 0.01;
-		
-		// update the vertex array
-		vi = index * 4;
-		mPositionArray[vi] = mParticles[index].start.x;
-		mPositionArray[vi+1] = mParticles[index].start.y;
-		mPositionArray[vi+2] = mParticles[index].end.x;
-		mPositionArray[vi+3] = mParticles[index].end.y;
-		
-		// update the color array
-		ci = index * 8;
-		mColorArray[ci] = mParticles[index].alpha;
-		mColorArray[ci+1] = mParticles[index].alpha * 0.5f;
-		mColorArray[ci+2] = 1.0 - mParticles[index].alpha;
-		mColorArray[ci+3] = mParticles[index].alpha;
-		
-		mColorArray[ci+4] = mParticles[index].alpha;
-		mColorArray[ci+5] = mParticles[index].alpha * 0.5f;
-		mColorArray[ci+6] = 1.0 - mParticles[index].alpha;
-		mColorArray[ci+7] = mParticles[index].alpha;
-	}
-	/*
-	for(index = start_index; index < end_index; index++){
 		Line2D* line = mParticles + index;
-
+		
 		// accumulate system forces
 		line->velocity.y += 0.15;
 		
@@ -109,17 +78,16 @@ void LineSystem::updateKernel(const unsigned int start_index, const unsigned int
 		
 		// update the color array
 		ci = index * 8;
-		mColorArray[ci] = line->alpha;
-		mColorArray[ci+1] = line->alpha * 0.5f;
-		mColorArray[ci+2] = 1.0 - line->alpha;
+		mColorArray[ci] = line->alpha * 0.25f;
+		mColorArray[ci+1] = line->alpha * 0.75f;
+		mColorArray[ci+2] = 1.0f - (line->alpha * 0.5f);
 		mColorArray[ci+3] = line->alpha;
 		
-		mColorArray[ci+4] = line->alpha;
-		mColorArray[ci+5] = line->alpha * 0.5f;
-		mColorArray[ci+6] = 1.0 - line->alpha;
+		mColorArray[ci+4] = line->alpha * 0.25f;
+		mColorArray[ci+5] = line->alpha * 0.75f;;
+		mColorArray[ci+6] = 1.0f - (line->alpha * 0.5f);
 		mColorArray[ci+7] = line->alpha;
 	}
-	*/
 }
 
 void LineSystem::emit(const Emitter& emitter)
@@ -127,7 +95,16 @@ void LineSystem::emit(const Emitter& emitter)
 	if(!mInitialized) return;
 	
 	// update from emitter
-	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
+	Vec2f pos = emitter.getPosition();
+	Vec2f vel = emitter.getDirection();
+	for(unsigned int i=0; i<emitter.getRate(); i++){
+		Vec2f p = mNumCache->nextPosition();
+		Vec2f v = mNumCache->nextVelocity();
+		mParticles[mCurrentIndex++].init(pos.x + p.x, pos.y + p.y, vel.x + v.x, vel.y + v.y);
+		if(mCurrentIndex >= mMaxParticles){
+			mCurrentIndex = 0;
+		}
+	}
 }
 
 void LineSystem::update()
@@ -138,20 +115,6 @@ void LineSystem::update()
 	
 	// executes compute kernel (or relies upon threads to do so)
 	ParticleSystem::update();
-}
-
-void LineSystem::addParticles(const unsigned int amount, const Vec2f &pos, const Vec2f &vel)
-{
-	if(!mInitialized) return;
-	
-	for(unsigned int i=0; i<amount; i++){
-		Vec2f p = mNumCache->nextPosition();
-		Vec2f v = mNumCache->nextVelocity();
-		mParticles[mCurrentIndex++].init(pos.x + p.x, pos.y + p.y, vel.x + v.x, vel.y + v.y);
-		if(mCurrentIndex >= mMaxParticles){
-			mCurrentIndex = 0;
-		}
-	}
 }
 
 void LineSystem::draw()

@@ -28,9 +28,6 @@ public:
 	/** Complies with emitter interface */
 	virtual void emit(const Emitter& emitter);
 	
-	/** */
-	virtual void addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel);
-	
 	struct PointSprite {
 		ci::Vec2f position;
 		ci::Vec2f velocity;

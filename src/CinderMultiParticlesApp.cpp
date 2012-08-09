@@ -47,13 +47,13 @@ void CinderMultiParticlesApp::setup()
 	_rot = 0.0f;
 	mContinue = true;
 	
-//	mGpuSystem = new GpuParticleSystem(262144);
-//	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
+	mGpuSystem = new GpuParticleSystem(262144);
+	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
 	
 	pMouse = getWindowCenter();
-	mEmitter = new Emitter(100, pMouse, Vec2f(0,-10.0f));
-	mEmitter2 = new Emitter(5, pMouse, Vec2f(0,-10.0f));
-	mEmitter3 = new Emitter(15, pMouse, Vec2f(0,-5.0f));
+	mEmitter = new Emitter(100, pMouse, Vec2f(0,-15.0f));
+	mEmitter2 = new Emitter(5, pMouse, Vec2f(-0.5f,-10.0f));
+	mEmitter3 = new Emitter(15, pMouse, Vec2f(0.9f,-0.5f));
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset("shaders/pass.vert"), app::loadAsset( "shaders/blur.frag" ) );
@@ -74,22 +74,22 @@ void CinderMultiParticlesApp::update()
 {	
 	if(!mContinue) return;
 	
-	mEmitter->setPosition(pMouse);
-	mEmitter2->setPosition(pMouse);
-	mEmitter3->setPosition(pMouse);
+//	mEmitter->setPosition(pMouse);
+//	mEmitter2->setPosition(pMouse);
+//	mEmitter3->setPosition(pMouse);
+//	
+//	mLineSystem->emit(*mEmitter);
+//	mLineSystem->update();
+//	
+//	mSpriteSystem->emit(*mEmitter);
+//	mSpriteSystem->update();
+//
+//	mMeshSystem->emit(*mEmitter2);
+//	mMeshSystem->update();
+//	mMeshSystem2->emit(*mEmitter3);
+//	mMeshSystem2->update();
 	
-	mLineSystem->emit(*mEmitter);
-	mLineSystem->update();
-	
-	mSpriteSystem->emit(*mEmitter);
-	mSpriteSystem->update();
-
-	mMeshSystem->emit(*mEmitter2);
-	mMeshSystem->update();
-	mMeshSystem2->emit(*mEmitter3);
-	mMeshSystem2->update();
-	
-//	mGpuSystem->update();
+	mGpuSystem->update();
 }
 
 void CinderMultiParticlesApp::drawSystems()
@@ -104,7 +104,12 @@ void CinderMultiParticlesApp::draw()
 {
 	if(!mContinue) return;
 	
-//	mGpuSystem->draw();
+	gl::setMatrices( mCam );
+	gl::setViewport( getWindowBounds() );
+	gl::clear();
+	
+	mGpuSystem->draw();
+	return;
 	
 //	gl::color(1,1,1,1);
 //	gl::pushModelView();
@@ -212,13 +217,13 @@ void CinderMultiParticlesApp::resize( ResizeEvent event )
 	
 	// -- 
 	{
-//		mArcball.setWindowSize( getWindowSize() );
-//		mArcball.setCenter( Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f ) );
-//		mArcball.setRadius( getWindowHeight() / 2.0f );
-//		
-//		mCam.lookAt( Vec3f( 0.0f, 0.0f, -450.0f ), Vec3f::zero() );
-//		mCam.setPerspective( 60.0f, getWindowAspectRatio(), 0.1f, 2000.0f );
-//		gl::setMatrices( mCam );
+		mArcball.setWindowSize( getWindowSize() );
+		mArcball.setCenter( Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f ) );
+		mArcball.setRadius( getWindowHeight() / 2.0f );
+		
+		mCam.lookAt( Vec3f( 0.0f, 0.0f, -450.0f ), Vec3f::zero() );
+		mCam.setPerspective( 60.0f, getWindowAspectRatio(), 0.1f, 2000.0f );
+		gl::setMatrices( mCam );
 	}
 }
 

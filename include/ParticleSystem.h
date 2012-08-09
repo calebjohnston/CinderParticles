@@ -30,9 +30,6 @@ public:
 	/** Might need to refactor this... hmmmm */
 	virtual void spawnThread(const unsigned int start_index, const unsigned int end_index, const int id);
 	
-	/** Interface for updating the system itself */
-	virtual void addParticles(const unsigned int amount, const ci::Vec2f &pos, const ci::Vec2f &vel) = 0;
-	
 	/** Emitter interface */
 	virtual void emit(const Emitter& emitter) = 0;
 	

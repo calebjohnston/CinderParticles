@@ -16,7 +16,7 @@ MeshSystem::MeshSystem(const std::string& filepath)
 	mNumCache(NULL),
 	mMesh(NULL),
 	mVBO(NULL)
-{		
+{
 	mMesh = new TriMesh();
 	ObjLoader loader( (DataSourceRef) app::loadAsset(filepath) );
 	loader.load( mMesh );
@@ -37,7 +37,7 @@ void MeshSystem::setup(const unsigned int particles, const int threads)
 	
 	// allocate memory
 	try {
-		mParticles = (MeshParticle*) calloc(sizeof(MeshParticle), mMaxParticles);
+		mParticles = (MeshParticle*) calloc(sizeof(MeshParticle), particles);
 	} catch(...) {
 		app::console() << "Unable to allocate data" << std::endl;
 		return;
@@ -59,7 +59,7 @@ void MeshSystem::setup(const unsigned int particles, const int threads)
 
 void MeshSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)
 {
-	if(!mInitialized && mVBO) return;
+	if(!mInitialized || !mVBO) return;
 	
 	for(size_t index = start_index; index < end_index; index++){
 		MeshParticle* mesh = mParticles + index;
@@ -78,16 +78,16 @@ void MeshSystem::updateKernel(const unsigned int start_index, const unsigned int
 		mesh->position += mesh->velocity;
 		
 		// fade out and update color
-		mesh->color.r = mesh->color.a;
-		mesh->color.g = mesh->color.a * 0.45f;
-		mesh->color.b = 0.5 - mesh->color.a * 0.5f;// 1.0 - mesh->color.a;
+		mesh->color.r = mesh->color.a * 0.25f;;
+		mesh->color.g = mesh->color.a * 0.75f;
+		mesh->color.b = 0.5 - mesh->color.a * 0.35f;// 1.0 - mesh->color.a;
 		mesh->color.a -= 0.01;
 	}
 }
 
 void MeshSystem::update()
 {	
-	if(!mInitialized && mVBO) return;
+	if(!mInitialized || !mVBO) return;
 	
 	mNumCache->computeRandomVectors();	// update number cache
 	
@@ -97,22 +97,17 @@ void MeshSystem::update()
 
 void MeshSystem::emit(const Emitter& emitter)
 {
-	if(!mInitialized && mVBO) return;
+	if(!mInitialized || !mVBO) return;
 	
-	this->addParticles(emitter.getRate(), emitter.getPosition(), emitter.getDirection());
-}
-
-void MeshSystem::addParticles(const unsigned int amount, const Vec2f& pos, const Vec2f& vel)
-{
-	if(!mInitialized && mVBO) return;
-	
-	for(unsigned int i=0; i<amount; i++){
+	Vec2f pos = emitter.getPosition();
+	Vec2f vel = emitter.getDirection();
+	for(unsigned int i=0; i<emitter.getRate(); i++){
 		Vec2f p = mNumCache->nextPosition();
 		Vec2f v = mNumCache->nextVelocity();
 		mParticles[mCurrentIndex++].init(mVBO, 
 										 Vec3f(pos.x + p.x, pos.y + p.y, 0.0),
 										 Vec3f(vel.x + v.x, vel.y + v.y, 0.0), 
-										 Vec3f(6.0f,6.0f,6.0f), 
+										 Vec3f(10.0f,10.0f,10.0f), 
 										 Vec3f(-0.05f, -0.07f, -0.03f), 
 										 Vec3f(0.0,1.0,0), 0.1f, 1.0f,
 										 ColorA::white());
@@ -125,7 +120,7 @@ void MeshSystem::addParticles(const unsigned int amount, const Vec2f& pos, const
 
 void MeshSystem::draw()
 {	
-	if(!mInitialized && mVBO) return;
+	if(!mInitialized || !mVBO) return;
 	
 	ParticleSystem::preDraw();
 	

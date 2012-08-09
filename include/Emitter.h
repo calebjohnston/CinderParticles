@@ -29,9 +29,6 @@ public:
 	ci::Vec2f getDirection() const { return mDirection; }
 	unsigned int getRate() const { return mEmitterRate; }
 	
-	// Not sure exactly how this will be handled yet...
-//	virtual void update(ParticleSystem& system);
-	
 protected:	
 	ci::Vec2f mPosition;
 	ci::Vec2f mDirection;

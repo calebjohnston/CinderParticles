@@ -29,13 +29,10 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::setup(const unsigned int particles, const int threads)
 {
-	mRunning = true;
 	mMaxParticles = particles;
 	mCurrentIndex = 0;
-	if(threads <= 0){
-		// nothing?
-	}
-	else{
+	
+	if(threads > 0){
 		unsigned int workload_size = mMaxParticles / threads;
 		unsigned int start_index, end_index;
 		for(int i = 0; i < threads; ++i){
@@ -45,14 +42,15 @@ void ParticleSystem::setup(const unsigned int particles, const int threads)
 			std::thread* t = new std::thread(boost::bind(&ParticleSystem::spawnThread, this, _1, _2, _3), start_index, end_index, i);
 			mThreads.push_back(t);
 		}
+		
 	}
 	
-	mInitialized = true;
+	mRunning = true;
 }
 
 void ParticleSystem::update()
 {
-	if(!mInitialized) return;
+	if(!mRunning) return;
 	
 	if(mThreads.size() <= 0){
 		this->updateKernel(0, mMaxParticles);
