@@ -37,23 +37,23 @@ void CinderMultiParticlesApp::setup()
 //	mVBO = gl::VboMesh( mMesh );
 	
 	mLineSystem = new LineSystem();
-	mLineSystem->setup(100000, 2);
+	mLineSystem->setup(100000);
 	mSpriteSystem = new SpriteSystem("images/particle-small.png");
 	mSpriteSystem->setup(5000);
 	mMeshSystem = new MeshSystem("meshes/Jewel01b.obj");
 	mMeshSystem->setup(500, 1);
 	mMeshSystem2 = new MeshSystem("meshes/Leaf01e.obj");
-	mMeshSystem2->setup(1000, 1);
+	mMeshSystem2->setup(5000, 1);
 	_rot = 0.0f;
 	mContinue = true;
 	
-	mGpuSystem = new GpuParticleSystem(262144);
-	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
+//	mGpuSystem = new GpuParticleSystem(262144);
+//	mGpuSystem->setup("shaders/pos.vert", "shaders/pos.frag", "shaders/vDispl.vert", "shaders/vDispl.frag");
 	
 	pMouse = getWindowCenter();
-	mEmitter = new Emitter(100, pMouse, Vec2f(0,-15.0f));
+	mEmitter = new Emitter(1000, pMouse, Vec2f(0,-15.0f));
 	mEmitter2 = new Emitter(5, pMouse, Vec2f(-0.5f,-10.0f));
-	mEmitter3 = new Emitter(15, pMouse, Vec2f(0.9f,-0.5f));
+	mEmitter3 = new Emitter(50, pMouse, Vec2f(0.9f,-0.5f));
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset("shaders/pass.vert"), app::loadAsset( "shaders/blur.frag" ) );
@@ -76,27 +76,27 @@ void CinderMultiParticlesApp::update()
 	
 //	mEmitter->setPosition(pMouse);
 //	mEmitter2->setPosition(pMouse);
-//	mEmitter3->setPosition(pMouse);
-//	
+	mEmitter3->setPosition(pMouse);
+//
 //	mLineSystem->emit(*mEmitter);
 //	mLineSystem->update();
-//	
+//
 //	mSpriteSystem->emit(*mEmitter);
 //	mSpriteSystem->update();
 //
 //	mMeshSystem->emit(*mEmitter2);
 //	mMeshSystem->update();
-//	mMeshSystem2->emit(*mEmitter3);
-//	mMeshSystem2->update();
+	mMeshSystem2->emit(*mEmitter3);
+	mMeshSystem2->update();
 	
-	mGpuSystem->update();
+//	mGpuSystem->update();
 }
 
 void CinderMultiParticlesApp::drawSystems()
 {
-	mLineSystem->draw();
-	mSpriteSystem->draw();
-	mMeshSystem->draw();
+//	mLineSystem->draw();
+//	mSpriteSystem->draw();
+//	mMeshSystem->draw();
 	mMeshSystem2->draw();
 }
 
@@ -104,12 +104,12 @@ void CinderMultiParticlesApp::draw()
 {
 	if(!mContinue) return;
 	
-	gl::setMatrices( mCam );
-	gl::setViewport( getWindowBounds() );
-	gl::clear();
-	
-	mGpuSystem->draw();
-	return;
+//	gl::setMatrices( mCam );
+//	gl::setViewport( getWindowBounds() );
+//	gl::clear();
+//	
+//	mGpuSystem->draw();
+//	return;
 	
 //	gl::color(1,1,1,1);
 //	gl::pushModelView();

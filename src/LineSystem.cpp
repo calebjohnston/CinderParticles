@@ -128,7 +128,7 @@ void LineSystem::draw()
 	glDisable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	glEnable(GL_LINE_SMOOTH);
-	glLineWidth(4.0);
+	glLineWidth(2.0);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, mPositionArray);
