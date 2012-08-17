@@ -186,8 +186,9 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */,
-				3C0999BC15DDEDEA007D4035 /* VaoMeshSystem.cpp */,
+				00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */,
+				3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */,
+				3C4FAAB815D8A3D600E0BE05 /* SpriteSheetTestApp.cpp */,
 				3C4FAABD15D8A4CE00E0BE05 /* SpriteSheet.cpp */,
 				3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */,
 				3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */,
@@ -197,9 +198,8 @@
 				3CC9BB3615C251C90017D3AE /* LineSystem.cpp */,
 				3CC9BB3815C251C90017D3AE /* SpriteSystem.cpp */,
 				0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */,
-				00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */,
-				3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */,
-				3C4FAAB815D8A3D600E0BE05 /* SpriteSheetTestApp.cpp */,
+				3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */,
+				3C0999BC15DDEDEA007D4035 /* VaoMeshSystem.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -256,8 +256,9 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				3C0999C215DDEDF5007D4035 /* VaoMesh.h */,
-				3C0999C315DDEDF5007D4035 /* VaoMeshSystem.h */,
+				4101ECEC157D297200EF2816 /* CinderParticlesApp.h */,
+				3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */,
+				3C4FAABB15D8A3EC00E0BE05 /* SpriteSheetTestApp.h */,
 				3C4FAABC15D8A4C400E0BE05 /* SpriteSheet.h */,
 				3C6605DD15CF48E80004B31D /* MeshSystem.h */,
 				3C09D57815CEFF2F007BEB31 /* GpuParticleSystem.h */,
@@ -268,9 +269,8 @@
 				3CC9BB3315C251BD0017D3AE /* LineSystem.h */,
 				3CC9BB3515C251BD0017D3AE /* SpriteSystem.h */,
 				0026CD211197C267007D86C6 /* ParticleSystem.h */,
-				4101ECEC157D297200EF2816 /* CinderParticlesApp.h */,
-				3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */,
-				3C4FAABB15D8A3EC00E0BE05 /* SpriteSheetTestApp.h */,
+				3C0999C215DDEDF5007D4035 /* VaoMesh.h */,
+				3C0999C315DDEDF5007D4035 /* VaoMeshSystem.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";

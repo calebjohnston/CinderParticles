@@ -73,8 +73,12 @@ protected:
 	NumberCache* mNumCache;
 	ci::TriMesh* mMesh;
 	ci::gl::GlslProg mShader;
-	ci::Surface32f mMeshData;
-	ci::gl::Texture mMeshTexture;
+	ci::Surface32f mPositionImage;
+	ci::Surface32f mRotationImage;
+	ci::Surface32f mScaleImage;
+	ci::gl::Texture mMeshPositions;
+	ci::gl::Texture mMeshRotations;
+	ci::gl::Texture mMeshScale;
 	VaoMesh* mVao;
 
 };

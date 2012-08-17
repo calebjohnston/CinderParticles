@@ -47,15 +47,32 @@ void VaoMeshSystem::setup(const unsigned int particles, const int threads)
 	}
 	
 	// create surface to write values to
-	mMeshData = Surface32f( side_size, side_size, true);
-	Surface32f::Iter pixelIter = mMeshData.getIter();
+	mPositionImage = Surface32f( side_size, side_size, true);
+	Surface32f::Iter pixelIter = mPositionImage.getIter();
 	while( pixelIter.line() ) {
 		while( pixelIter.pixel() ) {
-			mMeshData.setPixel( pixelIter.getPos(), ColorA::black() );
+			mPositionImage.setPixel( pixelIter.getPos(), ColorA::black() );
 		}
 	}
-	// create texture to perform VTF in
-	mMeshTexture = gl::Texture( mMeshData );
+	mRotationImage = Surface32f( side_size, side_size, true);
+	pixelIter = mRotationImage.getIter();
+	while( pixelIter.line() ) {
+		while( pixelIter.pixel() ) {
+			mRotationImage.setPixel( pixelIter.getPos(), ColorA::black() );
+		}
+	}
+	mScaleImage = Surface32f( side_size, side_size, true);
+	pixelIter = mScaleImage.getIter();
+	while( pixelIter.line() ) {
+		while( pixelIter.pixel() ) {
+			mScaleImage.setPixel( pixelIter.getPos(), ColorA::black() );
+		}
+	}
+	
+	// create texture(s) to perform VTF against
+	mMeshPositions = gl::Texture( mPositionImage );
+	mMeshRotations = gl::Texture( mRotationImage );
+	mMeshScale = gl::Texture( mScaleImage );
 	
 	// create VAO object
 	mVao = new VaoMesh();
@@ -86,7 +103,7 @@ void VaoMeshSystem::setup(const unsigned int particles, const int threads)
 		texCoords.insert(texCoords.begin(), mMesh->getTexCoords().begin(), mMesh->getTexCoords().end());
 	}
 	mVao->bufferPosition3(points);
-	mVao->bufferPosition3(normals);
+	mVao->bufferNormal(normals);
 	mVao->bufferTexCoord(texCoords);
 	
 	for(unsigned int i=0; i<mMaxParticles; i++){
@@ -180,13 +197,20 @@ void VaoMeshSystem::draw()
 	mShader.uniform("tex0???", 0);
 	
 	// bind texture(s)
-	mMeshTexture.bind(0);
+	mMeshPositions.update(mPositionImage);
+	mMeshRotations.update(mRotationImage);
+	mMeshScale.update(mScaleImage);
+	mMeshPositions.bind(0);
+	mMeshRotations.bind(0);
+	mMeshScale.bind(0);
 	
 	mVao->bindVao();
 	glDrawArrays( GL_TRIANGLES, 0, mVao->getNumVertices() );
 	mVao->unbindVao();
 	
-	mMeshTexture.unbind(0);
+	mMeshPositions.unbind(0);
+	mMeshRotations.unbind(0);
+	mMeshScale.unbind(0);
 	mShader.unbind();
 	
 	glEnable(GL_DEPTH_TEST);
