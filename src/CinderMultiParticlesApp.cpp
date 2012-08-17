@@ -42,8 +42,21 @@ void CinderMultiParticlesApp::setup()
 	mSpriteSystem->setup(5000);
 	mMeshSystem = new MeshSystem("meshes/Jewel01b.obj");
 	mMeshSystem->setup(500, 1);
-	mMeshSystem2 = new MeshSystem("meshes/Leaf01e.obj");
-	mMeshSystem2->setup(5000, 1);
+	
+	gl::GlslProg vaoShader;
+	try {
+		vaoShader = gl::GlslProg( app::loadAsset("shaders/pass.vert"), app::loadAsset( "shaders/blur.frag" ) );
+	}
+	catch( ci::gl::GlslProgCompileExc &exc ) {
+		console() << "Shader compile error: " << std::endl;
+		console() << exc.what();
+	}
+	catch( ... ) {
+		console() << "Unable to load shader" << std::endl;
+	}
+	
+	mVaoMeshSystem = new VaoMeshSystem("meshes/Jewel02b.obj", vaoShader);
+	mVaoMeshSystem->setup(5000, 1);
 	_rot = 0.0f;
 	mContinue = true;
 	

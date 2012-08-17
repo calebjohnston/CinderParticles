@@ -114,6 +114,8 @@ void SpriteSheet::update()
 	}
 }
 
+// accept a float for a set time...
+
 void SpriteSheet::gotoAndPlay(const int frame)
 {
 	this->gotoAndStop(frame);

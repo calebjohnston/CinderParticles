@@ -16,6 +16,7 @@
 #include "LineSystem.h"
 #include "SpriteSystem.h"
 #include "MeshSystem.h"
+#include "VaoMeshSystem.h"
 #include "GpuParticleSystem.h"
 
 /**
@@ -50,6 +51,7 @@ private:
 	ParticleSystem*				mSpriteSystem;
 	ParticleSystem*				mMeshSystem;
 	ParticleSystem*				mMeshSystem2;
+	ParticleSystem*				mVaoMeshSystem;
 	GpuParticleSystem*			mGpuSystem;
 	Emitter*					mEmitter;
 	Emitter*					mEmitter2;

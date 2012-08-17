@@ -15,6 +15,10 @@
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		00BAE65A0E7ED9C10018A608 /* CinderParticlesApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */; };
+		3C0999BD15DDEDEA007D4035 /* VaoMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */; };
+		3C0999BE15DDEDEA007D4035 /* VaoMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */; };
+		3C0999BF15DDEDEA007D4035 /* VaoMeshSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0999BC15DDEDEA007D4035 /* VaoMeshSystem.cpp */; };
+		3C0999C015DDEDEA007D4035 /* VaoMeshSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0999BC15DDEDEA007D4035 /* VaoMeshSystem.cpp */; };
 		3C09D57615CEFAE5007BEB31 /* GpuSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */; };
 		3C09D57715CEFAF9007BEB31 /* GpuSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */; };
 		3C09D57A15CF015A007BEB31 /* GpuParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */; };
@@ -84,6 +88,10 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderParticles_Prefix.pch; sourceTree = "<group>"; };
+		3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VaoMesh.cpp; path = ../src/VaoMesh.cpp; sourceTree = "<group>"; };
+		3C0999BC15DDEDEA007D4035 /* VaoMeshSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VaoMeshSystem.cpp; path = ../src/VaoMeshSystem.cpp; sourceTree = "<group>"; };
+		3C0999C215DDEDF5007D4035 /* VaoMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VaoMesh.h; path = ../include/VaoMesh.h; sourceTree = "<group>"; };
+		3C0999C315DDEDF5007D4035 /* VaoMeshSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VaoMeshSystem.h; path = ../include/VaoMeshSystem.h; sourceTree = "<group>"; };
 		3C09D57315CEFADD007BEB31 /* GpuSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpuSystem.h; path = ../include/GpuSystem.h; sourceTree = "<group>"; };
 		3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GpuSystem.cpp; path = ../src/GpuSystem.cpp; sourceTree = "<group>"; };
 		3C09D57815CEFF2F007BEB31 /* GpuParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpuParticleSystem.h; path = ../include/GpuParticleSystem.h; sourceTree = "<group>"; };
@@ -178,6 +186,8 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */,
+				3C0999BC15DDEDEA007D4035 /* VaoMeshSystem.cpp */,
 				3C4FAABD15D8A4CE00E0BE05 /* SpriteSheet.cpp */,
 				3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */,
 				3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */,
@@ -246,6 +256,8 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				3C0999C215DDEDF5007D4035 /* VaoMesh.h */,
+				3C0999C315DDEDF5007D4035 /* VaoMeshSystem.h */,
 				3C4FAABC15D8A4C400E0BE05 /* SpriteSheet.h */,
 				3C6605DD15CF48E80004B31D /* MeshSystem.h */,
 				3C09D57815CEFF2F007BEB31 /* GpuParticleSystem.h */,
@@ -417,6 +429,8 @@
 				3CC9BB3C15C251C90017D3AE /* NumberCache.cpp in Sources */,
 				3CC9BB3E15C251C90017D3AE /* SpriteSystem.cpp in Sources */,
 				3C6605E115CF48EF0004B31D /* MeshSystem.cpp in Sources */,
+				3C0999BE15DDEDEA007D4035 /* VaoMesh.cpp in Sources */,
+				3C0999C015DDEDEA007D4035 /* VaoMeshSystem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +456,8 @@
 				3C09D57615CEFAE5007BEB31 /* GpuSystem.cpp in Sources */,
 				3C09D57A15CF015A007BEB31 /* GpuParticleSystem.cpp in Sources */,
 				3C6605E015CF48EF0004B31D /* MeshSystem.cpp in Sources */,
+				3C0999BD15DDEDEA007D4035 /* VaoMesh.cpp in Sources */,
+				3C0999BF15DDEDEA007D4035 /* VaoMeshSystem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
