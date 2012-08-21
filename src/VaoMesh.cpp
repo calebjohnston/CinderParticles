@@ -30,7 +30,7 @@ VaoMesh::VaoMesh()
 
 VaoMesh::~VaoMesh()
 {
-	destroyVao();
+	destroy();
 }
 
 void VaoMesh::setup( POSITION_TYPE aPosType, gl::GlslProg& aShader )
@@ -39,7 +39,7 @@ void VaoMesh::setup( POSITION_TYPE aPosType, gl::GlslProg& aShader )
 	mPositionType = aPosType;
 
 	// Create VBOs
-	mIndices = gl::Vbo( GL_ARRAY_BUFFER );
+	mIndices = gl::Vbo( GL_ELEMENT_ARRAY_BUFFER );
 	mIndices2 = gl::Vbo( GL_ARRAY_BUFFER );
 	mPosition = gl::Vbo( GL_ARRAY_BUFFER );
 	mColor = gl::Vbo( GL_ARRAY_BUFFER );
@@ -50,7 +50,7 @@ void VaoMesh::setup( POSITION_TYPE aPosType, gl::GlslProg& aShader )
 	acquireAttributeLocations( aShader );
 
 	// Create VAO
-	createVao();
+	create();
 
 	// Enable the vertex attrib arrays
 	enableVertexAttribArrays();
@@ -58,7 +58,7 @@ void VaoMesh::setup( POSITION_TYPE aPosType, gl::GlslProg& aShader )
 
 void VaoMesh::acquireAttributeLocations( ci::gl::GlslProg& aShader )
 {
-	mVtxIndexLoc	= glGetAttribLocation( aShader.getHandle(), "ciVtxIndex" );
+	mVtxIndex2Loc	= glGetAttribLocation( aShader.getHandle(), "ciVtxIndex" );
 	mVtxPositionLoc = glGetAttribLocation( aShader.getHandle(), "ciVtxPosition" );
 	mVtxColorLoc	= glGetAttribLocation( aShader.getHandle(), "ciVtxColor" );
 	mVtxTexCoordLoc = glGetAttribLocation( aShader.getHandle(), "ciVtxTexCoord" );
@@ -71,7 +71,7 @@ void VaoMesh::enableVertexAttribArrays()
 	disableVertexAttribArrays();
 
 	// Now enable what we need
-	bindVao();
+	bind();
 
 	// Position
 	if( VaoMesh::INVALID_LOCATION != mVtxPositionLoc ) {
@@ -134,7 +134,7 @@ void VaoMesh::enableVertexAttribArrays()
 	}
 
 	// Indices
-	if( VaoMesh::INVALID_LOCATION != mVtxIndexLoc ) {
+	if( VaoMesh::INVALID_LOCATION != mVtxIndexLoc && false) {
 		mIndices.bind();
 		//
 		GLint size = 1;
@@ -177,17 +177,17 @@ void VaoMesh::enableVertexAttribArrays()
 		}
 	}
 
-	unbindVao();
+	unbind();
 }
 
 void VaoMesh::disableVertexAttribArrays()
 {
-	bindVao();
+	bind();
 	
-	// Indices
-	if( mVtxIndexEnabled && ( VaoMesh::INVALID_LOCATION != mVtxIndexLoc ) ) {
-		glDisableVertexAttribArray( mVtxIndexLoc );
-		mVtxIndexEnabled = false;
+	// Indices2
+	if( mVtxIndex2Enabled && ( VaoMesh::INVALID_LOCATION != mVtxIndex2Loc ) ) {
+		glDisableVertexAttribArray( mVtxIndex2Loc );
+		mVtxIndex2Enabled = false;
 	}
 
 	// Position
@@ -214,37 +214,39 @@ void VaoMesh::disableVertexAttribArrays()
 		mVtxNormalEnabled = false;
 	}
 
-	unbindVao();
+	unbind();
 }
 
 
-void VaoMesh::bindVao()
+void VaoMesh::bind()
 {
+	mIndices.bind();
 	glBindVertexArray( mVaoId );
 }
 
-void VaoMesh::unbindVao()
+void VaoMesh::unbind()
 {
 	glBindVertexArray( 0 );
+	mIndices.unbind();
 }
 
-void VaoMesh::createVao()
+void VaoMesh::create()
 {
 	if( 0 == mVaoId ) {
 		glGenVertexArrays( 1, &mVaoId );
 	}
 }
 
-void VaoMesh::destroyVao()
+void VaoMesh::destroy()
 {
 	if( 0 != mVaoId ) {
 		glDeleteVertexArrays( 1, &mVaoId );
 	}
 }
 
-void VaoMesh::bufferIndices( const std::vector<float>& aData )
+void VaoMesh::bufferIndices( const std::vector<uint32_t>& aData )
 {
-	size_t sizeInBytes = aData.size()*sizeof(float);
+	size_t sizeInBytes = aData.size()*sizeof(uint32_t);
 	mIndices.bind();
 	mIndices.bufferData( sizeInBytes, &(aData[0]), GL_STATIC_DRAW );
 	mIndices.unbind();

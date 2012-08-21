@@ -45,7 +45,7 @@ void CinderMultiParticlesApp::setup()
 	
 	gl::GlslProg vaoShader;
 	try {
-		vaoShader = gl::GlslProg( app::loadAsset("shaders/pass.vert"), app::loadAsset( "shaders/blur.frag" ) );
+		vaoShader = gl::GlslProg( app::loadAsset("shaders/vaomesh.vert"), app::loadAsset( "shaders/vaomesh.frag" ) );
 	}
 	catch( ci::gl::GlslProgCompileExc &exc ) {
 		console() << "Shader compile error: " << std::endl;
@@ -55,8 +55,8 @@ void CinderMultiParticlesApp::setup()
 		console() << "Unable to load shader" << std::endl;
 	}
 	
-	mVaoMeshSystem = new VaoMeshSystem("meshes/Jewel02b.obj", vaoShader);
-	mVaoMeshSystem->setup(5000, 1);
+	mVaoMeshSystem = new VaoMeshSystem("meshes/Jewel02.obj", vaoShader);
+	mVaoMeshSystem->setup(5000);
 	_rot = 0.0f;
 	mContinue = true;
 	
@@ -99,8 +99,9 @@ void CinderMultiParticlesApp::update()
 //
 //	mMeshSystem->emit(*mEmitter2);
 //	mMeshSystem->update();
-	mMeshSystem2->emit(*mEmitter3);
-	mMeshSystem2->update();
+//	mMeshSystem2->emit(*mEmitter3);
+//	mMeshSystem2->update();
+	mVaoMeshSystem->update();
 	
 //	mGpuSystem->update();
 }
@@ -110,7 +111,16 @@ void CinderMultiParticlesApp::drawSystems()
 //	mLineSystem->draw();
 //	mSpriteSystem->draw();
 //	mMeshSystem->draw();
-	mMeshSystem2->draw();
+//	mMeshSystem2->draw();
+	
+	
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity();
+	glOrtho( 0, getWindowWidth(), getWindowHeight(), 0, 0.1f, 1000.0f );
+	glMatrixMode( GL_MODELVIEW );
+	glLoadIdentity();
+	glViewport( 0, 0, getWindowWidth(), getWindowHeight() );
+	mVaoMeshSystem->draw();
 }
 
 void CinderMultiParticlesApp::draw()

@@ -30,14 +30,14 @@ public:
 
 	void			setup( POSITION_TYPE aPosType, ci::gl::GlslProg& aShader );
 
-	void			bindVao();
-	void			unbindVao();
+	void			bind();
+	void			unbind();
 
 	void			acquireAttributeLocations( ci::gl::GlslProg& aShader );
 	void			enableVertexAttribArrays();
 	void			disableVertexAttribArrays();
 
-	void			bufferIndices( const std::vector<float>& aData );
+	void			bufferIndices( const std::vector<uint32_t>& aData );
 	void			bufferIndices2( const std::vector<ci::Vec2f>& aData );
 	void			bufferPosition2( const std::vector<ci::Vec2f>& aData );
 	void			bufferPosition3( const std::vector<ci::Vec3f>& aData );
@@ -73,6 +73,6 @@ private:
 	bool			mVtxTexCoordEnabled;
 	bool			mVtxNormalEnabled;
 
-	void			createVao();
-	void			destroyVao();
+	void			create();
+	void			destroy();
 };

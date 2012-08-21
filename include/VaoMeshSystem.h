@@ -80,7 +80,8 @@ protected:
 	ci::gl::Texture mMeshRotations;
 	ci::gl::Texture mMeshScale;
 	VaoMesh* mVao;
-
+	ci::gl::VboMesh* mVbo;
+	std::vector<uint32_t> indices;
 };
 
 

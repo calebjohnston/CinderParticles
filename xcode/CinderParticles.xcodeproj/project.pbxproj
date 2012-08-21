@@ -24,7 +24,6 @@
 		3C09D57A15CF015A007BEB31 /* GpuParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */; };
 		3C09D57B15CF0164007BEB31 /* GpuParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */; };
 		3C0FF79B159FDDCA004FF665 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
-		3C0FF79C159FDDCA004FF665 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEF157D312400EF2816 /* shaders */; };
 		3C0FF7A0159FDDCA004FF665 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */; };
 		3C0FF7A2159FDDCA004FF665 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		3C0FF7A3159FDDCA004FF665 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
@@ -36,8 +35,9 @@
 		3C0FF7A9159FDDCA004FF665 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
 		3C0FF7AA159FDDCA004FF665 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		3C0FF7AB159FDDCA004FF665 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		3C12D8F315E1AD180098565D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 3C12D8F215E1AD180098565D /* shaders */; };
+		3C12D8F415E1AD180098565D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 3C12D8F215E1AD180098565D /* shaders */; };
 		3C4FAA9A15D8A21D00E0BE05 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
-		3C4FAA9B15D8A21D00E0BE05 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEF157D312400EF2816 /* shaders */; };
 		3C4FAA9C15D8A21D00E0BE05 /* meshes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6605E215CF4EB30004B31D /* meshes */; };
 		3C4FAAA815D8A21D00E0BE05 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		3C4FAAA915D8A21D00E0BE05 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
@@ -66,7 +66,6 @@
 		3CC9BB3D15C251C90017D3AE /* SpriteSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9BB3815C251C90017D3AE /* SpriteSystem.cpp */; };
 		3CC9BB3E15C251C90017D3AE /* SpriteSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9BB3815C251C90017D3AE /* SpriteSystem.cpp */; };
 		4101ECF0157D312400EF2816 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
-		4101ECF1157D312400EF2816 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEF157D312400EF2816 /* shaders */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
@@ -98,6 +97,7 @@
 		3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GpuParticleSystem.cpp; path = ../src/GpuParticleSystem.cpp; sourceTree = "<group>"; };
 		3C0FF7AF159FDDCA004FF665 /* CinderMultiParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CinderMultiParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CinderMultiParticles-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/CinderMultiParticles-Info.plist"; sourceTree = "<absolute>"; };
+		3C12D8F215E1AD180098565D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = ../resources/shaders; sourceTree = "<group>"; };
 		3C4FAAB515D8A21D00E0BE05 /* SpriteSheetTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteSheetTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C4FAAB715D8A21D00E0BE05 /* SpriteSheetTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SpriteSheetTest-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/SpriteSheetTest-Info.plist"; sourceTree = "<absolute>"; };
 		3C4FAAB815D8A3D600E0BE05 /* SpriteSheetTestApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpriteSheetTestApp.cpp; path = ../src/SpriteSheetTestApp.cpp; sourceTree = "<group>"; };
@@ -120,7 +120,6 @@
 		3CC9BB3815C251C90017D3AE /* SpriteSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpriteSystem.cpp; path = ../src/SpriteSystem.cpp; sourceTree = "<group>"; };
 		4101ECEC157D297200EF2816 /* CinderParticlesApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CinderParticlesApp.h; path = ../include/CinderParticlesApp.h; sourceTree = "<group>"; };
 		4101ECEE157D312400EF2816 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../resources/images; sourceTree = "<group>"; };
-		4101ECEF157D312400EF2816 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = ../resources/shaders; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		53E3CDFB0E86099300238D2B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
@@ -281,7 +280,7 @@
 				3CC051B915D8B01C004131FE /* dk.xml */,
 				3C6605E215CF4EB30004B31D /* meshes */,
 				4101ECEE157D312400EF2816 /* images */,
-				4101ECEF157D312400EF2816 /* shaders */,
+				3C12D8F215E1AD180098565D /* shaders */,
 				8D1107310486CEB800E47090 /* CinderParticles-Info.plist */,
 				3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */,
 				3C4FAAB715D8A21D00E0BE05 /* SpriteSheetTest-Info.plist */,
@@ -387,8 +386,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C0FF79B159FDDCA004FF665 /* images in Resources */,
-				3C0FF79C159FDDCA004FF665 /* shaders in Resources */,
 				3C6605E415CF4EB30004B31D /* meshes in Resources */,
+				3C12D8F415E1AD180098565D /* shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +396,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C4FAA9A15D8A21D00E0BE05 /* images in Resources */,
-				3C4FAA9B15D8A21D00E0BE05 /* shaders in Resources */,
 				3C4FAA9C15D8A21D00E0BE05 /* meshes in Resources */,
 				3CC051BA15D8B01C004131FE /* dk.xml in Resources */,
 			);
@@ -408,8 +406,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4101ECF0157D312400EF2816 /* images in Resources */,
-				4101ECF1157D312400EF2816 /* shaders in Resources */,
 				3C6605E315CF4EB30004B31D /* meshes in Resources */,
+				3C12D8F315E1AD180098565D /* shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

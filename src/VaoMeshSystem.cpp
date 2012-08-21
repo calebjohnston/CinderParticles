@@ -1,7 +1,7 @@
 #include "VaoMeshSystem.h"
 
-#include "cinder/ObjLoader.h"
 #include "cinder/app/App.h"
+#include "cinder/ObjLoader.h"
 #include "cinder/ImageIO.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
@@ -21,6 +21,7 @@ VaoMeshSystem::VaoMeshSystem(const std::string& filepath, const gl::GlslProg& sh
 	mMesh = new TriMesh();
 	ObjLoader loader( (DataSourceRef) app::loadAsset(filepath) );
 	loader.load( mMesh );
+	mVbo = new gl::VboMesh(*mMesh);
 }
 
 VaoMeshSystem::~VaoMeshSystem() 
@@ -47,11 +48,15 @@ void VaoMeshSystem::setup(const unsigned int particles, const int threads)
 	}
 	
 	// create surface to write values to
+	bool really = true;
 	mPositionImage = Surface32f( side_size, side_size, true);
 	Surface32f::Iter pixelIter = mPositionImage.getIter();
 	while( pixelIter.line() ) {
 		while( pixelIter.pixel() ) {
-			mPositionImage.setPixel( pixelIter.getPos(), ColorA::black() );
+			if(really) mPositionImage.setPixel( pixelIter.getPos(), ColorA(0,50.0,0,0) );
+			else mPositionImage.setPixel( pixelIter.getPos(), ColorA::black() );
+			
+			really = false;
 		}
 	}
 	mRotationImage = Surface32f( side_size, side_size, true);
@@ -80,28 +85,31 @@ void VaoMeshSystem::setup(const unsigned int particles, const int threads)
 	
 	// Prepare VAO with mesh indices 
 	// Assuming one pixel per mesh for now. Needs to be more flexible
-	std::vector<Vec2f> indices;
-	indices.resize(mMaxParticles);
+	std::vector<Vec2f> indices2;
+	indices2.resize(mMaxParticles);
 	for( int x = 0; x < side_size; ++x ) {
 		for( int y = 0; y < side_size; ++y ) {
 			Vec2f st( x/(float)side_size, y/(float)side_size );
-			indices.push_back(st);
+			indices2.push_back(st);
 		}
 	}
-	mVao->bufferIndices2(indices);
+	mVao->bufferIndices2(indices2);
 	
 	// buffer all other VAO mesh data
 	std::vector<Vec3f> points;
 	std::vector<Vec3f> normals;
 	std::vector<Vec2f> texCoords;
-	points.resize(mMesh->getNumVertices() * mMaxParticles);
-	texCoords.resize(mMesh->getNumVertices() * mMaxParticles);
-	normals.resize(mMesh->getNumVertices() * mMaxParticles);
+	indices.reserve(mMesh->getNumIndices() * mMaxParticles);
+	points.reserve(mMesh->getNumVertices() * mMaxParticles);
+	texCoords.reserve(mMesh->getNumVertices() * mMaxParticles);
+	normals.reserve(mMesh->getNumVertices() * mMaxParticles);
 	for(unsigned int i=0; i<mMaxParticles; i++){
-		points.insert(points.begin(), mMesh->getVertices().begin(), mMesh->getVertices().end());
-		normals.insert(normals.begin(), mMesh->getNormals().begin(), mMesh->getNormals().end());
-		texCoords.insert(texCoords.begin(), mMesh->getTexCoords().begin(), mMesh->getTexCoords().end());
+		indices.insert(indices.end(), mMesh->getIndices().begin(), mMesh->getIndices().end());
+		points.insert(points.end(), mMesh->getVertices().begin(), mMesh->getVertices().end());
+		normals.insert(normals.end(), mMesh->getNormals().begin(), mMesh->getNormals().end());
+		texCoords.insert(texCoords.end(), mMesh->getTexCoords().begin(), mMesh->getTexCoords().end());
 	}
+	mVao->bufferIndices(indices);
 	mVao->bufferPosition3(points);
 	mVao->bufferNormal(normals);
 	mVao->bufferTexCoord(texCoords);
@@ -182,39 +190,60 @@ void VaoMeshSystem::emit(const Emitter& emitter)
 	}
 }
 
+static float rot = 0;
+
 void VaoMeshSystem::draw()
 {	
 	if(!mInitialized || !mVao) return;
 	
 	ParticleSystem::preDraw();
 	
-	glEnable(GL_BLEND);
-	glDisable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+//	glEnable(GL_BLEND);
+//	glDisable(GL_DEPTH_TEST);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	
+	gl::pushModelView();
+	gl::translate(500.0f,500.0f,0.0f);
+	glRotatef(rot+=0.1f, 0,1.0f,0);
+	gl::scale(50.0f, 50.0f, 50.0f);
+	Matrix44f ciModelViewProjectionMatrix = gl::getProjection() * gl::getModelView();
+	gl::popModelView();
 	
 	// bind shader and add uniforms...
 	mShader.bind();
-	mShader.uniform("tex0???", 0);
+	mShader.uniform( "ciModelViewProjectionMatrix", ciModelViewProjectionMatrix );
+	mShader.uniform("ciTranslation", 0);
+	mShader.uniform("ciRotation", 1);
+	mShader.uniform("ciScale", 2);
 	
 	// bind texture(s)
 	mMeshPositions.update(mPositionImage);
 	mMeshRotations.update(mRotationImage);
 	mMeshScale.update(mScaleImage);
 	mMeshPositions.bind(0);
-	mMeshRotations.bind(0);
-	mMeshScale.bind(0);
+	mMeshRotations.bind(1);
+	mMeshScale.bind(2);
 	
-	mVao->bindVao();
-	glDrawArrays( GL_TRIANGLES, 0, mVao->getNumVertices() );
-	mVao->unbindVao();
+	mVao->bind();
+	glDrawRangeElements( GL_TRIANGLES, 0, mVao->getNumVertices(), mVao->getNumIndices(), GL_UNSIGNED_INT, (GLvoid*)&(indices[0]));
+//	glDrawArrays( GL_TRIANGLES, 0, mVao->getNumVertices() );
+	mVao->unbind();
+	
+//	gl::color(1,1,1,1);
+//	gl::pushModelView();
+//	gl::translate(500.0f,500.0f,0.0f);
+//	glRotatef(rot+=0.1f, 0,1.0f,0);
+//	gl::scale(50.0f, 50.0f, 50.0f);
+//	gl::draw(*mVbo);
+//	gl::popModelView();
 	
 	mMeshPositions.unbind(0);
-	mMeshRotations.unbind(0);
-	mMeshScale.unbind(0);
+	mMeshRotations.unbind(1);
+	mMeshScale.unbind(2);
 	mShader.unbind();
 	
-	glEnable(GL_DEPTH_TEST);
-	glDisable(GL_BLEND);
+//	glEnable(GL_DEPTH_TEST);
+//	glDisable(GL_BLEND);
 	
 	ParticleSystem::postDraw();
 }
