@@ -78,7 +78,7 @@ void ParticleSystem::preDraw()
 	for(size_t i=0; i<mThreadCompleted.size(); i++) {
 		keep_going = keep_going && mThreadCompleted[i];
 	}
-	if(!keep_going) return;
+//	if(!keep_going) return;
 }
 
 void ParticleSystem::postDraw()

@@ -31,17 +31,21 @@ void CinderMultiParticlesApp::setup()
 	fs::path path = this->getAppPath() / "Contents" / "Resources";
 	this->addAssetDirectory(path);
 	
-//	TriMesh mMesh;
-//	ObjLoader loader( (DataSourceRef) loadAsset("meshes/jewel01a.obj") );
-//	loader.load( &mMesh );
-//	mVBO = gl::VboMesh( mMesh );
+	TriMesh mMesh;
+	//ObjLoader loader((DataSourceRef) loadAsset("meshes/triangle0.obj"));
+	ObjLoader loader((DataSourceRef) loadAsset("meshes/head.obj"));
+	loader.load( &mMesh );
+	mVBO = gl::VboMesh( mMesh );
 	
 	mLineSystem = new LineSystem();
-	mLineSystem->setup(100000);
+//	mLineSystem->setup(200000, 2);
 	mSpriteSystem = new SpriteSystem("images/particle-small.png");
-	mSpriteSystem->setup(5000);
-	mMeshSystem = new MeshSystem("meshes/Jewel01b.obj");
-	mMeshSystem->setup(500, 1);
+//	mSpriteSystem->setup(5000);
+//	mMeshSystem = new MeshSystem("meshes/Jewel01b.obj");
+	mMeshSystem = new MeshSystem("meshes/triangle0.obj");
+//	mMeshSystem->setup(5000);
+	mTriangleSystem = new TriangleSystem();
+	mTriangleSystem->setup(200000, 2);
 	
 	gl::GlslProg vaoShader;
 	try {
@@ -55,8 +59,10 @@ void CinderMultiParticlesApp::setup()
 		console() << "Unable to load shader" << std::endl;
 	}
 	
-	mVaoMeshSystem = new VaoMeshSystem("meshes/Jewel02.obj", vaoShader);
-	mVaoMeshSystem->setup(5000);
+//	mVaoMeshSystem = new VaoMeshSystem("meshes/Jewel02.obj", vaoShader);
+//	mVaoMeshSystem->setup(1000);
+	mVaoMeshSystem = new VaoMeshSystem("meshes/triangle0.obj", vaoShader);
+//	mVaoMeshSystem->setup(5000);
 	_rot = 0.0f;
 	mContinue = true;
 	
@@ -87,9 +93,9 @@ void CinderMultiParticlesApp::update()
 {	
 	if(!mContinue) return;
 	
-//	mEmitter->setPosition(pMouse);
+	mEmitter->setPosition(pMouse);
 //	mEmitter2->setPosition(pMouse);
-	mEmitter3->setPosition(pMouse);
+//	mEmitter3->setPosition(pMouse);
 //
 //	mLineSystem->emit(*mEmitter);
 //	mLineSystem->update();
@@ -101,26 +107,39 @@ void CinderMultiParticlesApp::update()
 //	mMeshSystem->update();
 //	mMeshSystem2->emit(*mEmitter3);
 //	mMeshSystem2->update();
-	mVaoMeshSystem->update();
+//	mVaoMeshSystem->update();
+	
+	mTriangleSystem->emit(*mEmitter);
+	mTriangleSystem->update();
 	
 //	mGpuSystem->update();
 }
 
 void CinderMultiParticlesApp::drawSystems()
 {
+	mTriangleSystem->draw();
 //	mLineSystem->draw();
 //	mSpriteSystem->draw();
 //	mMeshSystem->draw();
 //	mMeshSystem2->draw();
 	
 	
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	glOrtho( 0, getWindowWidth(), getWindowHeight(), 0, 0.1f, 1000.0f );
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
-	glViewport( 0, 0, getWindowWidth(), getWindowHeight() );
-	mVaoMeshSystem->draw();
+//	glMatrixMode( GL_PROJECTION );
+//	glLoadIdentity();
+//	glOrtho( 0, getWindowWidth(), getWindowHeight(), 0, 0.1f, 1000.0f );
+//	glMatrixMode( GL_MODELVIEW );
+//	glLoadIdentity();
+//	glViewport( 0, 0, getWindowWidth(), getWindowHeight() );
+//	gl::scale(20,20,20);
+//	mVaoMeshSystem->draw();
+	
+//	if(_rot >= 30){
+//		console() << " getAverageFps() = " << getAverageFps() << std::endl;
+//		_rot = 0;
+//	}
+//	else {
+//		_rot += 1;
+//	}
 }
 
 void CinderMultiParticlesApp::draw()
@@ -134,6 +153,9 @@ void CinderMultiParticlesApp::draw()
 //	mGpuSystem->draw();
 //	return;
 	
+	
+	/*
+	gl::clear();
 //	gl::color(1,1,1,1);
 //	gl::pushModelView();
 //	gl::translate(200,200,0);
@@ -141,7 +163,24 @@ void CinderMultiParticlesApp::draw()
 //	glRotatef(_rot, 0.0f,1.0f,0.0f);
 //	gl::draw(mVBO);
 //	gl::popModelView();
-//	_rot += 1.0f;
+
+	gl::pushModelView();
+//	gl::translate(0,0,-450);
+	gl::draw(mVBO);
+	gl::popModelView();
+	_rot += 1.0f;
+	
+	if((int)_rot % 30 == 0){
+		console() << " getAverageFps() = " << getAverageFps() << std::endl;
+	}
+	
+	return;
+	*/
+	_rot += 1.0f;
+	
+	if((int)_rot % 30 == 0){
+		console() << " getAverageFps() = " << getAverageFps() << std::endl;
+	}
 	
 //	mContinue = false;
 	

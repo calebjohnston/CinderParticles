@@ -13,6 +13,7 @@
 #include "cinder/Camera.h"
 
 #include "Emitter.h"
+#include "TriangleSystem.h"
 #include "LineSystem.h"
 #include "SpriteSystem.h"
 #include "MeshSystem.h"
@@ -52,6 +53,7 @@ private:
 	ParticleSystem*				mMeshSystem;
 	ParticleSystem*				mMeshSystem2;
 	ParticleSystem*				mVaoMeshSystem;
+	ParticleSystem*				mTriangleSystem;
 	GpuParticleSystem*			mGpuSystem;
 	Emitter*					mEmitter;
 	Emitter*					mEmitter2;

@@ -211,7 +211,7 @@ void VaoMeshSystem::draw()
 	
 	// bind shader and add uniforms...
 	mShader.bind();
-	mShader.uniform( "ciModelViewProjectionMatrix", ciModelViewProjectionMatrix );
+	mShader.uniform("ciModelViewProjectionMatrix", ciModelViewProjectionMatrix);
 	mShader.uniform("ciTranslation", 0);
 	mShader.uniform("ciRotation", 1);
 	mShader.uniform("ciScale", 2);
