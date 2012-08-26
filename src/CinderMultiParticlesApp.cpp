@@ -24,28 +24,28 @@ CinderMultiParticlesApp::~CinderMultiParticlesApp()
 
 void CinderMultiParticlesApp::setup()
 {
-	this->setWindowSize(1650,1080);
+	this->setWindowSize(1280,768);
 	this->setFrameRate(60);
 	this->setWindowPos(0, 60);
 	
 	fs::path path = this->getAppPath() / "Contents" / "Resources";
 	this->addAssetDirectory(path);
 	
-	TriMesh mMesh;
-	//ObjLoader loader((DataSourceRef) loadAsset("meshes/triangle0.obj"));
-	ObjLoader loader((DataSourceRef) loadAsset("meshes/head.obj"));
-	loader.load( &mMesh );
-	mVBO = gl::VboMesh( mMesh );
+//	TriMesh mMesh;
+//	ObjLoader loader((DataSourceRef) loadAsset("meshes/triangle0.obj"));
+//	ObjLoader loader((DataSourceRef) loadAsset("meshes/head.obj"));
+//	loader.load( &mMesh );
+//	mVBO = gl::VboMesh( mMesh );
 	
 	mLineSystem = new LineSystem();
-//	mLineSystem->setup(200000, 2);
+	mLineSystem->setup(100000, 1);
 	mSpriteSystem = new SpriteSystem("images/particle-small.png");
-//	mSpriteSystem->setup(5000);
-//	mMeshSystem = new MeshSystem("meshes/Jewel01b.obj");
-	mMeshSystem = new MeshSystem("meshes/triangle0.obj");
-//	mMeshSystem->setup(5000);
+	mSpriteSystem->setup(5000, 1);
+	mMeshSystem = new MeshSystem("meshes/Jewel01b.obj");
+//	mMeshSystem = new MeshSystem("meshes/triangle0.obj");
+	mMeshSystem->setup(500, 1);
 	mTriangleSystem = new TriangleSystem();
-	mTriangleSystem->setup(200000, 2);
+	mTriangleSystem->setup(50000, 1);
 	
 	gl::GlslProg vaoShader;
 	try {
@@ -61,7 +61,7 @@ void CinderMultiParticlesApp::setup()
 	
 //	mVaoMeshSystem = new VaoMeshSystem("meshes/Jewel02.obj", vaoShader);
 //	mVaoMeshSystem->setup(1000);
-	mVaoMeshSystem = new VaoMeshSystem("meshes/triangle0.obj", vaoShader);
+//	mVaoMeshSystem = new VaoMeshSystem("meshes/triangle0.obj", vaoShader);
 //	mVaoMeshSystem->setup(5000);
 	_rot = 0.0f;
 	mContinue = true;
@@ -72,7 +72,7 @@ void CinderMultiParticlesApp::setup()
 	pMouse = getWindowCenter();
 	mEmitter = new Emitter(1000, pMouse, Vec2f(0,-15.0f));
 	mEmitter2 = new Emitter(5, pMouse, Vec2f(-0.5f,-10.0f));
-	mEmitter3 = new Emitter(50, pMouse, Vec2f(0.9f,-0.5f));
+	mEmitter3 = new Emitter(50, pMouse, Vec2f(0.9f,-5.5f));
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset("shaders/pass.vert"), app::loadAsset( "shaders/blur.frag" ) );
@@ -94,17 +94,17 @@ void CinderMultiParticlesApp::update()
 	if(!mContinue) return;
 	
 	mEmitter->setPosition(pMouse);
-//	mEmitter2->setPosition(pMouse);
-//	mEmitter3->setPosition(pMouse);
+	mEmitter2->setPosition(pMouse);
+	mEmitter3->setPosition(pMouse);
 //
-//	mLineSystem->emit(*mEmitter);
-//	mLineSystem->update();
-//
-//	mSpriteSystem->emit(*mEmitter);
-//	mSpriteSystem->update();
-//
-//	mMeshSystem->emit(*mEmitter2);
-//	mMeshSystem->update();
+	mLineSystem->emit(*mEmitter);
+	mLineSystem->update();
+
+	mSpriteSystem->emit(*mEmitter3);
+	mSpriteSystem->update();
+
+	mMeshSystem->emit(*mEmitter2);
+	mMeshSystem->update();
 //	mMeshSystem2->emit(*mEmitter3);
 //	mMeshSystem2->update();
 //	mVaoMeshSystem->update();
@@ -118,9 +118,9 @@ void CinderMultiParticlesApp::update()
 void CinderMultiParticlesApp::drawSystems()
 {
 	mTriangleSystem->draw();
-//	mLineSystem->draw();
-//	mSpriteSystem->draw();
-//	mMeshSystem->draw();
+	mLineSystem->draw();
+	mSpriteSystem->draw();
+	mMeshSystem->draw();
 //	mMeshSystem2->draw();
 	
 	
@@ -206,6 +206,7 @@ void CinderMultiParticlesApp::draw()
 		gl::color(1,1,1,1);
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
 		
+		gl::enableAdditiveBlending();
 		this->drawSystems();
 	}
 	else{

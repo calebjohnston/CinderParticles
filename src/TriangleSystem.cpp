@@ -58,7 +58,7 @@ void TriangleSystem::updateKernel(const unsigned int start_index, const unsigned
 		Tri3D* line = mParticles + index;
 		
 		// accumulate system forces
-		line->velocity.y += 0.015;
+		line->velocity.y += 0.15;
 		
 		// perform integration
 //		line->v1.x = line->v2.x;

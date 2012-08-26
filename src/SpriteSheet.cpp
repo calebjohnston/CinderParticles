@@ -55,13 +55,13 @@ int SpriteSheet::numFrames() const
 
 void SpriteSheet::addStopAtKeyFrame(const int frame)
 {
-	int clampedFrame = math<int>::clamp(frame, 0, this->numFrames());
+	int clampedFrame = math<int>::clamp(frame, 0, this->numFrames()-1);
 	mStopAtKeyFrames.push_back(clampedFrame);
 }
 
 void SpriteSheet::addResetAtKeyFrame(const int frame)
 {
-	int clampedFrame = math<int>::clamp(frame, 0, this->numFrames());
+	int clampedFrame = math<int>::clamp(frame, 0, this->numFrames()-1);
 	mResetAtKeyFrames.push_back(clampedFrame);
 }
 

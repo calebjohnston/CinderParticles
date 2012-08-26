@@ -34,8 +34,8 @@ public:
 		void init(const ci::Vec3f& pos, const ci::Vec3f& vel = ci::Vec3f::zero(), const float m = 1, const float a = 1)
 		{
 			v1 = pos;
-			v2 = pos + ci::Vec3f(10.0f,0,0);
-			v3 = pos + ci::Vec3f(0,10.0f,0);
+			v2 = pos + ci::Vec3f(5.0f,0,0);
+			v3 = pos + ci::Vec3f(0,5.0f,0);
 			velocity = vel;
 			mass = m;
 			alpha = a;
