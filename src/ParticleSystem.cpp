@@ -59,7 +59,7 @@ void ParticleSystem::update()
 
 void ParticleSystem::spawnThread(const unsigned int start_index, const unsigned int end_index, const int id)
 {
-	boost::unique_lock<boost::shared_mutex> lock(mMutex);
+	std::unique_lock<std::mutex> lock(mMutex);
 	mThreadCompleted.push_back(false);
 	lock.unlock();
 	

@@ -251,10 +251,10 @@ void CinderMultiParticlesApp::draw()
 	}
 }
 
-void CinderMultiParticlesApp::resize( ResizeEvent event )
+void CinderMultiParticlesApp::resize()
 {
-	int w = event.getWidth();
-	int h = event.getHeight();
+	int w = this->getWindowWidth();
+	int h = this->getWindowHeight();
 	
 	// clean data
 	if(mBlurX != NULL) delete mBlurX;

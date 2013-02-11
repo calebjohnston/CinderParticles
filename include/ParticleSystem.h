@@ -48,7 +48,7 @@ protected:
 	bool mInitialized;
 	unsigned int	mMaxParticles;
 	unsigned int	mCurrentIndex;
-	boost::shared_mutex	mMutex;
+	std::mutex	mMutex;
 	std::vector<std::thread*> mThreads;
 	std::vector<bool> mThreadCompleted;	// not sure if there's a better way of doing this yet...
 };

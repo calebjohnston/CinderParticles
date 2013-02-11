@@ -41,7 +41,7 @@ public:
 	void	mouseDrag( ci::app::MouseEvent event );
 	void	mouseDown( ci::app::MouseEvent event );
 	void	mouseUp( ci::app::MouseEvent event );
-	void	resize( ci::app::ResizeEvent event );
+	void	resize( /*ci::app::ResizeEvent event*/ );
 	
 	ci::CameraPersp		mCam;
 	ci::Arcball			mArcball;
