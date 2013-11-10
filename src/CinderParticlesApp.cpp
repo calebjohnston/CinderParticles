@@ -18,6 +18,8 @@ void CinderParticlesApp::setup()
 	this->setFrameRate(60);
 	fs::path path = this->getAppPath() / ".." / ".." / "resources";
 	this->addAssetDirectory( path );
+	path = this->getAppPath() / ".." / ".." / ".." / ".." / "Resources";
+	this->addAssetDirectory( path );
 	
 	mParticleSystem = new ParticleSystem();
 	
