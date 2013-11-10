@@ -8,9 +8,13 @@ using namespace ci::app;
 
 void CinderParticlesApp::setup()
 {
-	mParams = NULL;
+	this->getWindow()->getSignalResize().connect(std::bind(&CinderParticlesApp::resize, this));
+	
+	fs::path path = this->getAppPath() / "Contents" / "Resources";
+	this->addAssetDirectory(path);
+	
 	mShader = NULL;
-	mParticleSystem = NULL;
+	//mParticleSystem = NULL;
 	mBlurX = mBlurY = NULL;
 	mEnableGaussianBlur = mMouseDown = false;
 
@@ -19,10 +23,13 @@ void CinderParticlesApp::setup()
 	
 //	mParticleSystem = new ParticleSystem();
 	mLineSystem = new LineSystem();
-	mSpriteSystem = new SpriteSystem();
+	//mSpriteSystem = new SpriteSystem();
+	
+	mLineEmitter = new Emitter( 1000, Vec2f::zero(), Vec2f::one() );
+	mLineSystem->setup( 100000 );
 	
 	try {
-		mShader = new gl::GlslProg( app::loadAsset( "../Resources/shaders/pass.vert" ), app::loadAsset( "../Resources/shaders/blur.frag" ) );
+		mShader = new gl::GlslProg( app::loadAsset( "shaders/pass.vert" ), app::loadAsset( "shaders/blur.frag" ) );
 	}
 	catch( ci::gl::GlslProgCompileExc &exc ) {
 		console() << "Shader compile error: " << std::endl;
@@ -35,7 +42,7 @@ void CinderParticlesApp::setup()
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
 	
-	// mParams = new params::InterfaceGl("settings", Vec2i(200,300));
+	mParams = params::InterfaceGl::create(this->getWindow(), "Parameters", Vec2i(350, 600));
 	
 	pMouse = getWindowCenter();
 	
@@ -44,22 +51,24 @@ void CinderParticlesApp::setup()
 
 void CinderParticlesApp::addParticles( Vec2f pos, Vec2f vel )
 {
-//	mParticleSystem->addParticles( pos, vel );
+//	mLineSystem->addParticles( pos, vel );
+	mLineEmitter->setPosition( pos );
+	mLineEmitter->setDirection( vel );
+	mLineSystem->emit( *mLineEmitter );
 }
 
 void CinderParticlesApp::update()
 {	
-//	mParticleSystem->update();
+	mLineSystem->update();
 }
 
 void CinderParticlesApp::draw()
 {
-/*
 	if(!mEnableGaussianBlur){
 		gl::clear();
 		gl::color( ColorA::white() );
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),true);
-		mParticleSystem->draw();
+		mLineSystem->draw();
 	}
 	else{
 		// FIRST render pass...
@@ -68,7 +77,7 @@ void CinderParticlesApp::draw()
 		gl::clear();
 		gl::color( ColorA::white() );
 		gl::setMatricesWindow(getWindowWidth(),getWindowHeight(),false);
-		mParticleSystem->draw();
+		mLineSystem->draw();
 		mBlurX->unbindFramebuffer();
 		
 		// SECOND render pass...
@@ -99,13 +108,12 @@ void CinderParticlesApp::draw()
 		mBlurY->unbindTexture();
 		mShader->unbind();
 	}
-*/
 }
 
-void CinderParticlesApp::resize( ResizeEvent event )
+void CinderParticlesApp::resize()
 {
-	int w = event.getWidth();
-	int h = event.getHeight();
+	int w = getWindowWidth();
+	int h = getWindowHeight();
 //	mParticleSystem->setWindowSize( Vec2i( w, h ) );
 	
 	// clean data
@@ -126,7 +134,7 @@ void CinderParticlesApp::resize( ResizeEvent event )
 }
 
 void CinderParticlesApp::keyDown( KeyEvent event )
-{ 
+{
     switch( event.getChar() ) {
 		case 'f':
 			setFullScreen( ! isFullScreen() );

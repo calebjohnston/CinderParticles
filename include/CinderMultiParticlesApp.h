@@ -37,6 +37,7 @@ public:
 	void	drawSystems();
 	void	addParticles( ci::Vec2f pos, ci::Vec2f vel );
 	void	keyDown( ci::app::KeyEvent event );
+	void	keyUp( ci::app::KeyEvent event );
 	void	mouseMove( ci::app::MouseEvent event );
 	void	mouseDrag( ci::app::MouseEvent event );
 	void	mouseDown( ci::app::MouseEvent event );

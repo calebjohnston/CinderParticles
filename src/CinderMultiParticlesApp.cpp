@@ -290,8 +290,41 @@ void CinderMultiParticlesApp::resize()
 	}
 }
 
+void CinderMultiParticlesApp::keyUp( KeyEvent event )
+{
+    switch( event.getCode() ) {
+		case KeyEvent::KEY_LSHIFT:
+			console() << "left shift up" << std::endl;
+			break;
+		case KeyEvent::KEY_LCTRL:
+			console() << "left control up" << std::endl;
+			break;
+		case KeyEvent::KEY_LALT:
+			console() << "left alt up" << std::endl;
+			break;
+		case KeyEvent::KEY_LMETA:
+			console() << "left meta up" << std::endl;
+			break;
+		case KeyEvent::KEY_RSHIFT:
+			console() << "right shift up" << std::endl;
+			break;
+		case KeyEvent::KEY_RCTRL:
+			console() << "right control up" << std::endl;
+			break;
+		case KeyEvent::KEY_RALT:
+			console() << "right alt up" << std::endl;
+			break;
+		case KeyEvent::KEY_RMETA:
+			console() << "right meta up" << std::endl;
+			break;
+		case KeyEvent::KEY_CAPSLOCK:
+			console() << "caps lock up" << std::endl;
+			break;
+	}
+}
+
 void CinderMultiParticlesApp::keyDown( KeyEvent event )
-{ 
+{
     switch( event.getChar() ) {
 		case 'f':
 			setFullScreen( ! isFullScreen() );
@@ -305,10 +338,45 @@ void CinderMultiParticlesApp::keyDown( KeyEvent event )
 		case 'p':
 			mContinue = true;
 			break;
+			
 		case 's':
 			// app::writeImage( getHomeDirectory() / "cinder" / "particles" / ("snapshot-" + toString( this->getElapsedFrames() ) + ".png" ), copyWindowSurface() );
 			break;
     }
+	
+	console() << "event.getCode() = " << event.getCode() << " vs event.getChar() = " << event.getChar() << std::endl;
+	switch( event.getCode() ) {
+		case KeyEvent::KEY_z:
+			console() << "z" << std::endl;
+			break;
+		case KeyEvent::KEY_LSHIFT:
+			console() << "left shift down" << std::endl;
+			break;
+		case KeyEvent::KEY_LCTRL:
+			console() << "left control down" << std::endl;
+			break;
+		case KeyEvent::KEY_LALT:
+			console() << "left alt down" << std::endl;
+			break;
+		case KeyEvent::KEY_LMETA:
+			console() << "left meta down" << std::endl;
+			break;
+		case KeyEvent::KEY_RSHIFT:
+			console() << "right shift down" << std::endl;
+			break;
+		case KeyEvent::KEY_RCTRL:
+			console() << "right control down" << std::endl;
+			break;
+		case KeyEvent::KEY_RALT:
+			console() << "right alt down" << std::endl;
+			break;
+		case KeyEvent::KEY_RMETA:
+			console() << "right meta down" << std::endl;
+			break;
+		case KeyEvent::KEY_CAPSLOCK:
+			console() << "caps lock down" << std::endl;
+			break;
+	}
 }
 
 void CinderMultiParticlesApp::mouseMove( MouseEvent event )

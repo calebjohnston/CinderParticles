@@ -26,15 +26,16 @@ public:
 	void	mouseDrag( ci::app::MouseEvent event );
 	void	mouseDown( ci::app::MouseEvent event );
 	void	mouseUp( ci::app::MouseEvent event );
-	void	resize( ci::app::ResizeEvent event );
+	void	resize();
 
 private:
 	ParticleSystem*				mLineSystem;
 	ParticleSystem*				mSpriteSystem;
+	Emitter*					mLineEmitter;
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
-//	ci::params::InterfaceGl*	mParams;
+	ci::params::InterfaceGlRef	mParams;
 	
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;

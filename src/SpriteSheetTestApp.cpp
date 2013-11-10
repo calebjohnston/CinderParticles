@@ -15,6 +15,8 @@ void SpriteSheetTestApp::setup()
 	path = this->getAppPath() / ".." / ".." / "resources";
 	this->addAssetDirectory(path);
 	
+	this->getWindow()->getSignalResize().connect(std::bind(&SpriteSheetTestApp::resize, this));
+	
 	XmlTree config( loadAsset("dk.xml") );
 	
 	mSheet = gl::Texture(loadImage( App::loadAsset("images/dk.png") ));
@@ -38,7 +40,7 @@ void SpriteSheetTestApp::draw()
 	mSprites.draw();
 }
 
-void SpriteSheetTestApp::resize( ResizeEvent event )
+void SpriteSheetTestApp::resize()
 {
 }
 
