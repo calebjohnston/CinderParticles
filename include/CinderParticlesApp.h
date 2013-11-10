@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cinder/app/AppBasic.h"
+#include "cinder/app/AppNative.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/params/Params.h"
@@ -15,7 +15,7 @@
  * The rendering uses VBOs for the particle geometry.
  * FBOs can be used for custom post-processing.
  */
-class CinderParticlesApp : public ci::app::AppBasic {
+class CinderParticlesApp : public ci::app::AppNative {
 public:
 	void	setup();
 	void	update();
@@ -26,7 +26,7 @@ public:
 	void	mouseDrag( ci::app::MouseEvent event );
 	void	mouseDown( ci::app::MouseEvent event );
 	void	mouseUp( ci::app::MouseEvent event );
-	void	resize( ci::app::ResizeEvent event );
+	void	resize();
 	inline bool running() const { return mRunning; }
 
 private:

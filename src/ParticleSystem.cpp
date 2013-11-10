@@ -110,7 +110,7 @@ void ParticleSystem::setWindowSize( const Vec2i &winSize )
 
 void ParticleSystem::threaded_update(const unsigned int start_index, const unsigned int end_index, const int id)
 {
-	boost::unique_lock<boost::shared_mutex> lock(mMutex);
+	std::unique_lock<std::mutex> lock(mMutex);
 	std::cout << "id = " << id << ", start_index = " << start_index << ", end_index = " << end_index << std::endl;
 	mThreadCompleted.push_back(false);
 	lock.unlock();

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Particle.h"
 #include "cinder/Vector.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Thread.h"
+#include "Particle.h"
 
 class ParticleSystem {
 public:	
@@ -61,7 +61,7 @@ protected:
 	float*		mParticleRandomFactor;
 	
 	std::vector<bool>	mThreadCompleted;
-	boost::shared_mutex	mMutex;
+	std::mutex	mMutex;
 };
 
 

@@ -1,4 +1,4 @@
-#include "cinder/app/AppBasic.h"
+#include "cinder/app/AppNative.h"
 #include "cinder/System.h"
 #include "cinder/Rand.h"
 
@@ -12,7 +12,7 @@ CinderMultiParticlesApp::~CinderMultiParticlesApp()
 	mRunning = false;
 	
 	for(int i = 0; i < mThreads.size(); ++i){
-		mThreads.at(i)->join();
+		mThreads.at(i).join();
 	}
 }
 
@@ -56,8 +56,9 @@ void CinderMultiParticlesApp::setup()
 	for(int i = 0; i < core_count; ++i){
 		start_index = i * workload_size;
 		end_index = start_index + workload_size;
-		std::thread* t = new std::thread(boost::bind(&ParticleSystem::threaded_update, mParticleSystem, _1, _2, _3), start_index, end_index, i);
-		mThreads.push_back(t);
+		
+		//std::thread t(std::bind(&ParticleSystem::threaded_update, mParticleSystem, _1, _2, _3), start_index, end_index, i);
+		//mThreads.push_back(t);
 	}
 }
 
@@ -163,13 +164,13 @@ void CinderMultiParticlesApp::draw()
 		mShader->unbind();
 	}
 
-	if(mParams!=NULL) params::InterfaceGl::draw();
+	//if(mParams!=NULL) params::InterfaceGl::draw();
 }
 
-void CinderMultiParticlesApp::resize( ResizeEvent event )
+void CinderMultiParticlesApp::resize()
 {
-	int w = event.getWidth();
-	int h = event.getHeight();
+	int w = getWindowWidth();
+	int h = getWindowHeight();
 	mParticleSystem->setWindowSize( Vec2i( w, h ) );
 	
 	// clean data
@@ -229,4 +230,4 @@ void CinderMultiParticlesApp::mouseDrag( MouseEvent event )
 	mParticleSystem->addParticles(mouseNorm, mouseVel);
 }
 
-CINDER_APP_BASIC( CinderMultiParticlesApp, RendererGl )
+CINDER_APP_NATIVE( CinderMultiParticlesApp, RendererGl )

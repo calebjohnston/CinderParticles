@@ -34,6 +34,7 @@ void CinderParticlesApp::setup()
 	gl::enableDepthWrite();
 	
 	// mParams = new params::InterfaceGl("settings", Vec2i(200,300));
+	//mParams = params::InterfaceGl::create(this->getWindow(), "Parameters", Vec2i(350, 600));
 	
 	pMouse = getWindowCenter();
 	
@@ -97,13 +98,13 @@ void CinderParticlesApp::draw()
 		mShader->unbind();
 	}
 
-	if(mParams!=NULL) params::InterfaceGl::draw();
+	//if(mParams!=NULL) params::InterfaceGl::draw();
 }
 
-void CinderParticlesApp::resize( ResizeEvent event )
+void CinderParticlesApp::resize()
 {
-	int w = event.getWidth();
-	int h = event.getHeight();
+	int w = getWindowWidth();
+	int h = getWindowHeight();
 	mParticleSystem->setWindowSize( Vec2i( w, h ) );
 	
 	// clean data
@@ -158,4 +159,4 @@ void CinderParticlesApp::mouseDrag( MouseEvent event )
 	this->addParticles(mouseNorm, mouseVel);
 }
 
-CINDER_APP_BASIC( CinderParticlesApp, RendererGl )
+CINDER_APP_NATIVE( CinderParticlesApp, RendererGl )
