@@ -64,8 +64,8 @@ void Particle::updatePointsData( const Vec2f &invWindowSize, int i, float* posBu
 void Particle::updateLinesData( const Vec2f &invWindowSize, int i, float* posBuffer, float* colBuffer) const 
 {
 	int vi = i * 4;
-	posBuffer[vi] = mPosition.x - mVelocity.x;
-	posBuffer[vi+1] = mPosition.y - mVelocity.y;
+	posBuffer[vi] = mPosition.x - mVelocity.x - mVelocity.x;
+	posBuffer[vi+1] = mPosition.y - mVelocity.y - mVelocity.y;
 	posBuffer[vi+2] = mPosition.x;
 	posBuffer[vi+3] = mPosition.y;
 	

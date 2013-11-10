@@ -5,4 +5,8 @@ xcode/build
 *.hmap
 
 *.xcuserdatad
+*.sdf
+*.opensdf
+Debug
+Release
 /xcode/CinderParticles.xcodeproj/project.xcworkspace/xcshareddata/

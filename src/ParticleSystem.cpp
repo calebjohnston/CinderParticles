@@ -7,7 +7,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/Rand.h"
 
-#define MAX_PARTICLES 150000
+#define MAX_PARTICLES 250000
 
 using namespace ci;
 
@@ -44,7 +44,8 @@ void ParticleSystem::setMode(Rendering mode)
 		format.setWrap(GL_CLAMP,GL_CLAMP);
 		format.setMinFilter(GL_NEAREST);
 		format.setMagFilter(GL_NEAREST);
-		mPointTexture = new gl::Texture( loadImage( app::App::get()->loadResource("../Resources/images/particle-small.png") ), format );
+		mPointTexture = new gl::Texture( 256, 256 );
+		//mPointTexture = new gl::Texture( loadImage( app::App::get()->loadResource("../Resources/images/particle-small.png") ), format );
 	}
 	
 	// determine memory requirements
@@ -58,8 +59,8 @@ void ParticleSystem::setMode(Rendering mode)
 			mParticleRate = 750;
 			break;
 		case LINES:
-			mMaxParticles = (int) MAX_PARTICLES / 2;
-			mParticleRate = 600;
+			mMaxParticles = (int) MAX_PARTICLES;
+			mParticleRate = 1250;
 			break;
 		case SPRITES:
 			mMaxParticles = (int) MAX_PARTICLES / 4;
@@ -111,7 +112,7 @@ void ParticleSystem::setWindowSize( const Vec2i &winSize )
 void ParticleSystem::threaded_update(const unsigned int start_index, const unsigned int end_index, const int id)
 {
 	std::unique_lock<std::mutex> lock(mMutex);
-	std::cout << "id = " << id << ", start_index = " << start_index << ", end_index = " << end_index << std::endl;
+	//std::cout << "id = " << id << ", start_index = " << start_index << ", end_index = " << end_index << std::endl;
 	mThreadCompleted.push_back(false);
 	lock.unlock();
 	

@@ -16,11 +16,13 @@ void CinderParticlesApp::setup()
 
 	this->setWindowSize(1680,1080);
 	this->setFrameRate(60);
+	fs::path path = this->getAppPath() / ".." / ".." / "resources";
+	this->addAssetDirectory( path );
 	
 	mParticleSystem = new ParticleSystem();
 	
 	try {
-		mShader = new gl::GlslProg( loadResource( "../Resources/shaders/pass.vert" ), loadResource( "../Resources/shaders/blur.frag" ) );
+		mShader = new gl::GlslProg( app::loadAsset( "shaders/pass.vert" ), app::loadAsset( "shaders/blur.frag" ) );
 	}
 	catch( ci::gl::GlslProgCompileExc &exc ) {
 		console() << "Shader compile error: " << std::endl;
