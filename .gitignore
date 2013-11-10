@@ -5,3 +5,7 @@ xcode/build
 *.hmap
 
 *.xcuserdatad
+*.sdf
+*.opensdf
+Debug
+Release
