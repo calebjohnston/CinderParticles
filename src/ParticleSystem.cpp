@@ -59,7 +59,7 @@ void ParticleSystem::setMode(Rendering mode)
 			break;
 		case LINES:
 			mMaxParticles = (int) MAX_PARTICLES / 2;
-			mParticleRate = 400;
+			mParticleRate = 600;
 			break;
 		case SPRITES:
 			mMaxParticles = (int) MAX_PARTICLES / 4;

@@ -12,7 +12,7 @@ CinderMultiParticlesApp::~CinderMultiParticlesApp()
 	mRunning = false;
 	
 	for(int i = 0; i < mThreads.size(); ++i){
-		mThreads.at(i).join();
+		mThreads.at(i)->join();
 	}
 }
 
@@ -56,9 +56,8 @@ void CinderMultiParticlesApp::setup()
 	for(int i = 0; i < core_count; ++i){
 		start_index = i * workload_size;
 		end_index = start_index + workload_size;
-		
-		//std::thread t(std::bind(&ParticleSystem::threaded_update, mParticleSystem, _1, _2, _3), start_index, end_index, i);
-		//mThreads.push_back(t);
+		std::thread* t = new std::thread( std::bind( &ParticleSystem::threaded_update, mParticleSystem, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3 ), start_index, end_index, i );
+		mThreads.push_back(t);
 	}
 }
 
