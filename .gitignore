@@ -5,3 +5,4 @@ xcode/build
 *.hmap
 
 *.xcuserdatad
+/xcode/CinderParticles.xcodeproj/project.xcworkspace/xcshareddata/
