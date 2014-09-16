@@ -55,6 +55,32 @@
 		3C6605E115CF48EF0004B31D /* MeshSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */; };
 		3C6605E315CF4EB30004B31D /* meshes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6605E215CF4EB30004B31D /* meshes */; };
 		3C6605E415CF4EB30004B31D /* meshes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6605E215CF4EB30004B31D /* meshes */; };
+		3C745A8A19C7D69900021990 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
+		3C745A8B19C7D69900021990 /* meshes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6605E215CF4EB30004B31D /* meshes */; };
+		3C745A8C19C7D69900021990 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 3C12D8F215E1AD180098565D /* shaders */; };
+		3C745A8F19C7D69900021990 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */; };
+		3C745A9019C7D69900021990 /* LineSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9BB3615C251C90017D3AE /* LineSystem.cpp */; };
+		3C745A9119C7D69900021990 /* NumberCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9BB3715C251C90017D3AE /* NumberCache.cpp */; };
+		3C745A9219C7D69900021990 /* SpriteSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9BB3815C251C90017D3AE /* SpriteSystem.cpp */; };
+		3C745A9319C7D69900021990 /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CBA5C4515C5E3330088D160 /* Emitter.cpp */; };
+		3C745A9419C7D69900021990 /* GpuSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */; };
+		3C745A9519C7D69900021990 /* GpuParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */; };
+		3C745A9619C7D69900021990 /* MeshSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */; };
+		3C745A9719C7D69900021990 /* VaoMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */; };
+		3C745A9819C7D69900021990 /* VaoMeshSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0999BC15DDEDEA007D4035 /* VaoMeshSystem.cpp */; };
+		3C745A9A19C7D69900021990 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		3C745A9B19C7D69900021990 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0091D8F80E81B9330029341E /* OpenGL.framework */; };
+		3C745A9C19C7D69900021990 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
+		3C745A9D19C7D69900021990 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
+		3C745A9E19C7D69900021990 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
+		3C745A9F19C7D69900021990 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0097E3E40F3E9819005A4392 /* QuickTime.framework */; };
+		3C745AA019C7D69900021990 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784AF0FF439BC000DE1D7 /* Accelerate.framework */; };
+		3C745AA119C7D69900021990 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
+		3C745AA219C7D69900021990 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
+		3C745AA319C7D69900021990 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		3C745AAA19C7D6F200021990 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C745AA919C7D6F200021990 /* OpenCL.framework */; };
+		3C745AAD19C7D76A00021990 /* OpenCLParticlesApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C745AAC19C7D76A00021990 /* OpenCLParticlesApp.cpp */; };
+		3C745AB019C7D98500021990 /* KernelSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C745AAF19C7D98500021990 /* KernelSystem.cpp */; };
 		3C74A40615E9419F00768E81 /* TriangleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C74A40515E9419F00768E81 /* TriangleSystem.cpp */; };
 		3C9D942215C6153800C47CDD /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CBA5C4515C5E3330088D160 /* Emitter.cpp */; };
 		3CBA5C4615C5E3330088D160 /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CBA5C4515C5E3330088D160 /* Emitter.cpp */; };
@@ -108,6 +134,13 @@
 		3C6605DD15CF48E80004B31D /* MeshSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshSystem.h; path = ../include/MeshSystem.h; sourceTree = "<group>"; };
 		3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshSystem.cpp; path = ../src/MeshSystem.cpp; sourceTree = "<group>"; };
 		3C6605E215CF4EB30004B31D /* meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = meshes; path = ../resources/meshes; sourceTree = "<group>"; };
+		3C745AA719C7D69900021990 /* OpenCLParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCLParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C745AA819C7D69A00021990 /* OpenCLParticles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "OpenCLParticles-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/OpenCLParticles-Info.plist"; sourceTree = "<absolute>"; };
+		3C745AA919C7D6F200021990 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		3C745AAB19C7D75C00021990 /* OpenCLParticlesApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenCLParticlesApp.h; path = ../include/OpenCLParticlesApp.h; sourceTree = "<group>"; };
+		3C745AAC19C7D76A00021990 /* OpenCLParticlesApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenCLParticlesApp.cpp; path = ../src/OpenCLParticlesApp.cpp; sourceTree = "<group>"; };
+		3C745AAE19C7D97600021990 /* KernelSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KernelSystem.h; path = ../include/KernelSystem.h; sourceTree = "<group>"; };
+		3C745AAF19C7D98500021990 /* KernelSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KernelSystem.cpp; path = ../src/KernelSystem.cpp; sourceTree = "<group>"; };
 		3C74A40315E9419800768E81 /* TriangleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriangleSystem.h; path = ../include/TriangleSystem.h; sourceTree = "<group>"; };
 		3C74A40515E9419F00768E81 /* TriangleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TriangleSystem.cpp; path = ../src/TriangleSystem.cpp; sourceTree = "<group>"; };
 		3CBA5C4315C5E32B0088D160 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Emitter.h; path = ../include/Emitter.h; sourceTree = "<group>"; };
@@ -165,6 +198,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C745A9919C7D69900021990 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C745AAA19C7D6F200021990 /* OpenCL.framework in Frameworks */,
+				3C745A9A19C7D69900021990 /* Cocoa.framework in Frameworks */,
+				3C745A9B19C7D69900021990 /* OpenGL.framework in Frameworks */,
+				3C745A9C19C7D69900021990 /* Carbon.framework in Frameworks */,
+				3C745A9D19C7D69900021990 /* CoreVideo.framework in Frameworks */,
+				3C745A9E19C7D69900021990 /* QTKit.framework in Frameworks */,
+				3C745A9F19C7D69900021990 /* QuickTime.framework in Frameworks */,
+				3C745AA019C7D69900021990 /* Accelerate.framework in Frameworks */,
+				3C745AA119C7D69900021990 /* AudioToolbox.framework in Frameworks */,
+				3C745AA219C7D69900021990 /* AudioUnit.framework in Frameworks */,
+				3C745AA319C7D69900021990 /* CoreAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -188,17 +239,19 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				3C4FAAB815D8A3D600E0BE05 /* SpriteSheetTestApp.cpp */,
 				3CBE4BFA159FDFE7009863EB /* CinderMultiParticlesApp.cpp */,
 				00BAE6590E7ED9C10018A608 /* CinderParticlesApp.cpp */,
 				3CBA5C4515C5E3330088D160 /* Emitter.cpp */,
 				3C09D57915CF015A007BEB31 /* GpuParticleSystem.cpp */,
 				3C09D57515CEFAE5007BEB31 /* GpuSystem.cpp */,
+				3C745AAF19C7D98500021990 /* KernelSystem.cpp */,
 				3CC9BB3615C251C90017D3AE /* LineSystem.cpp */,
 				3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */,
 				3CC9BB3715C251C90017D3AE /* NumberCache.cpp */,
+				3C745AAC19C7D76A00021990 /* OpenCLParticlesApp.cpp */,
 				0026CD1B1197C25E007D86C6 /* ParticleSystem.cpp */,
 				3C4FAABD15D8A4CE00E0BE05 /* SpriteSheet.cpp */,
+				3C4FAAB815D8A3D600E0BE05 /* SpriteSheetTestApp.cpp */,
 				3CC9BB3815C251C90017D3AE /* SpriteSystem.cpp */,
 				3C74A40515E9419F00768E81 /* TriangleSystem.cpp */,
 				3C0999BB15DDEDEA007D4035 /* VaoMesh.cpp */,
@@ -240,6 +293,7 @@
 				8D1107320486CEB800E47090 /* CinderParticles.app */,
 				3C0FF7AF159FDDCA004FF665 /* CinderMultiParticles.app */,
 				3C4FAAB515D8A21D00E0BE05 /* SpriteSheetTest.app */,
+				3C745AA719C7D69900021990 /* OpenCLParticles.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -259,18 +313,20 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				3C4FAABB15D8A3EC00E0BE05 /* SpriteSheetTestApp.h */,
 				3CBE4BF9159FDFE7009863EB /* CinderMultiParticlesApp.h */,
 				32CA4F630368D1EE00C91783 /* CinderParticles_Prefix.pch */,
 				4101ECEC157D297200EF2816 /* CinderParticlesApp.h */,
 				3CBA5C4315C5E32B0088D160 /* Emitter.h */,
 				3C09D57815CEFF2F007BEB31 /* GpuParticleSystem.h */,
 				3C09D57315CEFADD007BEB31 /* GpuSystem.h */,
+				3C745AAE19C7D97600021990 /* KernelSystem.h */,
 				3CC9BB3315C251BD0017D3AE /* LineSystem.h */,
 				3C6605DD15CF48E80004B31D /* MeshSystem.h */,
 				3CC9BB3415C251BD0017D3AE /* NumberCache.h */,
+				3C745AAB19C7D75C00021990 /* OpenCLParticlesApp.h */,
 				0026CD211197C267007D86C6 /* ParticleSystem.h */,
 				3C4FAABC15D8A4C400E0BE05 /* SpriteSheet.h */,
+				3C4FAABB15D8A3EC00E0BE05 /* SpriteSheetTestApp.h */,
 				3CC9BB3515C251BD0017D3AE /* SpriteSystem.h */,
 				3C74A40315E9419800768E81 /* TriangleSystem.h */,
 				3C0999C215DDEDF5007D4035 /* VaoMesh.h */,
@@ -289,6 +345,7 @@
 				8D1107310486CEB800E47090 /* CinderParticles-Info.plist */,
 				3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */,
 				3C4FAAB715D8A21D00E0BE05 /* SpriteSheetTest-Info.plist */,
+				3C745AA819C7D69A00021990 /* OpenCLParticles-Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -296,6 +353,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C745AA919C7D6F200021990 /* OpenCL.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -341,6 +399,24 @@
 			productReference = 3C4FAAB515D8A21D00E0BE05 /* SpriteSheetTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3C745A8819C7D69900021990 /* OpenCLParticles */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C745AA419C7D69900021990 /* Build configuration list for PBXNativeTarget "OpenCLParticles" */;
+			buildPhases = (
+				3C745A8919C7D69900021990 /* Resources */,
+				3C745A8D19C7D69900021990 /* Sources */,
+				3C745A9919C7D69900021990 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenCLParticles;
+			productInstallPath = "$(HOME)/Applications";
+			productName = msaFluidParticles;
+			productReference = 3C745AA719C7D69900021990 /* OpenCLParticles.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8D1107260486CEB800E47090 /* CinderParticles */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "CinderParticles" */;
@@ -384,6 +460,7 @@
 				8D1107260486CEB800E47090 /* CinderParticles */,
 				3C0FF799159FDDCA004FF665 /* CinderMultiParticles */,
 				3C4FAA9815D8A21D00E0BE05 /* SpriteSheetTest */,
+				3C745A8819C7D69900021990 /* OpenCLParticles */,
 			);
 		};
 /* End PBXProject section */
@@ -406,6 +483,16 @@
 				3C4FAA9A15D8A21D00E0BE05 /* images in Resources */,
 				3C4FAA9C15D8A21D00E0BE05 /* meshes in Resources */,
 				3CC051BA15D8B01C004131FE /* dk.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C745A8919C7D69900021990 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C745A8A19C7D69900021990 /* images in Resources */,
+				3C745A8B19C7D69900021990 /* meshes in Resources */,
+				3C745A8C19C7D69900021990 /* shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +537,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C745A8D19C7D69900021990 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C745AAD19C7D76A00021990 /* OpenCLParticlesApp.cpp in Sources */,
+				3C745A8F19C7D69900021990 /* ParticleSystem.cpp in Sources */,
+				3C745A9019C7D69900021990 /* LineSystem.cpp in Sources */,
+				3C745A9119C7D69900021990 /* NumberCache.cpp in Sources */,
+				3C745A9219C7D69900021990 /* SpriteSystem.cpp in Sources */,
+				3C745A9319C7D69900021990 /* Emitter.cpp in Sources */,
+				3C745A9419C7D69900021990 /* GpuSystem.cpp in Sources */,
+				3C745AB019C7D98500021990 /* KernelSystem.cpp in Sources */,
+				3C745A9519C7D69900021990 /* GpuParticleSystem.cpp in Sources */,
+				3C745A9619C7D69900021990 /* MeshSystem.cpp in Sources */,
+				3C745A9719C7D69900021990 /* VaoMesh.cpp in Sources */,
+				3C745A9819C7D69900021990 /* VaoMeshSystem.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -474,6 +580,7 @@
 		3C0FF7AD159FDDCA004FF665 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CINDER_PATH = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -501,6 +608,7 @@
 		3C0FF7AE159FDDCA004FF665 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CINDER_PATH = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -529,6 +637,7 @@
 		3C4FAAB315D8A21D00E0BE05 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CINDER_PATH = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -556,6 +665,7 @@
 		3C4FAAB415D8A21D00E0BE05 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CINDER_PATH = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -581,9 +691,67 @@
 			};
 			name = Release;
 		};
+		3C745AA519C7D69900021990 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CINDER_PATH = "$(inherited)";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CinderParticles_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "OpenCLParticles-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"$(CINDER_PATH)/lib/libcinder_d.a",
+					"-lcurl",
+				);
+				PRODUCT_NAME = OpenCLParticles;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		3C745AA619C7D69900021990 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CINDER_PATH = "$(inherited)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CinderParticles_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "OpenCLParticles-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"$(CINDER_PATH)/lib/libcinder.a",
+					"-lcurl",
+				);
+				PRODUCT_NAME = OpenCLParticles;
+				STRIP_INSTALLED_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CINDER_PATH = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -611,6 +779,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CINDER_PATH = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -687,6 +856,15 @@
 			buildConfigurations = (
 				3C4FAAB315D8A21D00E0BE05 /* Debug */,
 				3C4FAAB415D8A21D00E0BE05 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C745AA419C7D69900021990 /* Build configuration list for PBXNativeTarget "OpenCLParticles" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C745AA519C7D69900021990 /* Debug */,
+				3C745AA619C7D69900021990 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
