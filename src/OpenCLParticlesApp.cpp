@@ -17,13 +17,75 @@ void OpenCLParticlesApp::setup()
 	mKernelSystem = NULL;
 	mBlurX = mBlurY = NULL;
 	mEnableGaussianBlur = mMouseDown = false;
+	
+	mUseOpenGLContext = true;
+	
+//	Get a list of available platforms
+//	Select device
+//	Create Context
+//	Create command queue
+	
+//	Create memory objects
+//	Read kernel file
+//	Create program object
+//	Compile kernel
+//	Create kernel object
+//	Set kernel arguments
+//	Execute kernel (Enqueue task)
+//	Read memory object
+//	Free objects
+	
+	// query platform
+	cl_platform_id platformId = nullptr;
+	cl_uint platformCount;
+	cl_int ret = clGetPlatformIDs(1, &platformId, &platformCount);
+	if (!ret) {
+		console() << "OpenCLParticlesApp: Failed to query platform!" << std::endl;
+		shutdown();
+	}
+	
+	// make device query available to all future logic
+	cl_uint deviceCount;
+	cl_device_id deviceIds[4];
+	
+	// create context
+	if (mUseOpenGLContext) {
+		CGLContextObj cinderCglContext = this->getRenderer()->getCglContext();
+		CGLShareGroupObj cinderCglShareGroup = CGLGetShareGroup(cinderCglContext);
+		
+		cl_context_properties ctxProperties[] = {
+			CL_CONTEXT_PROPERTY_USE_CGL_SHAREGROUP_APPLE,
+			(cl_context_properties) cinderCglShareGroup,
+			0
+		};
+		// create OpenCL context from shared CGL context
+		mContext = clCreateContext(ctxProperties, 0, 0, clLogMessagesToStdoutAPPLE, 0, 0);
+		
+		if (!mContext) {
+			console() << "OpenCLParticlesApp: Failed to create compute context!" << std::endl;
+			shutdown();
+		}
+	}
+	else {
+		// query devices for platform
+		ret = clGetDeviceIDs(platformId, CL_DEVICE_TYPE_DEFAULT, 1, deviceIds, &deviceCount);
+		if (!ret) {
+			console() << "OpenCLParticlesApp: Failed to get available devices!" << std::endl;
+			shutdown();
+		}
+		
+		// select device
+		mContext = clCreateContext(0, deviceCount, deviceIds, nullptr, nullptr, &ret);
+	}
+	
+	mCommandQueue = clCreateCommandQueue(mContext, (cl_device_id) deviceIds[0], 0, &ret);
 
 	this->setWindowSize(1680,1080);
 	this->setFrameRate(60);
-	
+
 	mKernelSystem = new KernelSystem();
 	mEmitter = new Emitter( 1000, Vec2f::zero(), Vec2f::one() );
-	mKernelSystem->setup( 10000 );
+	mKernelSystem->setup( "resources/integrate-cpu.cl", 10000, mContext, mCommandQueue, deviceIds, deviceCount );
 	
 	try {
 		mShader = new gl::GlslProg( app::loadAsset( "shaders/pass.vert" ), app::loadAsset( "shaders/blur.frag" ) );

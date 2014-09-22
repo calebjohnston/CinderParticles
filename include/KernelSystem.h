@@ -19,7 +19,9 @@ public:
 	virtual ~KernelSystem();
 	
 	/** Cinder update callback */
-	virtual void setup(const unsigned int particles, const int threads = 0);
+	virtual void setup(const std::string& oclKernel, const unsigned int particles,
+					   cl_context oclContext, cl_command_queue oclCmdQueue,
+					   cl_device_id* oclDeviceIds, cl_int oclDeviceCount );
 	
 	/** Cinder update callback */
 	virtual void update();
@@ -48,6 +50,10 @@ public:
 	};
 	
 protected:
+	cl_kernel	mKernel;
+	cl_program	mProgram;
+	cl_mem		mDeviceMemBuffer;
+	
 	ci::Vec2i	mWindowSize;
 	ci::Vec2f	mInvWindowSize;
 	cl_Line2D*	mParticles;

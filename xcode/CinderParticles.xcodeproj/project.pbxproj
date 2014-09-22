@@ -55,6 +55,10 @@
 		3C6605E115CF48EF0004B31D /* MeshSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */; };
 		3C6605E315CF4EB30004B31D /* meshes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6605E215CF4EB30004B31D /* meshes */; };
 		3C6605E415CF4EB30004B31D /* meshes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6605E215CF4EB30004B31D /* meshes */; };
+		3C7239CD19C93A26002BEBDC /* kernels in Resources */ = {isa = PBXBuildFile; fileRef = 3C7239CC19C93A26002BEBDC /* kernels */; };
+		3C7239CE19C93A26002BEBDC /* kernels in Resources */ = {isa = PBXBuildFile; fileRef = 3C7239CC19C93A26002BEBDC /* kernels */; };
+		3C7239CF19C93A26002BEBDC /* kernels in Resources */ = {isa = PBXBuildFile; fileRef = 3C7239CC19C93A26002BEBDC /* kernels */; };
+		3C7239D019C93A26002BEBDC /* kernels in Resources */ = {isa = PBXBuildFile; fileRef = 3C7239CC19C93A26002BEBDC /* kernels */; };
 		3C745A8A19C7D69900021990 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 4101ECEE157D312400EF2816 /* images */; };
 		3C745A8B19C7D69900021990 /* meshes in Resources */ = {isa = PBXBuildFile; fileRef = 3C6605E215CF4EB30004B31D /* meshes */; };
 		3C745A8C19C7D69900021990 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 3C12D8F215E1AD180098565D /* shaders */; };
@@ -134,6 +138,7 @@
 		3C6605DD15CF48E80004B31D /* MeshSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshSystem.h; path = ../include/MeshSystem.h; sourceTree = "<group>"; };
 		3C6605DF15CF48EF0004B31D /* MeshSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshSystem.cpp; path = ../src/MeshSystem.cpp; sourceTree = "<group>"; };
 		3C6605E215CF4EB30004B31D /* meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = meshes; path = ../resources/meshes; sourceTree = "<group>"; };
+		3C7239CC19C93A26002BEBDC /* kernels */ = {isa = PBXFileReference; lastKnownFileType = folder; name = kernels; path = ../resources/kernels; sourceTree = "<group>"; };
 		3C745AA719C7D69900021990 /* OpenCLParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCLParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C745AA819C7D69A00021990 /* OpenCLParticles-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "OpenCLParticles-Info.plist"; path = "/Users/Caleb/Development/OpenSource/CinderParticles/xcode/OpenCLParticles-Info.plist"; sourceTree = "<absolute>"; };
 		3C745AA919C7D6F200021990 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
@@ -341,6 +346,7 @@
 				3CC051B915D8B01C004131FE /* dk.xml */,
 				3C6605E215CF4EB30004B31D /* meshes */,
 				4101ECEE157D312400EF2816 /* images */,
+				3C7239CC19C93A26002BEBDC /* kernels */,
 				3C12D8F215E1AD180098565D /* shaders */,
 				8D1107310486CEB800E47090 /* CinderParticles-Info.plist */,
 				3C0FF7B2159FDDCB004FF665 /* CinderMultiParticles-Info.plist */,
@@ -473,6 +479,7 @@
 				3C0FF79B159FDDCA004FF665 /* images in Resources */,
 				3C6605E415CF4EB30004B31D /* meshes in Resources */,
 				3C12D8F415E1AD180098565D /* shaders in Resources */,
+				3C7239CE19C93A26002BEBDC /* kernels in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +490,7 @@
 				3C4FAA9A15D8A21D00E0BE05 /* images in Resources */,
 				3C4FAA9C15D8A21D00E0BE05 /* meshes in Resources */,
 				3CC051BA15D8B01C004131FE /* dk.xml in Resources */,
+				3C7239CF19C93A26002BEBDC /* kernels in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +501,7 @@
 				3C745A8A19C7D69900021990 /* images in Resources */,
 				3C745A8B19C7D69900021990 /* meshes in Resources */,
 				3C745A8C19C7D69900021990 /* shaders in Resources */,
+				3C7239D019C93A26002BEBDC /* kernels in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +512,7 @@
 				4101ECF0157D312400EF2816 /* images in Resources */,
 				3C6605E315CF4EB30004B31D /* meshes in Resources */,
 				3C12D8F315E1AD180098565D /* shaders in Resources */,
+				3C7239CD19C93A26002BEBDC /* kernels in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,8 @@
 
 using namespace ci;
 
+// note to self: clEnqueueMigrateMemObjects can be used to *explicitly* migrate memory between compute devices...
+
 KernelSystem::KernelSystem()
 :	ParticleSystem(),
 	mParticles(NULL),
@@ -26,9 +28,18 @@ KernelSystem::~KernelSystem()
 	delete mNumCache;
 }
 
-void KernelSystem::setup(const unsigned int particles, const int threads)
+void KernelSystem::setup(const std::string& oclKernel, const unsigned int particles,
+						 cl_context oclContext, cl_command_queue oclCmdQueue,
+						 cl_device_id* oclDeviceIds, cl_int oclDeviceCount )
 {
-	ParticleSystem::setup(particles, threads);
+	unsigned int particles_sqrt = std::ceil( std::sqrt( particles ) );
+	unsigned int particles_sqrd = particles_sqrt * particles_sqrt;
+	
+	cl_int ret;
+	mDeviceMemBuffer = clCreateBuffer(oclContext, CL_MEM_READ_WRITE, particles_sqrd * sizeof(cl_Line2D), NULL, &ret);
+	if (!ret) {
+		ci::app::console() << "KernelSystem: Failed to allocate particles in device memory" << std::endl;
+	}
 	
 	// allocate memory
 	try {
@@ -36,7 +47,59 @@ void KernelSystem::setup(const unsigned int particles, const int threads)
 //		mPositionArray = (float*) calloc(sizeof(float), this->mMaxParticles * 4);
 //		mColorArray = (float*) calloc(sizeof(float), this->mMaxParticles * 8);
 	} catch(...) {
-		ci::app::console() << "Unable to allocate data" << std::endl;
+		ci::app::console() << "KernelSystem: Unable to allocate data" << std::endl;
+		return;
+	}
+	
+	// load program from source file and compile kernel
+	{
+//		const char **
+//		const size_t *
+		const DataSourceRef kernelDataSource = ci::loadFile(oclKernel);
+		Buffer& kernelContents = kernelDataSource->getBuffer();
+		const char* src = (const char*) kernelContents.getData();
+		const size_t src_size = kernelContents.getDataSize();
+		mProgram = clCreateProgramWithSource(oclContext, 1, &src, &src_size, &ret);
+		if (!ret) {
+			ci::app::console() << "KernelSystem: Failed to compile program from source" << std::endl;
+			return;
+		}
+		ret = clBuildProgram(mProgram, oclDeviceCount, oclDeviceIds, NULL, NULL, NULL);
+		mKernel = clCreateKernel(mProgram, "integrate", &ret);
+		if (!ret) {
+			ci::app::console() << "KernelSystem: Failed to create kernel from program" << std::endl;
+			return;
+		}
+	}
+	
+	// set arguments ...
+	{
+		ret = clSetKernelArg(mKernel, 0, sizeof(cl_mem), (void*) &mDeviceMemBuffer);
+		if (!ret) {
+			ci::app::console() << "KernelSystem: Failed to set kernel argument" << std::endl;
+			return;
+		}
+	}
+	
+	// enqueue kernel!
+	size_t preferred_work_group_size;
+	size_t return_size;
+	ret = clGetKernelWorkGroupInfo(mKernel, *oclDeviceIds, CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE,
+								   sizeof(size_t), &preferred_work_group_size, &return_size);
+	if (!ret) {
+		ci::app::console() << "KernelSystem: Could not query preferred work group size!" << std::endl;
+		return;
+	}
+	
+	//ret = clEnqueueTask(oclCmdQueue, mKernel, 0, NULL, NULL);
+	size_t global_work_offset[2] = { 0, 0 };
+	size_t global_work_size[2] = { particles_sqrt, particles_sqrt };
+	size_t local_work_size[2] = { preferred_work_group_size, preferred_work_group_size };
+	ret = clEnqueueNDRangeKernel(	oclCmdQueue, mKernel, 2,
+									global_work_offset, global_work_size, local_work_size,
+									0, nullptr, nullptr);
+	if (!ret) {
+		ci::app::console() << "KernelSystem: Failed to enqueue the kernel!" << std::endl;
 		return;
 	}
 	
@@ -47,6 +110,7 @@ void KernelSystem::setup(const unsigned int particles, const int threads)
 	mNumCache = new NumberCache(2048);	// use no more than 2 kbytes
 	
 	mInitialized = true;
+	mRunning = true;
 }
 
 void KernelSystem::updateKernel(const unsigned int start_index, const unsigned int end_index)

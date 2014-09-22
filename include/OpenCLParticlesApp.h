@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+#include <CL/cl.h>
+#endif
+
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Fbo.h"
@@ -26,6 +32,11 @@ public:
 private:
 	KernelSystem*				mKernelSystem;
 	Emitter*					mEmitter;
+	
+	cl_platform_id				mPlatform;
+	cl_context					mContext;
+	cl_command_queue			mCommandQueue;
+	
 	ci::gl::GlslProg*			mShader;
 	ci::gl::Fbo*				mBlurX;
 	ci::gl::Fbo*				mBlurY;
@@ -34,4 +45,5 @@ private:
 	ci::Vec2i					pMouse;
 	bool						mMouseDown;
 	bool						mEnableGaussianBlur;
+	bool						mUseOpenGLContext;
 };
