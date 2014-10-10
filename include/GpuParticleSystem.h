@@ -35,14 +35,14 @@ public:
 	/** Accessor method for the total set of particles */
 	unsigned int getMaxParticles() const { return mMaxParticles; }
 	
-protected:	
+protected:
+	// -- GPU specific data & methods ------------------------------
+	virtual void		setupVBO();
+	virtual void		resetFBOs();
+	virtual void		setupTextures();
+	
 	unsigned int		mMaxParticles;
 	unsigned int		mCurrentIndex;
-	
-	// -- GPU specific data & methods ------------------------------
-	virtual void setupVBO();
-	virtual void resetFBOs();
-	virtual void setupTextures();
 	
 	unsigned int		mTextureSide;
 	ci::Surface32f		mInitPos;
